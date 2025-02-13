@@ -16,7 +16,7 @@ body {
 
 button,
 .btn {
-	@apply rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-cyan-700;
+	@apply rounded-md bg-[var(--red)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-cyan-700;
 }
 
 .btn-outline {

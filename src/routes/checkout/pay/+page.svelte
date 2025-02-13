@@ -6,6 +6,7 @@
 	} from '$env/static/public';
 	import { checkoutActions } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
+	import UserForm from '$lib/compontents/checkout/user-form.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { appearance, options } from '$lib/stripe';
 
@@ -105,6 +106,10 @@
 	}
 </script>
 
+<div class="m-4">
+	<UserForm />
+</div>
+
 <div class="payment-container">
 	<div id="payment-element" class="payment-element">
 		<div class="loading-animation">
@@ -112,7 +117,7 @@
 			<div class="loading-text">Loading</div>
 		</div>
 	</div>
-	<button onclick={onPay} disabled={!paymentElementLoaded} class="btn-bauhaus">Pay</button>
+	<button onclick={onPay} disabled={!paymentElementLoaded} class="btn-bauhaus mt-4">Pay</button>
 </div>
 
 <style lang="postcss">
@@ -145,7 +150,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-        min-height: 200px;
+		min-height: 200px;
 		@apply mb-4;
 	}
 

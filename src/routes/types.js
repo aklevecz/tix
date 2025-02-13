@@ -62,3 +62,10 @@
  * @property {string} project_name
  * @property {string} origin
  */
+
+/**
+ * @typedef {Object} User
+ * @property {string} name
+ * @property {string} phoneNumber
+ * @property {string} email
+ */
