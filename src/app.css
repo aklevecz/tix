@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+:root {
+	--yellow: #ffc73a;
+	--red: #ff2c2c;
+	--primary-color: #000000;
+	--secondary-color: #ffffff;
+}
+
+html,
+body {
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+	text-transform: uppercase;
+}
+
+button,
+.btn {
+	@apply rounded-md bg-cyan-400 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-cyan-700;
+}
+
+.btn-outline {
+	@apply flex h-5 w-5 items-center justify-center rounded-full border border-[white] bg-transparent p-0 text-[white] transition-colors hover:border-[var(--yellow)] hover:text-[var(--yellow)];
+}
+
+.btn-bauhaus {
+	@apply border border-[var(--red)] bg-[var(--red)] px-4 py-2 font-bold tracking-wide text-white uppercase transition-colors duration-200;
+}
+
+.btn-bauhaus:hover {
+	@apply bg-white text-[var(--red)];
+}

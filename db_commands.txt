@@ -1,0 +1,17 @@
+npx wrangler d1 execute DB --local --command "DROP TABLE tix_orders"
+npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS tix_orders (
+  pi_id TEXT PRIMARY KEY,
+  items TEXT,
+  name TEXT,
+  phone TEXT,
+  email TEXT,
+  discount INTEGER,
+  subtotal INTEGER,
+  amount INTEGER,
+  status TEXT,
+  project_name TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  origin TEXT
+);"
+
+
