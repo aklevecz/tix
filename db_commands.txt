@@ -15,3 +15,4 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS tix_ord
 );"
 
 
+npx wrangler d1 execute DB --local --command "SELECT * FROM tix_orders;"

@@ -39,7 +39,6 @@ export async function POST({ platform, request }) {
 				quantity: cart.items[key].quantity
 			};
 		});
-
 		const paymentIntent = await stripe.paymentIntents.create({
 			// amount: calculateOrderAmount(cart || [], discount || 0),
 			amount: cart.total,
@@ -56,13 +55,12 @@ export async function POST({ platform, request }) {
 
 		if (platform) {
 			const { context, env } = platform;
-
 			const testTixOrder = {
 				pi_id: paymentIntent.id,
 				items: JSON.stringify(cart.items),
-				name: 'test_name',
-				phone: 'test_phone',
-				email: 'test_email',
+				name: metadata.fullName,
+                phone: metadata.phoneNumber,
+                email: metadata.email,
                 discount: cart.discount,
                 subtotal: cart.subtotal,
 				amount: cart.total,

@@ -13,8 +13,8 @@
 				<CartLineItem {item} {quantity} />
 			{/each}
 		</div>
-		<div class="flex items-center justify-between pt-1">
-			<div class="border-t border-[var(--red)]/20 pt-0 text-sm font-medium text-white">
+		<div class="flex items-end justify-between pt-1">
+			<div class="border-t border-[var(--red)]/20 pt-0 text-lg font-medium text-white leading-[1rem]">
 				Total: {formatPrice(cart.state.total)}
 			</div>
 			<a class="btn-bauhaus" href="/checkout" aria-label="Checkout">Checkout</a>
@@ -26,7 +26,7 @@
 	@reference "tailwindcss/theme";
 
     a.btn-bauhaus {
-        @apply text-xs px-2 py-1;
+        @apply px-2 py-1;
     }
 	a.btn-bauhaus:hover {
 		@apply bg-white text-[var(--red)];

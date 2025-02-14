@@ -1,34 +1,31 @@
 <script>
-	let name = '';
-	let phone = '';
-	let email = '';
+	import user from '$lib/stores/user.svelte';
+	import Slider from './slider.svelte';
+	import TextInput from './text-input.svelte';
 
-	function onSubmit() {}
+	let { fullName, email, phoneNumber } = $derived(user.state);
 </script>
 
-<form on:submit={onSubmit} class="mx-auto max-w-lg space-y-4 bg-[#1a1a1a] p-4">
-	<h2 class="text-4xl font-bold tracking-tight text-white uppercase">User Information</h2>
+<Slider />
 
+<form class="mx-auto max-w-lg space-y-4 bg-[#1a1a1a] p-4">
+	<h2 class="text-4xl font-bold tracking-tight text-white uppercase">INFO</h2>
 	<div class="space-y-2">
 		<label for="name">Name</label>
-		<input id="name" type="text" bind:value={name} placeholder="Your Name" required class="" />
+		<TextInput name="fullName" placeholder="Your Name" value={fullName} />
 	</div>
 
 	<div class="space-y-2">
 		<label for="phone">Phone</label>
-		<input id="phone" type="tel" bind:value={phone} placeholder="Your Phone" required />
+		<TextInput name="phoneNumber" placeholder="Your Phone" value={phoneNumber} />
 	</div>
 
 	<div class="space-y-2">
 		<label for="email">Email</label>
-		<input id="email" type="email" bind:value={email} placeholder="Your Email" required />
+		<TextInput name="email" placeholder="Your Email" value={email} />
 	</div>
 
-	<button
-    class="btn-bauhaus w-full mt-4"
-	>
-		Submit
-	</button>
+	<!-- <button class="btn-bauhaus mt-4 w-full"> Submit </button> -->
 </form>
 
 <style lang="postcss">
@@ -38,5 +35,5 @@
 	}
 	input {
 		@apply w-full border border-white bg-transparent p-2 text-white focus:border-[var(--red)] focus:outline-none;
-	}   
+	}
 </style>

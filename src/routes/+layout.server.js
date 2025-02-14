@@ -1,8 +1,9 @@
-import { getOrCreateCart } from '$lib';
+import { getOrCreateCart, mockProducts } from '$lib';
 import { defaultCart } from '$lib/stores/cart.svelte';
 
 /** @type {import('./$types').LayoutServerLoad} */
 export async function load({ cookies, url, locals }) {
 	const cart = getOrCreateCart({ cookies, defaultCart });
-	return { cart };
+	const userSession = JSON.parse(cookies.get('user') || "{}")
+	return { cart, user: userSession, products: mockProducts };
 }

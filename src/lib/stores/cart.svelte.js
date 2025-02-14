@@ -1,11 +1,12 @@
 import cartApi from '$lib/api/cart';
+import discountApi from '$lib/api/discount';
 
 /** @type {Cart} */
 export const defaultCart = {
 	id: '',
 	createdAt: '',
 	items: /** @type {GroupedItemsMap} */ ({}),
-    discount: 0,
+	discount: 0,
 	subtotal: 0,
 	total: 0
 };
@@ -18,9 +19,9 @@ const createCartStore = () => {
 		cart.subtotal = Object.values(cart.items).reduce((sum, { item, quantity }) => {
 			return sum + item.price * quantity;
 		}, 0);
-        const discountAmount = cart.subtotal * (cart.discount / 100);
+		const discountAmount = cart.subtotal * (cart.discount / 100);
 		cart.total = cart.subtotal - discountAmount;
-        cart.total = Number(cart.total.toFixed(2))
+		cart.total = Number(cart.total.toFixed(2));
 	}
 
 	function saveCartSession() {
@@ -83,13 +84,32 @@ const createCartStore = () => {
 		getGroupedItems() {
 			return Object.values(cart.items);
 		},
-        /** @param {number} discount */
-        applyDiscount(discount) {
-            cart.discount = discount;
-            calculateTotals();
-            saveCartSession();
+		/** @param {string} discountCode */
+		async applyDiscount(discountCode) {
+			const { discountCode: discountCodeServer, discount } =
+				await discountApi.applyDiscount(discountCode);
+			cart.discount = discount;
+			calculateTotals();
+			saveCartSession();
+		},
+		/** @param {number} newPrice */
+		updateTicketPrice(newPrice) {
+			// if (cart.items['raptor-faight-2']) {
+			// 	cart.items['raptor-faight-2'].item.price = newPrice;
+			// }
+			const firstSlider = Object.entries(cart.items).find(
+				([key, object]) => object.item.priceConfig.slidingScale
+			);
+			if (firstSlider) {
+				const firstSliderKey = firstSlider[0];
+                cart.items[firstSliderKey].item.price = newPrice;
+			}
+			calculateTotals();
+		},
+        /** @param {string} productId @param {string} date */
+        updateTicketDate(productId, date) {
+            cart.items[productId].item.date = date;   
         },
-
 		reset() {
 			cart = { ...defaultCart };
 			saveCartSession();

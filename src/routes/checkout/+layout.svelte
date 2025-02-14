@@ -26,7 +26,7 @@
 		</h1>
 	</div>
 
-	<div class="grid grid-cols-[2fr,1fr] gap-8 p-4 pt-0">
+	<div class="card-base p-4 pt-0">
 		<div class="relative">
 			<!-- <div class="absolute -left-0 top-0 w-1 h-full bg-[var(--red)]"></div> -->
 			<div class="space-y-4 px-2">

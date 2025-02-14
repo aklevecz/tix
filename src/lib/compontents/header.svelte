@@ -10,8 +10,13 @@
 	</nav>
 </header>
 
+
 <style lang="postcss">
+	@reference "tailwindcss/theme";
 	.active {
 		@apply text-[var(--red)] transition-colors duration-200;
+	}
+	input {
+		@apply ml-3 w-1/2 border border-white bg-transparent p-2 text-white focus:border-[var(--red)] focus:outline-none;
 	}
 </style>

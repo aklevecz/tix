@@ -5,10 +5,11 @@ import {
 	YAYTSO_STRIPE_WEBHOOK_SECRET,
 	YAYTSO_STRIPE_WEBHOOK_SECRET_TEST
 } from '$env/static/private';
+import dbOrders from '$lib/db/orders';
 import Stripe from 'stripe';
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+export async function POST({ platform, request }) {
 	const sig = request.headers.get('stripe-signature');
 	if (!sig) {
 		return new Response('Missing Stripe signature', { status: 400 });
@@ -20,7 +21,20 @@ export async function POST({ request }) {
 	const rawBody = await request.text();
 	try {
 		let event = await stripe.webhooks.constructEventAsync(rawBody, sig, endpointSecret);
-		console.log(event.type);
+
+		if (event.type === 'charge.succeeded') {
+			if (platform) {
+				const { context, env } = platform;
+				console.log(event);
+				/** @type {string} */
+				const paymentIntentId = event.data.object.payment_intent;
+				if (paymentIntentId) {
+					context.waitUntil(
+						dbOrders(env.DB).updateOrder(paymentIntentId, [{ key: 'status', value: 'success' }])
+					);
+				}
+			}
+		}
 	} catch (/** @type {*} */ err) {
 		console.log(err.message);
 		return new Response(`Webhook Error: ${err.message}`, { status: 400 });

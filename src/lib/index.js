@@ -40,3 +40,26 @@ export const collectCookies = () => {
 
 	return { cartSession: cookies.cart ? JSON.parse(decodeURIComponent(cookies.cart)) : null };
 };
+
+/** @type {Product[]} */
+export const mockProducts = [
+	{
+		id: 'raptor-faight-2',
+		projectId: 'raptor-faight-2',
+		productType: 'ticket',
+		name: 'ticket',
+		title: 'ticket',
+		description: 'A ticket to the concert raptors takeover at the faight part 2',
+        price: 1500,
+		priceConfig: {
+			base: 1500,
+			slidingScale: true,
+			min: 100,
+			max: 5000,
+			step: 500
+		},
+        date: '2025-05-01',
+		dates: ['2025-05-01', '2025-05-02', '2025-05-03'],
+		img: '/images/ticket.png'
+	}
+];

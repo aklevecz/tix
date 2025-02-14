@@ -15,14 +15,26 @@
  */
 
 /**
+ * @typedef PriceConfig
+ * @property {number} base
+ * @property {boolean} slidingScale
+ * @property {number} min
+ * @property {number} max
+ * @property {number} step
+ */
+
+/**
  * @typedef Product
  * @property {string} id
  * @property {string} projectId
+ * @property {'ticket'} productType
  * @property {string} name
  * @property {string} title
  * @property {string} description
  * @property {number} price
+ * @property {PriceConfig} priceConfig
  * @property {string} date
+ * @property {string[]} dates
  * @property {string} img
  */
 
@@ -65,7 +77,7 @@
 
 /**
  * @typedef {Object} User
- * @property {string} name
+ * @property {string} fullName
  * @property {string} phoneNumber
  * @property {string} email
  */

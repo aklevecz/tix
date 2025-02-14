@@ -6,8 +6,9 @@
 	} from '$env/static/public';
 	import { checkoutActions } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
-	import UserForm from '$lib/compontents/checkout/user-form.svelte';
+	import Slider from '$lib/compontents/checkout/slider.svelte';
 	import cart from '$lib/stores/cart.svelte';
+	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -27,15 +28,17 @@
 		if (!cart.state.id) {
 			return;
 		}
+		console.log('CREATING PAYMENT INTENT');
+
 		const response = await fetch(`/api/checkout`, {
 			method: 'POST',
 			body: JSON.stringify({
 				action: checkoutActions.CREATE_INTENT,
 				cart: cart.state,
 				metadata: {
-					// name: shop.state.userInfo.name,
-					// email: shop.state.userInfo.email,
-					// phone: shop.state.userInfo.phone,
+					fullName: user.state.fullName,
+					email: user.state.email,
+					phoneNumber: user.state.phoneNumber,
 					// street1: shop.state.userInfo.address.street1,
 					// street2: shop.state.userInfo.address.street2,
 					// city: shop.state.userInfo.address.city,
@@ -106,10 +109,14 @@
 	}
 </script>
 
-<div class="m-4">
-	<UserForm />
+<div class="card-base m-4">
+	<div class="bg-[#1a1a1a] p-4 px-6 text-lg text-gray-300">
+		<div>{user.state.fullName}</div>
+		<div>{user.state.email}</div>
+		<div>{user.state.phoneNumber}</div>
+		<a class="text-sm text-blue-300 capitalize underline" href="/checkout">Edit</a>
+	</div>
 </div>
-
 <div class="payment-container">
 	<div id="payment-element" class="payment-element">
 		<div class="loading-animation">
@@ -117,7 +124,11 @@
 			<div class="loading-text">Loading</div>
 		</div>
 	</div>
-	<button onclick={onPay} disabled={!paymentElementLoaded} class="btn-bauhaus mt-4">Pay</button>
+	<button
+		onclick={onPay}
+		disabled={!paymentElementLoaded}
+		class="btn-bauhaus m-auto mt-4 block w-9/12">Pay</button
+	>
 </div>
 
 <style lang="postcss">
@@ -125,7 +136,7 @@
 
 	/* Container for the entire payment section */
 	.payment-container {
-		@apply max-w-lg rounded-md p-6;
+		@apply mt-4 max-w-lg rounded-md;
 	}
 
 	/* Totals section styling */
@@ -150,16 +161,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		min-height: 200px;
+		min-height: 300px;
 		@apply mb-4;
-	}
-
-	/* Bauhaus-inspired button styling */
-	.btn-bauhaus {
-		@apply w-full border border-[var(--red)] bg-[var(--red)] px-4 py-2 font-bold tracking-wider text-white uppercase transition-colors duration-200;
-	}
-	.btn-bauhaus:hover {
-		@apply bg-white text-[var(--red)];
 	}
 
 	.loading-animation {

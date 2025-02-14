@@ -1,23 +1,32 @@
 /** @type {Product} */
 const defaultState = {
-    id: '',
-    projectId: '',
-    name: '',
-    title: '',
-    description: '',
+	id: '',
+	projectId: '',
+    productType: 'ticket',
+	name: '',
+	title: '',
+	description: '',
     price: 0,
+	priceConfig: {
+		base: 0,
+		slidingScale: false,
+		min: 0,
+		max: 0,
+		step: 0
+	},
     date: '',
-    img: ''
-}
+	dates: [''],
+	img: ''
+};
 
 const createProduct = () => {
-    const product = $state({ ...defaultState });
+	const product = $state({ ...defaultState });
 
-    return {
-        get state() {
-            return product;
-        }
-    };
+	return {
+		get state() {
+			return product;
+		}
+	};
 };
 
 const product = createProduct();

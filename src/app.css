@@ -14,9 +14,13 @@ body {
 	text-transform: uppercase;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 button,
 .btn {
-	@apply rounded-md bg-[var(--red)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-cyan-700;
+	@apply rounded-md bg-[var(--red)] px-4 py-2 text-lg font-medium text-white transition-colors hover:bg-cyan-700;
 }
 
 .btn-outline {
@@ -24,9 +28,21 @@ button,
 }
 
 .btn-bauhaus {
-	@apply border border-[var(--red)] bg-[var(--red)] px-4 py-2 font-bold tracking-wide text-white uppercase transition-colors duration-200;
+	@apply border border-[var(--red)] bg-[var(--red)] rounded-md px-4 py-2 font-bold tracking-wide text-white uppercase transition-colors duration-200;
+}
+
+.btn-nofill {
+    @apply border border-[var(--red)] bg-transparent px-4 py-2 font-bold tracking-wide text-[var(--red)] uppercase transition-colors duration-200;
+}
+
+.btn-onlytext {
+    @apply bg-transparent text-base font-bold p-0 uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus:hover {
 	@apply bg-white text-[var(--red)];
+}
+
+.card-base {
+    @apply grid grid-cols-[2fr,1fr] gap-8;
 }

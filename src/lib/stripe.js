@@ -15,5 +15,5 @@ export const appearance = {
 };
 
 export const options = {
-    layout: 'accordion'
+    // layout: 'accordion'
 };
