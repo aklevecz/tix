@@ -16,3 +16,17 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS tix_ord
 
 
 npx wrangler d1 execute DB --local --command "SELECT * FROM tix_orders;"
+
+npx wrangler d1 execute DB --local --command "DROP TABLE freebees;"
+npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS freebees (
+  id TEXT PRIMARY KEY,
+  winner TEXT,
+  project_name TEXT,
+  date TEXT,
+  time TEXT,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);"
+npx wrangler d1 execute DB --local --command "DELETE FROM freebees;"
+npx wrangler d1 execute DB --local --command "INSERT INTO freebees (id, winner, project_name, date, time) VALUES ('2025-02-15', '', 'raptor-faight-2', '2025-02-15', '');"
+npx wrangler d1 execute DB --local --command "UPDATE freebees SET winner='' WHERE id='2025-02-15';"
+npx wrangler d1 execute DB --local --command "UPDATE freebees SET time='23:00:00' WHERE id='2025-02-15';"

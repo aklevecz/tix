@@ -7,7 +7,6 @@ export async function load({ url, platform }) {
 	let order = null;
 	if (paymentIntentId) {
 		order = (await dbOrders(platform?.env.DB).getOrder(paymentIntentId));
-		console.log(order)
 	}
 	return { paymentIntentId, order };
 }

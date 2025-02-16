@@ -17,7 +17,22 @@
       "database_id": "476fa768-0f3f-4121-9820-7cf92be3ee6b",
       "preview_database_id": "04cee095-7ba4-4be0-9bba-b63db8b8e08b"
     }
-  ]
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "baomem",
+      "id": "4eff2250e78541b9918103d7ce9686cb"
+    }, {
+      "binding": "tixKV",
+      "id": "ab852ad13fe8442b89cc92129e80b360"
+    }
+  ],
+  "r2_buckets": [
+    {
+    "binding": "R2",
+    "bucket_name": "secret-tix",
+    "preview_bucket_name": "secret-tix"
+  }]
   /**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

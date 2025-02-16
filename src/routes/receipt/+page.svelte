@@ -19,31 +19,42 @@
 		receipt = paymentIntent;
 	});
 </script>
+
 {#if order}
-	<div class="receipt-container mx-auto max-w-lg rounded-md bg-black p-4 pt-0 shadow-lg min-h-[83.2vh]">
-		<h1 class="mb-4 text-3xl font-bold tracking-wide text-white uppercase">Receipt</h1>
+	<div
+		class="receipt-container mx-auto min-h-[83.2vh] max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
+	>
+		<h1 class="mb-4 text-3xl font-bold tracking-wide text-[var(--secondary-color)] uppercase">
+			Receipt
+		</h1>
 
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-white uppercase">Name</p>
-			<p class="text-white">{order?.name}</p>
+			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Name</p>
+			<p class="text-[var(--secondary-color)]">{order?.name}</p>
 		</div>
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-white uppercase">Email</p>
-			<p class="text-white">{order?.email}</p>
+			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Email</p>
+			<p class="text-[var(--secondary-color)]">{order?.email}</p>
 		</div>
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-white uppercase">Phone</p>
-			<p class="text-white">{order?.phone}</p>
+			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Phone</p>
+			<p class="text-[var(--secondary-color)]">{order?.phone}</p>
 		</div>
 
 		<div class="items mb-4">
-			<h2 class="mb-2 text-xl font-bold tracking-wide text-[var(--red)] uppercase">Items</h2>
+			<!-- Header row -->
+			<div class="receipt-grid-line mb-2 pb-1">
+				<div>Item</div>
+				<div>Price</div>
+				<div>Quantity</div>
+			</div>
+
+			<!-- List items -->
 			{#each Object.entries(JSON.parse(order.items)) as [key, object]}
-				<div class="item flex justify-between border-b border-gray-700 py-1">
-					<!-- {JSON.stringify(object)} -->
-					<div class="item-title text-white">{object.item.title}</div>
+				<div class="receipt-grid-line py-1">
+					<div class="item-title">{object.item.title}</div>
 					<div>{formatPrice(object.item.price)}</div>
-					<div class="item-quantity text-white">{object.quantity}</div>
+					<div class="item-quantity">{object.quantity}</div>
 				</div>
 			{/each}
 		</div>
@@ -51,15 +62,19 @@
 		<div class="total space-y-2">
 			<div class="total-line">
 				<span class="w-32 uppercase">Subtotal</span>
-				<span class="text-right text-[var(--red)]">{formatPrice(order?.subtotal || 0)}</span>
+				<span class="text-right text-[var(--secondary-color)]"
+					>{formatPrice(order?.subtotal || 0)}</span
+				>
 			</div>
 			<div class="total-line">
 				<span class="w-32 uppercase">Discount</span>
-				<span class="text-right text-[var(--red)]">{order?.discount || 0}%</span>
+				<span class="text-right text-[var(--color-2)]">{order?.discount || 0}%</span>
 			</div>
 			<div class="total-line">
 				<span class="w-32 uppercase">Total</span>
-				<span class="text-right text-[var(--red)]">{formatPrice(receipt?.amount || 0)}</span>
+				<span class="text-right text-[var(--secondary-color)]"
+					>{formatPrice(receipt?.amount || 0)}</span
+				>
 			</div>
 		</div>
 	</div>
@@ -68,6 +83,9 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	.total-line {
-		@apply ml-auto flex w-[70%] items-center justify-between text-xl font-bold text-white;
+		@apply ml-auto flex w-[70%] items-center justify-between text-xl font-bold text-[var(--secondary-color)];
+	}
+	.receipt-grid-line {
+		@apply grid grid-cols-[1fr_75px_70px] gap-4 border-b border-gray-700 text-xs font-bold;
 	}
 </style>

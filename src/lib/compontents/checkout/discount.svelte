@@ -17,16 +17,34 @@
 	}
 </script>
 
-<div class="flex gap-2">
-	<input oninput={onDiscountInput} /><button onclick={submitDiscount}>Submit</button>
-</div>
 {#if cart.state.discount}
-	<div class="p-2 pb-0 text-center text-lime-300">Discount applied! {cart.state.discount}%</div>
+	<div class="p-2 text-center text-[var(--green)]">
+		Discount applied! {cart.state.discount}%
+	</div>
+{/if}
+
+{#if !discountIsOpen}
+	<button onclick={toggleDiscount} class="btn-bauhaus discount">Discount Code?</button>
+{/if}
+
+
+
+{#if discountIsOpen}
+	<div class="flex gap-2">
+		<input oninput={onDiscountInput} placeholder="Discount Code" /><button
+			class="btn-bauhaus"
+			onclick={submitDiscount}>Submit</button
+		>
+	</div>
 {/if}
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	input {
-		@apply w-1/2 flex-1 border border-white bg-transparent p-2 text-white focus:border-[var(--red)] focus:outline-none;
+		@apply w-1/2 flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
+	}
+
+	button.discount {
+		@apply text-sm w-60 mx-auto;
 	}
 </style>

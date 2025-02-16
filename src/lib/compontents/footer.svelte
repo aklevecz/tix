@@ -6,6 +6,6 @@
     @reference "tailwindcss/theme";
 
     footer {
-        @apply mt-10 p-2 bg-white text-black;
+        @apply mt-10 p-2 bg-[var(--secondary-color)] text-[var(--primary-color)];
     }
 </style>

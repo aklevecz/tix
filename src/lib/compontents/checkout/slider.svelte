@@ -3,14 +3,14 @@
 	import { Spring } from 'svelte/motion';
 
 	let {
-		min = 0,
+		min = 500,
 		max = 10000,
-		step = 1000,
+		step = 500,
 		value = 50,
 		label = 'Price',
 		showValue = true,
 		disabled = false,
-		color = 'var(--red)',
+		color = 'var(--color-2)',
 		labelFor = 'ticket-price'
 	} = $props();
 
@@ -21,6 +21,8 @@
 		stiffness: 0.2,
 		damping: 0.4
 	});
+
+	spring.target = min
 
 	// Update the spring value when the prop changes
 	// $: displayValue.set(value);
@@ -50,7 +52,7 @@
 			{label}
 			{#if showValue}
 				<span class="value-display">
-					{Math.round(spring.current) / 100}
+					${(Math.round(spring.current) / 100).toFixed(2)}
 				</span>
 			{/if}
 		</label>
@@ -115,7 +117,7 @@
 		width: 18px;
 		height: 18px;
 		border-radius: 50%;
-		background: white;
+		background: var(--color-1);
 		border: 2px solid var(--slider-color);
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		transition: all 0.2s ease;
@@ -125,7 +127,7 @@
 		width: 18px;
 		height: 18px;
 		border-radius: 50%;
-		background: white;
+		background: var(--secondary-color);
 		border: 2px solid var(--slider-color);
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		transition: all 0.2s ease;

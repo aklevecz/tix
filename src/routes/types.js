@@ -31,6 +31,7 @@
  * @property {string} name
  * @property {string} title
  * @property {string} description
+ * @property {Locale | null} place
  * @property {number} price
  * @property {PriceConfig} priceConfig
  * @property {string} date
@@ -80,4 +81,30 @@
  * @property {string} fullName
  * @property {string} phoneNumber
  * @property {string} email
+ */
+
+/** 
+ * @typedef Freebee
+ * @property {string} id
+ * @property {string} project_name
+ * @property {string | null} nextFreebeeDate
+ * @property {string | null} nextFreebeeTime
+ */
+
+/** 
+ * @typedef FreebeeEntry
+ * @property {string} id
+ * @property {string} project_name
+ * @property {string} winner
+ * @property {string} date
+ * @property {string} time
+ * @property {string} createdAt
+ */
+
+/** 
+ * @typedef {Object} Locale
+ * @property {string} name
+ * @property {string} address
+ * @property {number} lat
+ * @property {number} lng
  */

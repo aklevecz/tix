@@ -10,6 +10,9 @@ declare global {
 		interface Platform {
 			env: {
 				DB: D1Database;
+				R2: R2Bucket;
+				tixKV: KVNamespace;
+				baomem: KVNamespace;
 			};
 			context: {
 				waitUntil(promise: Promise<any>): void;

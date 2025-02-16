@@ -14,6 +14,6 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	input {
-		@apply w-full border border-white bg-transparent p-2 text-white focus:border-[var(--red)] focus:outline-none;
+		@apply w-full border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 	}
 </style>

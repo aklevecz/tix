@@ -3,8 +3,12 @@
 :root {
 	--yellow: #ffc73a;
 	--red: #ff2c2c;
-	--primary-color: #000000;
-	--secondary-color: #ffffff;
+	--green: #14ad00;
+	--primary-color: #e8e8e6;
+	--secondary-color: #514040;
+	--secondary-light-color: #565656;
+	--color-1: var(--red);
+	--color-2: var(--yellow);
 }
 
 html,
@@ -12,37 +16,38 @@ body {
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
 	text-transform: uppercase;
+	min-height:90vh;
 }
 
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 button,
 .btn {
-	@apply rounded-md bg-[var(--red)] px-4 py-2 text-lg font-medium text-white transition-colors hover:bg-cyan-700;
+	@apply rounded-md bg-[var(--color-1)] px-4 py-2 text-lg font-medium text-[var(--secondary-color)] transition-colors hover:bg-cyan-700;
 }
 
 .btn-outline {
-	@apply flex h-5 w-5 items-center justify-center rounded-full border border-[white] bg-transparent p-0 text-[white] transition-colors hover:border-[var(--yellow)] hover:text-[var(--yellow)];
+	@apply flex h-5 w-5 items-center justify-center rounded-full border border-[var(--secondary-color)] bg-transparent p-0 text-[var(--secondary-color)] transition-colors hover:border-[var(--color-2)] hover:text-[var(--color-2)];
 }
 
 .btn-bauhaus {
-	@apply border border-[var(--red)] bg-[var(--red)] rounded-md px-4 py-2 font-bold tracking-wide text-white uppercase transition-colors duration-200;
-}
-
-.btn-nofill {
-    @apply border border-[var(--red)] bg-transparent px-4 py-2 font-bold tracking-wide text-[var(--red)] uppercase transition-colors duration-200;
-}
-
-.btn-onlytext {
-    @apply bg-transparent text-base font-bold p-0 uppercase transition-colors duration-200;
+	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide text-[var(--secondary-color)] uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus:hover {
-	@apply bg-white text-[var(--red)];
+	@apply bg-[var(--secondary-color)] text-[var(--primary-color)];
+}
+
+.btn-nofill {
+	@apply rounded-md border-2 border-[var(--secondary-color)] bg-transparent px-4 py-2 font-bold tracking-wide text-[var(--secondary-color)] uppercase transition-colors duration-200;
+}
+
+.btn-onlytext {
+	@apply bg-transparent p-0 text-base font-bold uppercase transition-colors duration-200;
 }
 
 .card-base {
-    @apply grid grid-cols-[2fr,1fr] gap-8;
+	@apply grid grid-cols-[2fr,1fr] gap-8;
 }

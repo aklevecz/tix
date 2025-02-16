@@ -6,7 +6,6 @@
 	} from '$env/static/public';
 	import { checkoutActions } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
-	import Slider from '$lib/compontents/checkout/slider.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
@@ -62,6 +61,9 @@
 		paymentElement.on('ready', () => {
 			paymentElementLoaded = true;
 			console.log('Payment Element is fully loaded.');
+			setTimeout(() => {
+				document.getElementById('payment-element')?.scrollIntoView({ behavior: 'smooth' });
+			}, 100);
 		});
 		// paymentElement.on('change', (event) => {
 		// 	paymentIsValid = event.complete;
@@ -110,11 +112,11 @@
 </script>
 
 <div class="card-base m-4">
-	<div class="bg-[#1a1a1a] p-4 px-6 text-lg text-gray-300">
+	<div class=" p-4 px-6 text-lg border">
 		<div>{user.state.fullName}</div>
 		<div>{user.state.email}</div>
 		<div>{user.state.phoneNumber}</div>
-		<a class="text-sm text-blue-300 capitalize underline" href="/checkout">Edit</a>
+		<a class="text-sm text-[var(--color-2)] capitalize underline" href="/checkout">Edit</a>
 	</div>
 </div>
 <div class="payment-container">
@@ -149,11 +151,11 @@
 	}
 
 	.subtotal {
-		@apply text-lg font-bold tracking-wide text-white uppercase;
+		@apply text-lg font-bold tracking-wide text-[var(--secondary-color)] uppercase;
 	}
 
 	.total {
-		@apply text-xl font-extrabold tracking-wide text-[var(--red)] uppercase;
+		@apply text-xl font-extrabold tracking-wide text-[var(--color-1)] uppercase;
 	}
 
 	/* Payment element area styling */

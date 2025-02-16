@@ -41,6 +41,16 @@ export const collectCookies = () => {
 	return { cartSession: cookies.cart ? JSON.parse(decodeURIComponent(cookies.cart)) : null };
 };
 
+/** @type {Record<string, Locale>} */
+const locations = {
+	faight: {
+		name: 'the faight collective',
+		address: '473A Haight St, San Francisco, CA 94117',
+		lat: 37.77207313781259,
+		lng: -122.42997725035403
+	}
+}
+
 /** @type {Product[]} */
 export const mockProducts = [
 	{
@@ -48,9 +58,10 @@ export const mockProducts = [
 		projectId: 'raptor-faight-2',
 		productType: 'ticket',
 		name: 'ticket',
-		title: 'ticket',
+		title: 'Ticket for Raptor Faight 2',
 		description: 'A ticket to the concert raptors takeover at the faight part 2',
-        price: 1500,
+		place: locations.faight,
+		price: 1500,
 		priceConfig: {
 			base: 1500,
 			slidingScale: true,
@@ -58,8 +69,8 @@ export const mockProducts = [
 			max: 5000,
 			step: 500
 		},
-        date: '2025-05-01',
-		dates: ['2025-05-01', '2025-05-02', '2025-05-03'],
+		date: '2025-05-02',
+		dates: ['2025-05-02'],
 		img: '/images/ticket.png'
 	}
 ];

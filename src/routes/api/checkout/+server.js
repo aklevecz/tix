@@ -55,7 +55,7 @@ export async function POST({ platform, request }) {
 
 		if (platform) {
 			const { context, env } = platform;
-			const testTixOrder = {
+			const tixOrder = {
 				pi_id: paymentIntent.id,
 				items: JSON.stringify(cart.items),
 				name: metadata.fullName,
@@ -68,7 +68,7 @@ export async function POST({ platform, request }) {
 				project_name: 'test_project_name',
 				origin: 'test_origin'
 			};
-			context.waitUntil(dbOrders(env.DB).saveOrder(testTixOrder));
+			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
 		} else {
 			console.log('Platform not found');
 			//LOG ERROR
