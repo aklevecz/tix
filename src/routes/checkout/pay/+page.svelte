@@ -111,14 +111,14 @@
 </script>
 
 <div class="card-base m-4">
-	<div class=" p-4 px-6 text-lg border">
+	<div class=" p-4 px-6 text-lg border max-w-[600px] mx-auto">
 		<div>{user.state.fullName}</div>
 		<div>{user.state.email}</div>
 		<div>{user.state.phoneNumber}</div>
 		<a class="text-sm text-[var(--color-2)] capitalize underline" href="/checkout">Edit</a>
 	</div>
 </div>
-<div class="payment-container">
+<div class="payment-container mx-auto">
 	<div id="payment-element" class="payment-element">
 		<div class="loading-animation">
 			<div class="spinner"></div>
@@ -128,7 +128,7 @@
 	<button
 		onclick={onPay}
 		disabled={!paymentElementLoaded}
-		class="btn-bauhaus m-auto mt-4 block w-9/12">Pay</button
+		class="btn-bauhaus m-auto mt-4 block w-9/12">{fetching ? "Loading..." : "Pay"}</button
 	>
 </div>
 

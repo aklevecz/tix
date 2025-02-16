@@ -52,7 +52,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	.product-item {
-		@apply flex flex-auto flex-col gap-3 bg-transparent p-4 md:basis-[40%];
+		@apply flex flex-auto flex-col gap-3 bg-transparent p-4 md:basis-[40%] max-w-[400px];
 	}
 
 	.product-title {

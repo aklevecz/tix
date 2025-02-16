@@ -10,40 +10,6 @@ import Stripe from 'stripe';
 import { isDev } from '$lib';
 import { Byte, Encoder } from '@nuintun/qrcode';
 
-/** @param {*} props */
-// const sendMessage = async ({
-// 	env,
-// 	user,
-// 	message,
-// 	mediaUrls = [],
-//   }) => {
-// 	const twilioApi = TwilioApi(env.TWILIO_ACCOUNT_ID, env.TWILIO_AUTH_TOKEN);
-// 	const result = await twilioApi.sendSms({ to: user.phoneNumber, message, mediaUrls });
-// 	if (!result.success) {
-// 	  console.error("SMS failed:", result.error);
-// 	  // Handle the error appropriately
-// 	} else {
-// 	  // Message sent successfully
-// 	  console.log("SMS sent:", result.data?.sid);
-// 	}
-// 	// weird usage of clean number here if I already send the message it probably is not necessary
-// 	const suffix = cleanNumber(user.phoneNumber).replace("+", "");
-// 	const { lastTenMessages } = await getUserMessages(env, suffix);
-// 	const newMessage: ChatMessage = { role: "assistant", content: message };
-// 	const newHistory = [...lastTenMessages, newMessage];
-// 	const kvKey = historyKey(suffix);
-// 	await env.baomem.put(kvKey, JSON.stringify(newHistory));
-// 	try {
-// 	  await saveUserLtm(env, suffix, [newMessage]);
-// 	} catch (e) {
-// 	  console.log(e);
-// 	  console.log("error saving LTM");
-// 	}
-// 	// SAVE FULL HISTORY SOMEWHERE
-// 	return { response: message, chatMessages: newHistory };
-//   };
-
-
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ platform, request }) {
 	const sig = request.headers.get('stripe-signature');
@@ -104,7 +70,6 @@ export async function POST({ platform, request }) {
 							JSON.stringify(error)
 						);
 					}
-					console.log(env)
 					context.waitUntil(
 						env.MESSENGER_QUEUE.send({
 						  defaultMessage: `Your order is complete! Thanks for your support!`,
@@ -112,14 +77,6 @@ export async function POST({ platform, request }) {
 						  mediaUrls
 						})
 					  );
-					// context.waitUntil(
-					// 	sendMessage({
-					// 		env: { ...env, TWILIO_ACCOUNT_ID, TWILIO_AUTH_TOKEN },
-					// 		user: { id: metadata.phoneNumber, phoneNumber: metadata.phoneNumber },
-					// 		message: `Your order is complete! Thanks for your support!`,
-					// 		mediaUrls
-					// 	})
-					// );
 				}
 			}
 		}

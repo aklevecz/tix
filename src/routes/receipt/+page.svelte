@@ -22,7 +22,7 @@
 
 {#if order}
 	<div
-		class="receipt-container mx-auto min-h-[83.2vh] max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
+		class="receipt-container mx-auto min-h-[87vh] max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
 	>
 		<h1 class="mb-4 text-3xl font-bold tracking-wide text-[var(--secondary-color)] uppercase">
 			Receipt
