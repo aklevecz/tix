@@ -24,3 +24,8 @@ export function formatDate(date) {
 export const dateAndTimeToDateZ = (date, time) => {
 	return new Date(`${date}T${time}Z`);
 };
+
+/** @param {string} date @param {string} time */
+export const concatDateTime = (date, time) => {
+	return new Date(`${date}T${time}`);
+};

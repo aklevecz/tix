@@ -6,7 +6,7 @@
 		min = 500,
 		max = 10000,
 		step = 500,
-		value = 50,
+		value = 1500,
 		label = 'Price',
 		showValue = true,
 		disabled = false,
@@ -22,7 +22,7 @@
 		damping: 0.4
 	});
 
-	spring.target = min
+	spring.target = value
 
 	// Update the spring value when the prop changes
 	// $: displayValue.set(value);

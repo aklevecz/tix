@@ -6,8 +6,8 @@
 	let { data } = $props();
 </script>
 
-<div class="mx-auto w-9/12">
-	<div>Slide to select your price</div>
+<div class="mx-auto w-9/12 text-center mt-2">
+	<div>Ticket price is a sliding scale</div>
 	<Slider />
 </div>
 <div class="mt-8 mb-12 flex flex-col justify-center px-5">

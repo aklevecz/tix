@@ -5,6 +5,8 @@
 	/** @type {{product: Product}} */
 	let { product } = $props();
 
+	let quantityInCart = $derived(cart.getQuantity(product.id))
+
 	function addToCart() {
 		if (selectedDate) {
 			product.date = selectedDate;
@@ -19,6 +21,10 @@
 		selectedDate = date;
 		cart.updateTicketDate(product.id, date);
 	}
+
+	$effect(() => {
+		console.log()
+	})
 </script>
 
 <div class="product-item">
@@ -46,13 +52,13 @@
 			{/if}
 		</div>
 	</div>
-	<button onclick={addToCart} class="btn-bauhaus"> Add {product.productType} </button>
+	<button onclick={addToCart} class="btn-bauhaus"> Add {quantityInCart ? "More" : ""} {product.productType} </button>
 </div>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	.product-item {
-		@apply flex flex-auto flex-col gap-3 bg-transparent p-4 md:basis-[40%] max-w-[400px];
+		@apply flex flex-auto flex-col border rounded-md pb-6 pt-4 gap-3 bg-transparent px-7 mt-2 md:basis-[40%] max-w-[400px];
 	}
 
 	.product-title {
@@ -64,7 +70,7 @@
 	}
 
 	.product-description {
-		@apply flex-grow text-lg text-[var(--secondary-color)];
+		@apply flex-grow text-base text-[var(--secondary-color)];
 	}
 
 	.selected {

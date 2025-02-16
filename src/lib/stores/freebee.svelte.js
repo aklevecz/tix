@@ -4,8 +4,9 @@ import freebeeApi from '$lib/api/freebee';
 const defaultFreebee = {
 	id: '',
 	project_name: '',
-	nextFreebeeDate: null,
-	nextFreebeeTime: null
+    winner: '',
+	date: null,
+	time: null
 };
 
 const createFreebeeStore = () => {
@@ -17,6 +18,7 @@ const createFreebeeStore = () => {
 		},
 		async init() {
 			const config = await freebeeApi.getFreebeeConfig();
+            console.log(config.message)
 			freebee = config;
             return config
 		},

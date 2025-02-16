@@ -87,8 +87,9 @@
  * @typedef Freebee
  * @property {string} id
  * @property {string} project_name
- * @property {string | null} nextFreebeeDate
- * @property {string | null} nextFreebeeTime
+ * @property {string | null} winner
+ * @property {string | null} date
+ * @property {string | null} time
  */
 
 /** 

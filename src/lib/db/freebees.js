@@ -4,10 +4,10 @@ const dbFreebees = (db) => {
 	return {
 		/** @param {Freebee} freebee @param {string} winner */
 		saveFreebee: async (freebee, winner) => {
-			const { id, project_name } = freebee;
+			const { id, project_name, date, time } = freebee;
 			await db
-				.prepare(`INSERT INTO ${tableName} (id, winner, project_name) VALUES (?, ?, ?)`)
-				.bind(id, winner, project_name)
+				.prepare(`INSERT INTO ${tableName} (id, winner, project_name, date, time) VALUES (?, ?, ?, ?, ?)`)
+				.bind(id, winner, project_name, date, time)
 				.run();
 		},
 		/** 
