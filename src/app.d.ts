@@ -13,6 +13,7 @@ declare global {
 				R2: R2Bucket;
 				tixKV: KVNamespace;
 				baomem: KVNamespace;
+				MESSENGER_QUEUE: Queue;
 			};
 			context: {
 				waitUntil(promise: Promise<any>): void;

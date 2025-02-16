@@ -1,6 +1,5 @@
-import { dev } from '$app/environment';
 import { YAYTSO_STRIPE_SECRET, YAYTSO_STRIPE_SECRET_TEST } from '$env/static/private';
-import { checkoutActions } from '$lib';
+import { checkoutActions, isDev } from '$lib';
 import dbOrders from '$lib/db/orders';
 import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
@@ -13,7 +12,7 @@ export async function GET({ url }) {
 			return new Response(JSON.stringify({ error: 'MISSING_PAYMENT_INTENT_ID' }), { status: 400 });
 		}
 
-		const STRIPE_SECRET = dev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
+		const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 
 		const stripe = new Stripe(STRIPE_SECRET);
 		const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
@@ -29,7 +28,7 @@ export async function GET({ url }) {
 export async function POST({ platform, request }) {
 	/** @type {{ action: string, cart: Cart, discount: number, metadata: any}} */
 	const { action, cart, metadata } = await request.json();
-	const STRIPE_SECRET = dev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
+	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 	const stripe = new Stripe(STRIPE_SECRET);
 
 	if (action === checkoutActions.CREATE_INTENT) {

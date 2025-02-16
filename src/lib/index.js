@@ -1,3 +1,7 @@
+import { dev } from '$app/environment';
+
+export const isDev = true 
+
 export const checkoutActions = {
 	CREATE_INTENT: 'CREATE_INTENT',
 	ORDER_CONFIRMED: 'ORDER_CONFIRMED',

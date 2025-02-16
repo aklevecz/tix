@@ -32,7 +32,14 @@
     "binding": "R2",
     "bucket_name": "secret-tix",
     "preview_bucket_name": "secret-tix"
-  }]
+  }],
+  "queues": {
+    "consumers": [],
+    "producers": [{
+      "binding": "MESSENGER_QUEUE",
+      "queue": "messenger-queue"
+    }]
+  }
   /**
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

@@ -1,7 +1,4 @@
-import { dev } from '$app/environment';
 import {
-	TWILIO_ACCOUNT_ID,
-	TWILIO_AUTH_TOKEN,
 	YAYTSO_STRIPE_SECRET,
 	YAYTSO_STRIPE_SECRET_TEST,
 	YAYTSO_STRIPE_WEBHOOK_SECRET,
@@ -10,8 +7,42 @@ import {
 import dbOrders from '$lib/db/orders';
 import Stripe from 'stripe';
 
+import { isDev } from '$lib';
 import { Byte, Encoder } from '@nuintun/qrcode';
-import { sendMessage } from 'bao-brain';
+
+/** @param {*} props */
+// const sendMessage = async ({
+// 	env,
+// 	user,
+// 	message,
+// 	mediaUrls = [],
+//   }) => {
+// 	const twilioApi = TwilioApi(env.TWILIO_ACCOUNT_ID, env.TWILIO_AUTH_TOKEN);
+// 	const result = await twilioApi.sendSms({ to: user.phoneNumber, message, mediaUrls });
+// 	if (!result.success) {
+// 	  console.error("SMS failed:", result.error);
+// 	  // Handle the error appropriately
+// 	} else {
+// 	  // Message sent successfully
+// 	  console.log("SMS sent:", result.data?.sid);
+// 	}
+// 	// weird usage of clean number here if I already send the message it probably is not necessary
+// 	const suffix = cleanNumber(user.phoneNumber).replace("+", "");
+// 	const { lastTenMessages } = await getUserMessages(env, suffix);
+// 	const newMessage: ChatMessage = { role: "assistant", content: message };
+// 	const newHistory = [...lastTenMessages, newMessage];
+// 	const kvKey = historyKey(suffix);
+// 	await env.baomem.put(kvKey, JSON.stringify(newHistory));
+// 	try {
+// 	  await saveUserLtm(env, suffix, [newMessage]);
+// 	} catch (e) {
+// 	  console.log(e);
+// 	  console.log("error saving LTM");
+// 	}
+// 	// SAVE FULL HISTORY SOMEWHERE
+// 	return { response: message, chatMessages: newHistory };
+//   };
+
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ platform, request }) {
@@ -19,8 +50,8 @@ export async function POST({ platform, request }) {
 	if (!sig) {
 		return new Response('Missing Stripe signature', { status: 400 });
 	}
-	const endpointSecret = dev ? YAYTSO_STRIPE_WEBHOOK_SECRET_TEST : YAYTSO_STRIPE_WEBHOOK_SECRET;
-	const STRIPE_SECRET = dev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
+	const endpointSecret = isDev ? YAYTSO_STRIPE_WEBHOOK_SECRET_TEST : YAYTSO_STRIPE_WEBHOOK_SECRET;
+	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 
 	const stripe = new Stripe(STRIPE_SECRET);
 	const rawBody = await request.text();
@@ -68,19 +99,27 @@ export async function POST({ platform, request }) {
 							}
 						}
 					} catch (error) {
-						await platform?.env.tixKV.put(
+						await env.tixKV.put(
 							`error:create-qrs:${metadata.phoneNumber}:${paymentIntentId}`,
 							JSON.stringify(error)
 						);
 					}
+					console.log(env)
 					context.waitUntil(
-						sendMessage({
-							env: { ...env, TWILIO_ACCOUNT_ID, TWILIO_AUTH_TOKEN },
-							user: { id: metadata.phoneNumber, phoneNumber: metadata.phoneNumber },
-							message: `Your order is complete! Thanks for your support!`,
-							mediaUrls
+						env.MESSENGER_QUEUE.send({
+						  defaultMessage: `Your order is complete! Thanks for your support!`,
+						  phoneNumber: metadata.phoneNumber,
+						  mediaUrls
 						})
-					);
+					  );
+					// context.waitUntil(
+					// 	sendMessage({
+					// 		env: { ...env, TWILIO_ACCOUNT_ID, TWILIO_AUTH_TOKEN },
+					// 		user: { id: metadata.phoneNumber, phoneNumber: metadata.phoneNumber },
+					// 		message: `Your order is complete! Thanks for your support!`,
+					// 		mediaUrls
+					// 	})
+					// );
 				}
 			}
 		}

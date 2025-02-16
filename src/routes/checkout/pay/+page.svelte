@@ -1,10 +1,9 @@
 <script>
-	import { dev } from '$app/environment';
 	import {
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID,
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST
 	} from '$env/static/public';
-	import { checkoutActions } from '$lib';
+	import { checkoutActions, isDev } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
 	import cart from '$lib/stores/cart.svelte';
 	import user from '$lib/stores/user.svelte';
@@ -13,7 +12,7 @@
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 
-	const clientId = dev ? PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST : PUBLIC_YAYTSO_STRIPE_CLIENT_ID;
+	const clientId = isDev ? PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST : PUBLIC_YAYTSO_STRIPE_CLIENT_ID;
 	/** @type {any} */
 	let stripe = $state(null);
 	/** @type {any} */
