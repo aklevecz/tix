@@ -1,5 +1,5 @@
 import dbFreebees from '$lib/db/freebees';
-import { dateAndTimeToDateZ } from '$lib/utils';
+import { concatDateTime, dateAndTimeToDateZ } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 
 let freebeeConfig = {
@@ -109,7 +109,7 @@ export async function POST({ platform, request }) {
 			message: 'There is no freebee today, check back tomorrow!'
 		});
 	}
-	const diff = dateAndTimeToDateZ(freebeeEntry.date, freebeeEntry.time).getTime() - now.getTime();
+	const diff = concatDateTime(freebeeEntry.date, freebeeEntry.time).getTime() - now.getTime();
 	if (diff > 0) {
 		console.log(`Freebee is not over yet. ${diff / 1000 / 60} minutes left to go.`);
 		return json({
