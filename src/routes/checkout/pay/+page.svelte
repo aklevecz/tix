@@ -37,7 +37,7 @@
 				metadata: {
 					fullName: user.state.fullName,
 					email: user.state.email,
-					phoneNumber: user.state.phoneNumber,
+					phoneNumber: `${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`,
 					// street1: shop.state.userInfo.address.street1,
 					// street2: shop.state.userInfo.address.street2,
 					// city: shop.state.userInfo.address.city,
@@ -115,7 +115,7 @@
 	<div class="mx-auto max-w-[600px] p-0 text-xs">
 		<div class="flex gap-2">
 			<div>{user.state.fullName}</div>
-			<div>{user.state.phoneNumber}</div>
+			<div>{user.state.phoneNumber.number}</div>
 		</div>
 		<div class="flex gap-4 items-center mt-1">
 			<div>{user.state.email}</div>

@@ -2,6 +2,8 @@
 	import cart from '$lib/stores/cart.svelte';
 	import { fade } from 'svelte/transition';
 
+	let hasInteracted = $state(false);
+
 	let discountCode = $state('');
 	let discountIsOpen = $state(false);
 	function toggleDiscount() {
@@ -25,8 +27,9 @@
 </script>
 
 <div>
+	{#if !cart.state.discount}<div class="text-sm mb-1 font-semibold">Have a discount code?</div>{/if}
 	{#if cart.state.discount}
-		<div class="p-2 text-center text-[var(--green)]">
+		<div class="mb-2 text-[var(--green)]">
 			Discount applied! {cart.state.discount}%
 		</div>
 	{/if}
@@ -58,6 +61,6 @@
 		@apply text-xs;
 	}
 	button.discount {
-		@apply m-auto block text-xs;
+		@apply block text-xs;
 	}
 </style>

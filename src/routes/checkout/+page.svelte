@@ -8,9 +8,9 @@
 
 <div class="mx-auto flex flex-col w-full px-8 mt-2 gap-2">
 	<Slider />
-	<p class="text-sm text-center">If you would like to contribute more or less slide to your ideal price.</p>
+	<p class="text-sm text-">If you would like to contribute more or less slide to your ideal price.</p>
 </div>
-<div class="mt-8 mb-12 flex flex-col justify-center px-5 mx-auto">
+<div class="mt-8 mb-12 flex flex-col justify- px-8 mx-">
 	<Discount />
 </div>
 <!-- <div class="m-4">

@@ -1,7 +1,10 @@
 import userApi from '$lib/api/user';
 const defaultUser = {
 	fullName: '',
-	phoneNumber: '',
+	phoneNumber: {
+		countryCode: '',
+		number: ''
+	},
 	email: ''
 };
 

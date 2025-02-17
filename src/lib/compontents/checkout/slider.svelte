@@ -45,12 +45,12 @@
 		};
 	}
 </script>
-
+<h2 class="font-semibold">Sliding Scale Ticket Price</h2>
 <div class="slider-container" class:disabled>
 	{#if label}
 		<label for={labelFor} class="slider-label">
 			{label}
-			<span class="text-black">Sliding Scale Ticket</span>
+			<!-- <span class="text-black">Sliding Scale Ticket</span> -->
 			{#if showValue}
 				<span class="value-display">
 					${(Math.round(spring.current) / 100).toFixed(2)}

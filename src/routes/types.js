@@ -76,10 +76,16 @@
  * @property {string} origin
  */
 
+/** 
+ * @typedef PhoneNumber
+ * @property {string} countryCode
+ * @property {string} number
+ */
+
 /**
  * @typedef {Object} User
  * @property {string} fullName
- * @property {string} phoneNumber
+ * @property {PhoneNumber} phoneNumber
  * @property {string} email
  */
 
