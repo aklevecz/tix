@@ -28,29 +28,30 @@
 		// 	phoneNumber = '+' + phoneNumber;
 		// }
 		let validPhoneNumber = parsePhoneNumberFromString(phoneNumber, 'US');
-		user.updateUser({phoneNumber: validPhoneNumber?.number});
+		user.updateUser({ phoneNumber: validPhoneNumber?.number });
 		goto('/checkout/pay');
 	}
 </script>
 
-<form class="mx-auto max-w-lg space-y-4 p-4">
+<form class="mx-auto max-w-lg space-y-4 p-6">
 	<h2 class="text-4xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
-	<div class="space-y-2">
-		<label for="name">Name</label>
-		<TextInput name="fullName" placeholder="Your Name" value={fullName} />
-	</div>
+	<div class="flex gap-1">
+		<div class="flex-[0_0_55%]">
+			<label for="name">Name</label>
+			<TextInput name="fullName" placeholder="Your Name" value={fullName} />
+		</div>
 
-	<div class="space-y-2">
-		<label for="phone">Phone</label>
-		<TextInput name="phoneNumber" placeholder="Your Phone" value={phoneNumber} />
+		<div class="space-y-0">
+			<label for="phone">Phone</label>
+			<TextInput name="phoneNumber" placeholder="Your Phone" value={phoneNumber} />
+		</div>
 	</div>
-
-	<div class="space-y-2">
+	<div class="space-y-0">
 		<label for="email">Email</label>
 		<TextInput name="email" placeholder="Your Email" value={email} />
 	</div>
 </form>
-<button onclick={goToPayment} class="btn-bauhaus mx-auto mt-4 block w-9/12"> Continue </button>
+<button onclick={goToPayment} class="btn-bauhaus mx-auto mt-auto block w-9/12"> Continue </button>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";

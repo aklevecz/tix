@@ -28,7 +28,7 @@
 </script>
 
 <div class="product-item">
-	<div class="flex">
+	<div class="flex justify-between">
 		<h3 class="product-title">{product.title}</h3>
 		<div>{formatPrice(product.price)}</div>
 	</div>

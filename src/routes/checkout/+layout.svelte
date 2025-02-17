@@ -19,11 +19,11 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div class="max-w-[800px] mx-auto min-h-[90vh]">
+<div class="max-w-[800px] mx-auto min-h-[90vh] flex flex-col justify-evenly">
 	<div class="mb- relative">
-		<div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div>
+		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
-			class="relative z-10 pl-2 text-3xl font-bold tracking-tight text-[var(--secondary-color)] uppercase"
+			class="relative z-10 pl-2 text-xl font-bold tracking-tight text-[var(--secondary-color)] uppercase"
 		>
 			Checkout
 		</h1>
@@ -41,20 +41,20 @@
 			</div>
 		</div>
 
-		<div class="relative mt-[-18px] border border-t-0 p-4">
+		<div class="relative mt-[-18px] border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
-			<div class="mb-0 space-y-3">
-				<h2 class="flex items-baseline justify-between text-lg text-gray-400">
+			<div class="mb-0 space-y-1">
+				<h2 class="flex items-baseline justify-between text-base text-gray-400">
 					Subtotal<span class="text-[var(--secondary-color)]"
 						>{formatPrice(cart.state.subtotal)}</span
 					>
 				</h2>
 				{#if cart.state.discount}
-				<h2 class="flex items-baseline justify-between text-lg text-gray-400">
+				<h2 class="flex items-baseline justify-between text-base text-gray-400">
 					Discount<span class="text-[var(--color-2)]">-{cart.state.discount}% </span>
 				</h2>
 				{/if}
-				<h2 class="flex items-baseline justify-between text-xl font-bold">
+				<h2 class="flex items-baseline justify-between text-base font-bold">
 					Total<span class="text-[var(--secondary-color)]">{formatPrice(cart.state.total)}</span>
 				</h2>
 			</div>

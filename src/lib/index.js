@@ -62,7 +62,7 @@ export const mockProducts = [
 		projectId: 'raptor-faight-2',
 		productType: 'ticket',
 		name: 'ticket',
-		title: 'Ticket for Raptor Faight 2',
+		title: 'Raptor Faight 2',
 		description: 'A ticket to the concert raptors takeover at the faight part 2',
 		place: locations.faight,
 		price: 1500,

@@ -3,12 +3,12 @@
 :root {
 	--yellow: #ffc73a;
 	--red: #ff2c2c;
-	--green: #14ad00;
+	--green: #ff00a2;
 	--primary-color: #e8e8e6;
 	--secondary-color: #514040;
 	--secondary-light-color: #565656;
 	--color-1: var(--red);
-	--color-2: var(--yellow);
+	--color-2: #a857e5;
 }
 
 html,
@@ -33,7 +33,7 @@ button,
 }
 
 .btn-bauhaus {
-	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide text-[var(--secondary-color)] uppercase transition-colors duration-200;
+	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide text-white uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus:hover {

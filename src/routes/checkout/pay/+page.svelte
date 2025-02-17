@@ -8,6 +8,7 @@
 	import cart from '$lib/stores/cart.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
+	import { formatPrice } from '$lib/utils';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -110,12 +111,16 @@
 	}
 </script>
 
-<div class="card-base m-4">
-	<div class=" p-4 px-6 text-lg border max-w-[600px] mx-auto">
-		<div>{user.state.fullName}</div>
-		<div>{user.state.email}</div>
-		<div>{user.state.phoneNumber}</div>
-		<a class="text-sm text-[var(--color-2)] capitalize underline" href="/checkout">Edit</a>
+<div class="m-0 px-8">
+	<div class="mx-auto max-w-[600px] p-0 text-xs">
+		<div class="flex gap-2">
+			<div>{user.state.fullName}</div>
+			<div>{user.state.phoneNumber}</div>
+		</div>
+		<div class="flex gap-4 items-center mt-1">
+			<div>{user.state.email}</div>
+			<a class="text-xs text-[var(--color-2)] capitalize underline" href="/checkout">Edit</a>
+		</div>
 	</div>
 </div>
 <div class="payment-container mx-auto">
@@ -128,7 +133,8 @@
 	<button
 		onclick={onPay}
 		disabled={!paymentElementLoaded}
-		class="btn-bauhaus m-auto mt-4 block w-9/12">{fetching ? "Loading..." : "Pay"}</button
+		class="btn-bauhaus m-auto mt-4 block w-9/12"
+		>{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
 	>
 </div>
 

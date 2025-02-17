@@ -50,6 +50,7 @@
 	{#if label}
 		<label for={labelFor} class="slider-label">
 			{label}
+			<span class="text-black">Sliding Scale Ticket</span>
 			{#if showValue}
 				<span class="value-display">
 					${(Math.round(spring.current) / 100).toFixed(2)}
@@ -88,15 +89,13 @@
 		margin-bottom: 0.5rem;
 		font-size: 0.875rem;
 		font-weight: 500;
-		color: #374151;
-		color: red;
+		color: var(--color-2);
 	}
 
 	.value-display {
 		font-variant-numeric: tabular-nums;
 		font-weight: 600;
-		color: #111827;
-		color: red;
+		color: var(--color-2);
 	}
 
 	input[type='range'] {
@@ -117,7 +116,8 @@
 		width: 18px;
 		height: 18px;
 		border-radius: 50%;
-		background: var(--color-1);
+		background: var(--color-2);
+		background: white;
 		border: 2px solid var(--slider-color);
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		transition: all 0.2s ease;

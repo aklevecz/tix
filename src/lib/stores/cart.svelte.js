@@ -91,6 +91,7 @@ const createCartStore = () => {
 			cart.discount = discount;
 			calculateTotals();
 			saveCartSession();
+			return discount
 		},
 		/** @param {number} newPrice */
 		updateTicketPrice(newPrice) {

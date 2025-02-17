@@ -15,7 +15,7 @@
 
 <div class="cart-line-item">
 	<div class="cart-line-item__title">
-		<span class="cart-line-item__quantity">{quantity}<span class="text-[var(--color-2)]">x</span>{formatPrice(price)}</span>{item.title} - {formatDate(item.date)}
+		<span class="cart-line-item__quantity">{quantity}<span class="text-[var(--color-2)] lowercase mx-[2px]">x</span>{formatPrice(price)}</span>{item.title}{" "}({formatDate(item.date).split(',')[0]})
 	</div>
 	<button class="btn-outline" onclick={onRemove} aria-label={`Remove ${item.title} from cart`}>
 		<svg viewBox="0 0 12 2" width="8" height="2">
@@ -34,11 +34,11 @@
 	@reference "tailwindcss/theme";
 
 	.cart-line-item {
-		@apply flex items-center gap-2 text-lg transition-colors hover:text-[var(--secondary-color)];
+		@apply flex items-center gap-2 text-sm transition-colors hover:text-[var(--secondary-color)];
 	}
 
 	.cart-line-item__title {
-		@apply flex-[1_2_80%] text-lg break-words text-[var(--secondary-color)];
+		@apply flex-[1_2_80%] text-sm break-words text-[var(--secondary-color)];
 	}
 
 	.cart-line-item__quantity {
