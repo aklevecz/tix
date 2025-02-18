@@ -34,17 +34,17 @@
 	});
 </script>
 
-<div class="flex w-full items-center justify-between gap-2">
+<div class="flex w-full items-center justify-between gap-6">
 	{#if !cart.state.discount && !discountIsOpen}<div class="mb-1 text-xs font-semibold">
 			Have a discount code?
 		</div>{/if}
-	{#if cart.state.discount}
-		<div class="mb-2 text-[var(--green)]">
+	{#if cart.state.discount && !discountIsOpen}
+		<div class="mb- text-xs text-[var(--green)]">
 			Discount applied! {cart.state.discount}%
 		</div>
 	{/if}
 	{#if !discountIsOpen}
-		<button onclick={toggleDiscount} class="btn-bauhaus discount">Discount</button>
+		<button onclick={toggleDiscount} class="btn-bauhaus discount">Apply Discount</button>
 	{/if}
 
 	{#if discountIsOpen}
@@ -71,6 +71,6 @@
 		@apply text-xs;
 	}
 	button.discount {
-		@apply block text-xs;
+		@apply block text-[.7rem];
 	}
 </style>

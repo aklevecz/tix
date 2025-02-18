@@ -79,11 +79,11 @@
 	{/if}
 </div>
 
-<style>
+<style lang="postcss">
+    @reference "tailwindcss/theme";
 	.phone-input-container {
 		max-width: 400px;
 		margin: 20px auto;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	}
 
 	.phone-input {
@@ -101,13 +101,19 @@
 		background-repeat: no-repeat;
 		background-position: right 10px center;
 		background-size: 10px 5px;
+        @apply text-sm;
 	}
+
+    label {
+        @apply text-sm;
+    }
 
 	input {
 		flex: 1;
 		padding: 10px;
 		border: 1px solid;
 		font-size: 1rem;
+        @apply text-sm;
 	}
 
 	input:focus,

@@ -78,10 +78,10 @@ export async function GET({ cookies, platform }) {
 		// 	message: 'Unauthorized'
 		// });
 	}
+	
 
 	const today = getTodaysFreebeeId();
 	let todaysFreebee = await dbFreebees(platform?.env.DB).getFreebee(today);
-	console.log(todaysFreebee);
 	if (!todaysFreebee) {
 		// create a new freebee when someone visits and there is none existing
 		let winner = '';
@@ -117,7 +117,8 @@ export async function GET({ cookies, platform }) {
 		project_name,
 		date: date,
 		time: time,
-		winner: Boolean(winner),
+		// winner: Boolean(winner),
+		winner: false,
 		message: `There is a freebee today! ${date} at ${time}`
 	});
 }

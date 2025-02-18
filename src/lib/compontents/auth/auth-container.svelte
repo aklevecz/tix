@@ -32,10 +32,10 @@
     }
 </script>
 
-<div class="flex flex-col items-center px-6">
+<div class="flex flex-col items-center pb-4">
 	{#if step === steps.phone}
 		<PhoneInput />
-		<button onclick={onSendCode} class="btn-bauhaus mx-auto block">Send Code</button>
+		<button onclick={onSendCode} class="btn-bauhaus send-code">Send Code</button>
 	{/if}
 	{#if step === steps.code}
 		<div>
@@ -63,4 +63,7 @@
 	input.code {
 		@apply w-50;
 	}
+    .send-code {
+        @apply mx-auto block text-sm;
+    }
 </style>
