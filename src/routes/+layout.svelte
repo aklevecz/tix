@@ -22,4 +22,4 @@
 
 <Header />
 {@render children()}
-<Footer />
+<!-- <Footer /> -->
