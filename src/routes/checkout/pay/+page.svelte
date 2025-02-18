@@ -112,7 +112,7 @@
 	}
 </script>
 
-<div transition:slide class="mb-10">
+<div class="mb-10">
 	<div class="px-5">
 		<div class="max-w-[600px] p-0 text-xs">
 			<div class="flex gap-4">
@@ -172,6 +172,7 @@
 		align-items: center;
 		justify-content: center;
 		min-height: 300px;
+		height:300px;
 		@apply mb-4;
 	}
 

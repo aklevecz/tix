@@ -79,22 +79,22 @@
 	}
 </script>
 
-{#if !user.token}
-	<div class="mb-10 border m-4 p-4 rounded-md">
-		<h1 class="my-4 text-center text-lg font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
-		<AuthContainer />
-	</div>
-{/if}
-{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
-	<div class="rounded-lg border p-4 shadow-inner">
-		<div class="mb-2 text-2xl font-bold">
-			{object.value.toString().padStart(2, '0')}
+<div class="flex min-h-[80vh] flex-col md:min-h-[90vh] max-w-[600px] mx-auto">
+	{#if !user.token}
+		<div class="m-4 mb-10 rounded-md border p-4">
+			<h1 class="my-4 text-center text-lg font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
+			<AuthContainer />
 		</div>
-		<div class="text-xs text-gray-400">{object.label}</div>
-	</div>
-{/snippet}
+	{/if}
+	{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
+		<div class="rounded-lg border p-4 shadow-inner">
+			<div class="mb-2 text-2xl font-bold">
+				{object.value.toString().padStart(2, '0')}
+			</div>
+			<div class="text-xs text-gray-400">{object.label}</div>
+		</div>
+	{/snippet}
 
-<div class="flex min-h-[80vh] flex-col md:min-h-[90vh]">
 	<h1 class="p-4 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
 
 	{#if won}
@@ -135,14 +135,14 @@
 					</p>
 				{/if}
 				{#if canWin && !alreadyClaimed}
-					<p class="px-4 my-12 pb-4 text-2xl text-center font-bold text-green-500">
+					<p class="my-12 px-4 pb-4 text-center text-2xl font-bold text-green-500">
 						OMG You can win! press the button!!!
 					</p>
 				{/if}
 			{/if}
 
 			{#if alreadyClaimed}
-				<p class="px-4 mt-10 text-2xl font-bold">Todays freebee has been claimed</p>
+				<p class="mt-10 px-4 text-2xl font-bold">Todays freebee has been claimed</p>
 				<p class="px-4 py-4 pr-0 text-lg font-bold">Check back tomorrow 😎</p>
 			{/if}
 		</div>
@@ -157,7 +157,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	button.win-button {
-		@apply m-auto block w-[155px] bg-[var(--color-2)] p-4 text-3xl font-bold text-green-400 transition-colors duration-200 hover:bg-[var(--color-1)] tracking-wide;
+		@apply m-auto block w-[155px] bg-[var(--color-2)] p-4 text-3xl font-bold tracking-wide text-green-400 transition-colors duration-200 hover:bg-[var(--color-1)];
 	}
 	.flashing {
 		animation: flashing 1s ease-in-out infinite;

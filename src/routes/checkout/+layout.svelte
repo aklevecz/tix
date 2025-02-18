@@ -21,7 +21,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div transition:fade class="mx-auto flex flex-col max-w-[380px]">
+<div class="mx-auto flex flex-col max-w-[380px]">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
