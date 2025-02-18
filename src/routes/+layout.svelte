@@ -10,12 +10,13 @@
 
 	let { data, children } = $props();
 
+
 	onMount(() => {
 		const { cartSession } = collectCookies();
 		products.set(data.products);
 		cart.set(cartSession);
 		user.updateUser(data.user);
-		user.updateToken(data.token)
+		user.updateToken(data.token);
 	});
 </script>
 

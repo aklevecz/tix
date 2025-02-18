@@ -111,15 +111,15 @@
 	}
 </script>
 
-<div class="m-0 px-8">
-	<div class="mx-auto max-w-[600px] p-0 text-xs">
-		<div class="flex gap-2">
+<div class="m-0 px-5">
+	<div class="max-w-[600px] p-0 text-xs">
+		<div class="flex gap-4">
 			<div>{user.state.fullName}</div>
 			<div>{user.state.phoneNumber.number}</div>
 		</div>
-		<div class="flex gap-4 items-center mt-1">
+		<div class="flex gap-4 items-center mt-2">
 			<div>{user.state.email}</div>
-			<a class="text-xs text-[var(--color-2)] capitalize underline" href="/checkout">Edit</a>
+			<a class="text-xs text-[var(--color-2)] capitalize underline" href="/checkout/info">Edit</a>
 		</div>
 	</div>
 </div>

@@ -32,23 +32,26 @@
 		goto('/checkout/pay');
 	}
 </script>
-<form class="mx-auto max-w-lg space-y-4 p-6">
-	<h2 class="text-4xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
+<form class="m-6 space-y-4 p-">
+	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
 	<div class="flex gap-1">
-		<div class="flex-[0_0_90%]">
+		<div class="flex-[0_0_40%]">
 			<label for="name">Name</label>
 			<TextInput name="fullName" placeholder="Your Name" value={fullName} />
 		</div>
+		<div class="space-y-0 flex-1">
+			<label for="email">Email</label>
+			<TextInput name="email" placeholder="Your Email" value={email} />
+		</div>
 	</div>
 	<PhoneInput />
-	<div class="space-y-0">
-		<label for="email">Email</label>
-		<TextInput name="email" placeholder="Your Email" value={email} />
-	</div>
+
 </form>
-<button onclick={goToPayment} class="btn-bauhaus mx-auto mt- block w-9/12"> Continue </button>
+<button onclick={goToPayment} class="btn-bauhaus mx-auto mt- block w-[175px]"> Continue </button>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
-
+	label {
+		@apply text-sm;
+	}
 </style>

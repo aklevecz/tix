@@ -93,7 +93,7 @@
 	}
 
 	select {
-		padding: 10px;
+		padding: 10px 6px;
 		border: 1px solid;
 		font-size: 1rem;
 		appearance: none;
@@ -101,6 +101,7 @@
 		background-repeat: no-repeat;
 		background-position: right 10px center;
 		background-size: 10px 5px;
+        width: 70px;
         @apply text-sm;
 	}
 

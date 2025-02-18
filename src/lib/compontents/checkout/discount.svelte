@@ -71,6 +71,6 @@
 		@apply text-xs;
 	}
 	button.discount {
-		@apply block text-[.7rem];
+		@apply block text-[.6rem];
 	}
 </style>
