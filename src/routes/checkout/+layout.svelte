@@ -21,7 +21,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div transition:fade class="mx-auto flex flex-col max-w-[360px]">
+<div transition:fade class="mx-auto flex flex-col max-w-[380px]">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
@@ -31,7 +31,7 @@
 		</h1>
 	</div>
 
-	<div class="card-base max-w-[600px] mx-auto p-4 pt-0">
+	<div class="card-base max-w-[600px] p-4 pt-0">
 		<div class="relative">
 			<!-- <div class="absolute -left-0 top-0 w-1 h-full bg-[var(--color-1)]"></div> -->
 			<div class="mt-4 space-y-4 border-0 border-b-0 px-0">

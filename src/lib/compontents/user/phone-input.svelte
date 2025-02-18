@@ -113,7 +113,7 @@
 		border: 1px solid;
 		font-size: 1rem;
         width: 135px;
-        letter-spacing: 3px;
+        letter-spacing: 2px;
         @apply text-sm;
 	}
 
