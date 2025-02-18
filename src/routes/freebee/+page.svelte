@@ -79,7 +79,7 @@
 	}
 </script>
 
-<div class="flex min-h-[80vh] flex-col md:min-h-[90vh] max-w-[600px] mx-auto">
+<div class="flex min-h-[80vh] flex-col md:min-h-[90vh] max-w-[600px] mx-auto mb-10">
 	{#if !user.token}
 		<div class="m-4 mb-10 rounded-md border p-4">
 			<h1 class="my-4 text-center text-lg font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
