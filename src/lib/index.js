@@ -87,3 +87,6 @@ export const responses = {
   UNKNOWN_AUTH_ERROR: 'Unknown auth error',
   LOGGED_OUT: 'Logged out'
 };
+
+
+export const EVENT_ID = 'raptor-faight-2'

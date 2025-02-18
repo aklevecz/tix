@@ -1,6 +1,7 @@
 // import { EVENT_ID } from '$lib/content';
 // import db from '$lib/db';
 import { responses } from '$lib';
+import { phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 
 
@@ -27,7 +28,7 @@ export async function GET({ request, platform, url }) {
 	// return json(partiers);
 	return json({});
 }
-const myNumber = '+14159671642';
+const myNumber = '14159671642';
 const testPhoneNumber = myNumber;
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies, platform }) {
@@ -36,7 +37,7 @@ export async function POST({ request, cookies, platform }) {
 	if (phoneNumber) {
 		/** @param {string} phoneNumber */
 		const success = async (phoneNumber) => {
-			cookies.set('phoneNumber', phoneNumber, cookieOptions);
+			cookies.set('phoneNumber', phoneNumberToUid(phoneNumber), cookieOptions);
 			cookies.set('name', name, cookieOptions);
 			return json({ phoneNumber, message: responses.CODE_SENT });
 		};
@@ -44,7 +45,7 @@ export async function POST({ request, cookies, platform }) {
 		if (phoneNumber === testPhoneNumber) {
 			return success(testPhoneNumber);
 		}
-    console.log(phoneNumber)
+
 		const r = await platform?.env.AUTH_SERVICE.sendCode(phoneNumber);
 		if (r.status === 'pending') {
 			return success(r.phoneNumber.trim());
@@ -61,7 +62,6 @@ export async function POST({ request, cookies, platform }) {
 				const token = await platform?.env.AUTH_SERVICE.generateToken({
 					phoneNumber: storedPhoneNumber.trim()
 				});
-        console.log(token)
 				// const token = await createJwt({ phoneNumber: storedPhoneNumber });
 				try {
           // CREATE USER - but dont necessarily need to do this because the order will have it?

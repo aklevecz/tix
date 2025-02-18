@@ -14,8 +14,8 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS tix_ord
   origin TEXT
 );"
 
-
 npx wrangler d1 execute DB --local --command "SELECT * FROM tix_orders;"
+px wrangler d1 execute DB --local --command "DELETE FROM tix_orders;"
 
 npx wrangler d1 execute DB --local --command "DROP TABLE freebees;"
 npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS freebees (

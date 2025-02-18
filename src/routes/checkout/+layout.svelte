@@ -4,6 +4,7 @@
 	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
+	import { fade, slide } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
 	let { children } = $props();
@@ -20,7 +21,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div class="max-w-[800px] mx-auto flex flex-col">
+<div transition:fade class="max-w-[800px] mx-auto flex flex-col">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1

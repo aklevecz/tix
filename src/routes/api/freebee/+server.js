@@ -1,5 +1,5 @@
 import dbFreebees from '$lib/db/freebees';
-import { concatDateTime, dateAndTimeToDateZ } from '$lib/utils';
+import { concatDateTime, dateAndTimeToDateZ, phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 
 let freebeeConfig = {
@@ -69,7 +69,7 @@ export async function GET({ cookies, platform }) {
 		const validated = await platform?.env.AUTH_SERVICE.authorizeToken(token);
 		decodedToken = validated;
 		const winnerSession = cookies.get('winner');
-		if (winnerSession && winnerSession === decodedToken.phoneNumber.replace('+', '')) {
+		if (winnerSession && winnerSession === phoneNumberToUid(decodedToken.phoneNumber)) {
 			return json({ message: 'You have already won!' });
 		}
 	} catch (e) {
@@ -78,7 +78,6 @@ export async function GET({ cookies, platform }) {
 		// 	message: 'Unauthorized'
 		// });
 	}
-	
 
 	const today = getTodaysFreebeeId();
 	let todaysFreebee = await dbFreebees(platform?.env.DB).getFreebee(today);
@@ -146,6 +145,14 @@ export async function POST({ cookies, platform, request }) {
 			message: 'There is no freebee today, check back tomorrow!'
 		});
 	}
+
+	if (freebeeEntry.winner === phoneNumberToUid(decodedToken.phoneNumber)) {
+		return json({
+			success: false,
+			message: 'You have already won!'
+		});
+	}
+
 	const diff = concatDateTime(freebeeEntry.date, freebeeEntry.time).getTime() - now.getTime();
 	if (diff > 0) {
 		console.log(`Freebee is not over yet. ${diff / 1000 / 60} minutes left to go.`);
@@ -160,10 +167,10 @@ export async function POST({ cookies, platform, request }) {
 		await dbFreebees(platform?.env.DB).updateFreebee(today, [
 			{
 				key: 'winner',
-				value: decodedToken.phoneNumber.replace('+', '')
+				value: phoneNumberToUid(decodedToken.phoneNumber)
 			}
 		]);
-		cookies.set('winner', decodedToken.phoneNumber.replace('+', ''), cookieOptions);
+		cookies.set('winner', phoneNumberToUid(decodedToken.phoneNumber), cookieOptions);
 		return json({ success: true, message: 'You won the freebee!' });
 	} else {
 		return json({

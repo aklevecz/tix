@@ -6,6 +6,7 @@
 	import TextInput from './text-input.svelte';
 
 	import PhoneInput from '../user/phone-input.svelte';
+	import { fade, slide } from 'svelte/transition';
 
 	let { fullName, email, phoneNumber } = $derived(user.state);
 
@@ -32,7 +33,7 @@
 		goto('/checkout/pay');
 	}
 </script>
-<form class="m-6 space-y-4 p-">
+<form transition:fade class="mx-6 mb-6 space-y-4 p-">
 	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
 	<div class="flex gap-1">
 		<div class="flex-[0_0_40%]">
@@ -52,6 +53,6 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	label {
-		@apply text-sm;
+		@apply text-sm mb-1;
 	}
 </style>

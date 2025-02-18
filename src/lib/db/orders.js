@@ -44,6 +44,15 @@ const dbOrders = (db) => {
 		async getOrder (pi_id) {
 			return db.prepare(`SELECT * FROM ${tableName} WHERE pi_id = ?`).bind(pi_id).first();
 		},
+		/**
+		 * 
+		 * @param {string} phoneNumber 
+		 * @returns {Promise<Record<string, unknown>[]>}
+		 */
+		async getOrdersByPhoneNumber(phoneNumber) {
+			const {results} =  await db.prepare(`SELECT * FROM ${tableName} WHERE phone = ? AND status = 'success'`).bind(phoneNumber).all();
+			return results
+		},
 		/** @param {string} pi_id @param {{key:string, value:string | number}[]} newValues */
 		async updateOrder (pi_id, newValues) {
 			const existingOrder = await this.getOrder(pi_id);

@@ -8,7 +8,8 @@
 	import cart from '$lib/stores/cart.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
-	import { formatPrice } from '$lib/utils';
+	import { formatPrice, phoneNumberToUid } from '$lib/utils';
+	import { fade, slide } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -37,7 +38,7 @@
 				metadata: {
 					fullName: user.state.fullName,
 					email: user.state.email,
-					phoneNumber: `${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`,
+					phoneNumber: phoneNumberToUid(`${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`),
 					// street1: shop.state.userInfo.address.street1,
 					// street2: shop.state.userInfo.address.street2,
 					// city: shop.state.userInfo.address.city,
@@ -111,31 +112,33 @@
 	}
 </script>
 
-<div class="m-0 px-5">
-	<div class="max-w-[600px] p-0 text-xs">
-		<div class="flex gap-4">
-			<div>{user.state.fullName}</div>
-			<div>{user.state.phoneNumber.number}</div>
-		</div>
-		<div class="flex gap-4 items-center mt-2">
-			<div>{user.state.email}</div>
-			<a class="text-xs text-[var(--color-2)] capitalize underline" href="/checkout/info">Edit</a>
-		</div>
-	</div>
-</div>
-<div class="payment-container mx-auto">
-	<div id="payment-element" class="payment-element">
-		<div class="loading-animation">
-			<div class="spinner"></div>
-			<div class="loading-text">Loading</div>
+<div transition:slide class="mb-10">
+	<div class="px-5">
+		<div class="max-w-[600px] p-0 text-xs">
+			<div class="flex gap-4">
+				<div>{user.state.fullName}</div>
+				<div>{user.state.phoneNumber.number}</div>
+			</div>
+			<div class="mt-2 flex items-center gap-4">
+				<div>{user.state.email}</div>
+				<a class="text-xs text-[var(--color-2)] capitalize underline" href="/checkout/info">Edit</a>
+			</div>
 		</div>
 	</div>
-	<button
-		onclick={onPay}
-		disabled={!paymentElementLoaded}
-		class="btn-bauhaus m-auto mt-4 block w-9/12"
-		>{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
-	>
+	<div class="payment-container mx-auto">
+		<div id="payment-element" class="payment-element">
+			<div class="loading-animation">
+				<div class="spinner"></div>
+				<div class="loading-text">Loading</div>
+			</div>
+		</div>
+		<button
+			onclick={onPay}
+			disabled={!paymentElementLoaded}
+			class="btn-bauhaus m-auto mt-4 block w-9/12"
+			>{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
+		>
+	</div>
 </div>
 
 <style lang="postcss">
@@ -184,14 +187,14 @@
 		width: 40px;
 		height: 40px;
 		border: 4px solid transparent;
-		border-top-color: #de0000;
+		border-top-color: #d037ff;
 		border-radius: 50%;
 		animation: spin 1s linear infinite;
 	}
 
 	/* Loading text styling */
 	.loading-text {
-		color: #ffffff;
+		color: #000000;
 		font-size: 1.2rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1rem;
