@@ -20,7 +20,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div class="max-w-[800px] mx-auto min-h-[90vh] flex flex-col">
+<div class="max-w-[800px] mx-auto min-h-[80vh] flex flex-col">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
