@@ -25,7 +25,7 @@
     }
   };
 </script>
-
+<h1 class="font-bold text-center text-2xl mb-4">GENERATE</h1>
 {#if generate.state.lastImgUrl}<img src={generate.state.lastImgUrl} alt="" style="width: 200px; height: 200px;" />{/if}
 {#if !generate.state.lastImgUrl && generate.state.cachedImg}<img src={JSON.parse(generate.state.cachedImg)} alt="" style="width: 200px; height: 200px;" />{/if}
 {#if generate.state.generating || (!generate.state.cachedImg && !generate.state.lastImgUrl)}
@@ -33,9 +33,10 @@
 {/if}
 <button class="btn-bauhaus w-[200px] mx-auto mt-10" onclick={onGenerate} disabled={generate.state.generating}>GENERATE</button>
 
-<style>
+<style lang="postcss">
+  @reference "tailwindcss/theme";
   img {
-    margin:auto;
+    @apply mx-auto;
   }
   button:disabled {
     background-color: red;
