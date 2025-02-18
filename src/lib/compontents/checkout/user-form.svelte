@@ -33,7 +33,7 @@
 		goto('/checkout/pay');
 	}
 </script>
-<form transition:fade class="px-6 mb-6 space-y-4 p-">
+<form transition:fade class="px-8 mb-6 space-y-4 p-">
 	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
 	<div class="flex gap-1">
 		<div class="flex-[0_0_40%]">
