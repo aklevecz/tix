@@ -11,11 +11,16 @@
 	// });
 </script>
 
-<div class="products-container flex flex-wrap gap-20">
+<div class="products-container mb-4 flex flex-wrap gap-20">
 	{#each products.state as product}
-        <ProductItem {product} />
+		<ProductItem {product} />
 	{/each}
-	{#if cart.getGroupedItems().length > 0}
-		<a href="/checkout" aria-label="Checkout" transition:fade class="btn-bauhaus mx-auto">CHECK OUT</a>
-	{/if}
 </div>
+{#if cart.getGroupedItems().length > 0}
+	<div class="flex flex-col items-center gap-2 justify-around mt-8">
+		<div class="font-semibold text-center lowercase">Psst you got some stuff in your cart to check out :)</div>
+		<a href="/checkout" aria-label="Checkout" transition:fade class="btn-bauhaus"
+			>CHECK OUT</a
+		>
+	</div>
+{/if}

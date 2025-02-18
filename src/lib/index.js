@@ -78,3 +78,12 @@ export const mockProducts = [
 		img: '/images/ticket.png'
 	}
 ];
+
+
+export const responses = {
+	CODE_SENT: 'Code sent',
+  AUTHED: 'Authenticated',
+  CODE_INVALID: 'Code invalid',
+  UNKNOWN_AUTH_ERROR: 'Unknown auth error',
+  LOGGED_OUT: 'Logged out'
+};

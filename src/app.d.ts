@@ -14,6 +14,7 @@ declare global {
 				tixKV: KVNamespace;
 				baomem: KVNamespace;
 				MESSENGER_QUEUE: Queue;
+				AUTH_SERVICE: Auth;
 			};
 			context: {
 				waitUntil(promise: Promise<any>): void;

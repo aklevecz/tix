@@ -33,6 +33,11 @@
     "bucket_name": "secret-tix",
     "preview_bucket_name": "secret-tix"
   }],
+  "services": [
+    {
+    "binding": "AUTH_SERVICE",
+    "service":"raptor-auth-service"
+  }],
   "queues": {
     "consumers": [],
     "producers": [{

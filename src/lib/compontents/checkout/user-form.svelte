@@ -1,11 +1,10 @@
 <script>
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import user from '$lib/stores/user.svelte';
 	import { onMount } from 'svelte';
 	import TextInput from './text-input.svelte';
-	import { browser } from '$app/environment';
-	import { goto } from '$app/navigation';
 
-	import { parsePhoneNumberFromString } from 'libphonenumber-js';
 	import PhoneInput from '../user/phone-input.svelte';
 
 	let { fullName, email, phoneNumber } = $derived(user.state);
@@ -33,30 +32,23 @@
 		goto('/checkout/pay');
 	}
 </script>
-
 <form class="mx-auto max-w-lg space-y-4 p-6">
 	<h2 class="text-4xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
 	<div class="flex gap-1">
-		<div class="flex-[0_0_35%]">
+		<div class="flex-[0_0_90%]">
 			<label for="name">Name</label>
 			<TextInput name="fullName" placeholder="Your Name" value={fullName} />
 		</div>
-
-		<div class="space-y-0">
-			<label for="email">Email</label>
-			<TextInput name="email" placeholder="Your Email" value={email} />
-		</div>
 	</div>
-		<PhoneInput />
+	<PhoneInput />
+	<div class="space-y-0">
+		<label for="email">Email</label>
+		<TextInput name="email" placeholder="Your Email" value={email} />
+	</div>
 </form>
-<button onclick={goToPayment} class="btn-bauhaus mx-auto mt-auto block w-9/12"> Continue </button>
+<button onclick={goToPayment} class="btn-bauhaus mx-auto mt- block w-9/12"> Continue </button>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
-	label {
-		@apply block tracking-wide text-[var(--secondary-color)] uppercase;
-	}
-	input {
-		@apply w-full border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
-	}
+
 </style>

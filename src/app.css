@@ -16,7 +16,7 @@ body {
 	background-color: var(--primary-color);
 	color: var(--secondary-color);
 	text-transform: uppercase;
-	min-height:90vh;
+	min-height: 90vh;
 }
 
 * {
@@ -50,4 +50,11 @@ button,
 
 .card-base {
 	@apply grid grid-cols-[2fr,1fr] gap-8;
+}
+
+label {
+	@apply block tracking-wide text-[var(--secondary-color)] uppercase;
+}
+input {
+	@apply w-full border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 }

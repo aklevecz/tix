@@ -15,6 +15,8 @@
 		products.set(data.products);
 		cart.set(cartSession);
 		user.updateUser(data.user);
+		console.log(data.token)
+		user.updateToken(data.token)
 	});
 </script>
 

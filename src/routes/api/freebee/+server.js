@@ -8,6 +8,14 @@ let freebeeConfig = {
 	nextFreebeeDate: '2025-02-15',
 	nextFreebeeTime: '12:00:00'
 };
+/** @type {import('cookie').CookieSerializeOptions & {path: string}} */
+const cookieOptions = {
+	path: '/',
+	expires: new Date('2100-01-01'),
+	secure: true, // Only sent over HTTPS
+	httpOnly: true, // Not accessible via JavaScript
+	sameSite: 'lax' // Protects against CSRF while allowing normal navigation
+};
 
 // const getRandomTimeString = () => {
 //     const hours = Math.max(Math.floor(Math.random() * 24), 12);
@@ -54,9 +62,26 @@ const getTodaysFreebeeId = () => {
 };
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ platform }) {
+export async function GET({ cookies, platform }) {
+	const token = cookies.get('token');
+	let decodedToken = null;
+	try {
+		const validated = await platform?.env.AUTH_SERVICE.authorizeToken(token);
+		decodedToken = validated;
+		const winnerSession = cookies.get('winner');
+		if (winnerSession && winnerSession === decodedToken.phoneNumber.replace('+', '')) {
+			return json({ message: 'You have already won!' });
+		}
+	} catch (e) {
+		// return json({
+		// 	success: false,
+		// 	message: 'Unauthorized'
+		// });
+	}
+
 	const today = getTodaysFreebeeId();
 	let todaysFreebee = await dbFreebees(platform?.env.DB).getFreebee(today);
+	console.log(todaysFreebee);
 	if (!todaysFreebee) {
 		// create a new freebee when someone visits and there is none existing
 		let winner = '';
@@ -86,19 +111,30 @@ export async function GET({ platform }) {
 	// 	time = getRandomTimeString();
 	// 	await dbFreebees(platform?.env.DB).updateFreebee(id, [{ key: 'time', value: time }]);
 	// }
-    // time = "11:00:00"
+	// time = "11:00:00"
 	return json({
 		id,
 		project_name,
 		date: date,
 		time: time,
 		winner: Boolean(winner),
-        message: `There is a freebee today! ${date} at ${time}`
+		message: `There is a freebee today! ${date} at ${time}`
 	});
 }
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ platform, request }) {
+export async function POST({ cookies, platform, request }) {
+	const token = cookies.get('token');
+	let decodedToken = null;
+	try {
+		const validated = await platform?.env.AUTH_SERVICE.authorizeToken(token);
+		decodedToken = validated;
+	} catch (e) {
+		return json({
+			success: false,
+			message: 'Unauthorized'
+		});
+	}
 	const now = new Date();
 	const today = getTodaysFreebeeId();
 	const freebeeEntry = await dbFreebees(platform?.env.DB).getFreebee(today);
@@ -123,9 +159,10 @@ export async function POST({ platform, request }) {
 		await dbFreebees(platform?.env.DB).updateFreebee(today, [
 			{
 				key: 'winner',
-				value: 'WEINER'
+				value: decodedToken.phoneNumber.replace('+', '')
 			}
 		]);
+		cookies.set('winner', decodedToken.phoneNumber.replace('+', ''), cookieOptions);
 		return json({ success: true, message: 'You won the freebee!' });
 	} else {
 		return json({

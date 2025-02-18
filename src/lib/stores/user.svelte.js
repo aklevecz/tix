@@ -1,4 +1,6 @@
 import userApi from '$lib/api/user';
+import authApi from '$lib/api/auth';
+
 const defaultUser = {
 	fullName: '',
 	phoneNumber: {
@@ -10,6 +12,7 @@ const defaultUser = {
 
 const createUserStore = () => {
 	let user = $state({ ...defaultUser });
+	let token = $state('');
 
 	function saveUserSession() {
 		document.cookie = `user=${encodeURIComponent(JSON.stringify(user))}; path=/; max-age=${60 * 60 * 24 * 30}`;
@@ -20,6 +23,9 @@ const createUserStore = () => {
 		get state() {
 			return user;
 		},
+		get token() {
+			return token;
+		},
 		/**
 		 * Update the user with new properties.
 		 * @param {Partial<User>} props
@@ -27,6 +33,24 @@ const createUserStore = () => {
 		updateUser: (props) => {
 			user = { ...user, ...props };
             saveUserSession()
+		},
+		/** @param {string} phoneNumber */
+		sendCode: async (phoneNumber) => {
+			const r = await authApi.sendCode(phoneNumber);
+			return r
+		},
+		/** @param {string} code */
+		verifyCode: async (code) => {
+			const r = await authApi.verifyCode(code);
+			return r
+		},
+		/** @param {string} newToken */
+		updateToken: (newToken) => {
+			token = newToken;
+		},
+		logout: async () => {
+			await authApi.logout();
+			token = '';
 		}
 	};
 };

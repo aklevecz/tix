@@ -6,11 +6,11 @@
 	let { data } = $props();
 </script>
 
-<div class="mx-auto flex flex-col w-full px-8 mt-2 gap-2">
+<div class="mx-auto mt-2 flex w-full flex-col gap-2 px-8">
 	<Slider />
-	<p class="text-sm text-">If you would like to contribute more or less slide to your ideal price.</p>
+	<p class="small">If you would like to contribute more or less slide to your ideal price.</p>
 </div>
-<div class="mt-8 mb-12 flex flex-col justify- px-8 mx-">
+<div class="justify- mx- mt-8 mb-12 flex flex-col px-8">
 	<Discount />
 </div>
 <!-- <div class="m-4">
@@ -22,5 +22,14 @@
        transition-colors duration-200 hover:bg-[var(--color-2)]"
 	>
 		CONTINUE
-	</button> -->	
-<a href="/checkout/info" class="btn-bauhaus block text-center text-2xl w-9/12 mx-auto"> CONTINUE </a>
+	</button> -->
+<a href="/checkout/info" class="btn-bauhaus mx-auto block w-9/12 text-center text-2xl">
+	CONTINUE
+</a>
+
+<style lang="postcss">
+	@reference "tailwindcss/theme";
+	p.small {
+		@apply text-sm lowercase;
+	}
+</style>

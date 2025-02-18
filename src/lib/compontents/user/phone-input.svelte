@@ -11,7 +11,7 @@
 <script>
 	import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
-    import countries from './countries'
+	import countries from './countries';
 	import user from '$lib/stores/user.svelte';
 
 	/** @type {import('libphonenumber-js').CountryCode }*/
@@ -19,6 +19,7 @@
 	let phone = $state('');
 	let error = $state('');
 
+    let phoneValue = $derived(user.state.phoneNumber.number)
 	function validatePhone() {
 		if (!phone.trim()) {
 			error = '';
@@ -36,24 +37,34 @@
 		}
 	}
 
-    /** @param {*} e*/
+	const getCountryPrefix = () => {
+		return countries.find((c) => c.code === selectedCountry)?.dialCode || '+1';
+	};
+
+	/** @param {*} e*/
 	function handleInput(e) {
 		phone = e.target.value;
 		validatePhone();
-        user.updateUser({ phoneNumber: { number: phone, countryCode: selectedCountry } });
+		user.updateUser({
+			phoneNumber: {
+				number: phone,
+				countryCode: getCountryPrefix()
+			}
+		});
 	}
 
-    /** @param {*} e*/
+	/** @param {*} e*/
 	function handleCountryChange(e) {
 		selectedCountry = e.target.value;
 		validatePhone();
-        user.updateUser({ phoneNumber: { number: phone, countryCode: selectedCountry } });
+		user.updateUser({ phoneNumber: { number: phone, countryCode: getCountryPrefix() } });
 	}
 </script>
 
 <div class="phone-input-container">
+	<label for="phone">Phone Number</label>
 	<div class="phone-input">
-		<select bind:value={selectedCountry} on:change={handleCountryChange}>
+		<select bind:value={selectedCountry} onchange={handleCountryChange}>
 			{#each countries as country}
 				<option value={country.code}>
 					{country.flag}
@@ -61,7 +72,7 @@
 				</option>
 			{/each}
 		</select>
-		<input type="tel" placeholder="Enter phone number" bind:value={phone} on:input={handleInput} />
+		<input type="tel" placeholder="Enter phone number" value={phoneValue} oninput={handleInput} />
 	</div>
 	{#if error}
 		<div class="error">{error}</div>

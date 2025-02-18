@@ -1,5 +1,8 @@
 <script>
+	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
+	import PhoneInput from '$lib/compontents/user/phone-input.svelte';
 	import freebee from '$lib/stores/freebee.svelte';
+	import user from '$lib/stores/user.svelte';
 	import { concatDateTime, dateAndTimeToDateZ } from '$lib/utils';
 	import { onMount } from 'svelte';
 
@@ -40,23 +43,32 @@
 
 	onMount(() => {
 		freebee.init().then((res) => {
-			if (!res.winner) {
-				updateCountdown();
-
-				interval = setInterval(updateCountdown, 1000);
-
-				return () => {
-					clearInterval(interval);
-				};
+			if (res.message === 'You have already won!') {
+				won = true;
 			} else {
-				canWin = false;
-				alreadyClaimed = true;
+				if (!res.winner) {
+					console.log('count');
+					updateCountdown();
+
+					interval = setInterval(updateCountdown, 1000);
+
+					return () => {
+						clearInterval(interval);
+					};
+				} else {
+					canWin = false;
+					alreadyClaimed = true;
+				}
 			}
 		});
 	});
 
 	let won = $state(false);
 	async function onWin() {
+		if (!user.token) {
+			alert('You must be signed in to win');
+			return;
+		}
 		const response = await freebee.win();
 		if (response.success) {
 			won = true;
@@ -67,6 +79,12 @@
 	}
 </script>
 
+{#if !user.token}
+	<div class="mb-10 border m-4 p-4 rounded-md">
+		<h1 class="my-4 text-center text-2xl font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
+		<AuthContainer />
+	</div>
+{/if}
 {#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
 	<div class="rounded-lg border p-4 shadow-inner">
 		<div class="mb-2 text-4xl font-bold">
@@ -80,8 +98,9 @@
 	<h1 class="p-4 text-center text-3xl font-bold">WIN A FREE TICKET</h1>
 
 	{#if won}
-		<p class="p-4 text-2xl">You won!</p>
-		<p class="p-4 text-2xl">Ari will contact you to confirm your ticket</p>
+		<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
+		<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
+		<p class="filter-strobe mx-auto text-[170px]">🎉</p>
 	{/if}
 
 	{#if !won}
@@ -152,6 +171,22 @@
 		}
 		100% {
 			background-color: var(--color-2);
+		}
+	}
+
+	.filter-strobe {
+		animation: strobe 200ms ease-in-out infinite;
+	}
+
+	@keyframes strobe {
+		0% {
+			filter: hue-rotate(0deg);
+		}
+		50% {
+			filter: hue-rotate(180deg);
+		}
+		100% {
+			filter: hue-rotate(0deg);
 		}
 	}
 </style>
