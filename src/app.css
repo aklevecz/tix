@@ -55,6 +55,6 @@ button,
 label {
 	@apply block tracking-wide text-[var(--secondary-color)] uppercase;
 }
-input {
+input[type='text'] {
 	@apply w-full border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 }
