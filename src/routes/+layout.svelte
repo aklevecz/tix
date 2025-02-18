@@ -18,8 +18,13 @@
 		console.log(data.token)
 		user.updateToken(data.token)
 	});
+
+	$effect(() => {
+		console.log(user.state.phoneNumber)
+	})
 </script>
 
 <Header />
+{user.state.phoneNumber.countryCode}
 {@render children()}
 <Footer />
