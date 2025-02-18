@@ -116,8 +116,7 @@ export async function GET({ cookies, platform }) {
 		project_name,
 		date: date,
 		time: time,
-		// winner: Boolean(winner),
-		winner: false,
+		winner: Boolean(winner),
 		message: `There is a freebee today! ${date} at ${time}`
 	});
 }
