@@ -1,6 +1,6 @@
 <script>
 	import cart from '$lib/stores/cart.svelte';
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 
 	let hasInteracted = $state(false);
 
@@ -24,38 +24,48 @@
 			message = 'Invalid discount code';
 		}
 	}
+
+	$effect(() => {
+		if (message) {
+			setTimeout(() => {
+				message = '';
+			}, 1000);
+		}
+	});
 </script>
 
-<div>
-	{#if !cart.state.discount}<div class="text-sm mb-1 font-semibold">Have a discount code?</div>{/if}
+<div class="flex w-full items-center justify-between gap-2">
+	{#if !cart.state.discount && !discountIsOpen}<div class="mb-1 text-xs font-semibold">
+			Have a discount code?
+		</div>{/if}
 	{#if cart.state.discount}
 		<div class="mb-2 text-[var(--green)]">
 			Discount applied! {cart.state.discount}%
 		</div>
 	{/if}
 	{#if !discountIsOpen}
-		<button onclick={toggleDiscount} class="btn-bauhaus discount">Discount Code?</button>
+		<button onclick={toggleDiscount} class="btn-bauhaus discount">Discount</button>
 	{/if}
 
 	{#if discountIsOpen}
-		<div class="flex flex-col gap-2">
+		<div class="flex w-full justify-between gap-6">
 			<input oninput={onDiscountInput} placeholder="Discount Code" /><button
 				class="btn-bauhaus"
 				onclick={submitDiscount}>Submit</button
 			>
 		</div>
 	{/if}
-	{#if message}
-		<div transition:fade class="mt-2 text-[var(--red)]">
-			{message}
-		</div>
-	{/if}
 </div>
+{#if message}
+	<div transition:slide class="mt-2 text-center font-bold text-[var(--red)]">
+		{message}
+	</div>
+{/if}
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	input {
-		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
+		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-sm text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
 	}
 	button.btn-bauhaus {
 		@apply text-xs;

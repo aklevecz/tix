@@ -6,13 +6,11 @@
 	let { data } = $props();
 </script>
 
-<div class="mx-auto mt-2 flex w-full flex-col gap-2 px-8">
+<div class="mx-auto mt-8 flex w-full flex-col gap-2 px-8">
 	<Slider />
 	<p class="small">If you would like to contribute more or less slide to your ideal price.</p>
 </div>
-<div class="justify- mx- mt-8 mb-12 flex flex-col px-8">
-	<Discount />
-</div>
+
 <!-- <div class="m-4">
 	<UserForm />
 </div> -->
@@ -23,7 +21,7 @@
 	>
 		CONTINUE
 	</button> -->
-<a href="/checkout/info" class="btn-bauhaus mx-auto block w-9/12 text-center text-2xl">
+<a href="/checkout/info" class="btn-bauhaus mx-auto mt-auto mb-4 block w-[175px] text-center text-xl">
 	CONTINUE
 </a>
 

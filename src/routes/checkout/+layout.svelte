@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import CartLineItem from '$lib/compontents/cart/cart-line-item.svelte';
+	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
 
@@ -19,7 +20,7 @@
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div class="max-w-[800px] mx-auto min-h-[90vh] flex flex-col justify-evenly">
+<div class="max-w-[800px] mx-auto min-h-[90vh] flex flex-col">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
@@ -57,6 +58,9 @@
 				<h2 class="flex items-baseline justify-between text-base font-bold">
 					Total<span class="text-[var(--secondary-color)]">{formatPrice(cart.state.total)}</span>
 				</h2>
+			</div>
+			<div class="justify- mx- mt-4 mb- flex flex-col px-">
+				<Discount />
 			</div>
 		</div>
 	</div>
