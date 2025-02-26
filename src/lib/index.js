@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 
-export const isDev = true 
+export const isDev = true;
 
 export const checkoutActions = {
 	CREATE_INTENT: 'CREATE_INTENT',
@@ -53,7 +53,7 @@ const locations = {
 		lat: 37.77207313781259,
 		lng: -122.42997725035403
 	}
-}
+};
 
 /** @type {Product[]} */
 export const mockProducts = [
@@ -79,14 +79,12 @@ export const mockProducts = [
 	}
 ];
 
-
 export const responses = {
 	CODE_SENT: 'Code sent',
-  AUTHED: 'Authenticated',
-  CODE_INVALID: 'Code invalid',
-  UNKNOWN_AUTH_ERROR: 'Unknown auth error',
-  LOGGED_OUT: 'Logged out'
+	AUTHED: 'Authenticated',
+	CODE_INVALID: 'Code invalid',
+	UNKNOWN_AUTH_ERROR: 'Unknown auth error',
+	LOGGED_OUT: 'Logged out'
 };
 
-
-export const EVENT_ID = 'raptor-faight-2'
+export const EVENT_ID = 'raptor-faight-2';

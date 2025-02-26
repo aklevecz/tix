@@ -1,4 +1,6 @@
 <script>
+	import GenerationStatus from '$lib/compontents/generation/generation-status.svelte';
+	import generate from '$lib/stores/generate.svelte';
 	import { formatPrice } from '$lib/utils';
 	import { onMount } from 'svelte';
 
@@ -11,6 +13,11 @@
 	let receipt = $state(null);
 
 	onMount(async () => {
+		if (data.generate) {
+			generate.generateRaptor();
+		} else {
+			generate.init();
+		}
 		const res = await fetch(`/api/checkout?paymentIntentId=${data.paymentIntentId}`);
 
 		/** @type {{ paymentIntent: PaymentIntent }} */
@@ -22,28 +29,31 @@
 
 {#if order}
 	<div
-		class="receipt-container mx-auto min-h-[87vh] max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
+		class="receipt-container mx-auto max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
 	>
-		<h1 class="mb-4 text-3xl font-bold tracking-wide text-[var(--secondary-color)] uppercase">
+		{#if generate.state.generating || (!generate.state.cachedImg && !generate.state.lastImgUrl)}
+			<GenerationStatus />
+		{/if}
+		<h1 class="mb-2 text-xl font-bold tracking-wide text-[var(--secondary-color)] uppercase">
 			Receipt
 		</h1>
 
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Name</p>
+			<p class="text-xs font-bold tracking-wider text-[var(--secondary-color)] uppercase">Name</p>
 			<p class="text-[var(--secondary-color)]">{order?.name}</p>
 		</div>
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Email</p>
+			<p class="text-xs font-bold tracking-wider text-[var(--secondary-color)] uppercase">email</p>
 			<p class="text-[var(--secondary-color)]">{order?.email}</p>
 		</div>
 		<div class="info mb-3">
-			<p class="text-lg font-bold tracking-wider text-[var(--secondary-color)] uppercase">Phone</p>
+			<p class="text-xs font-bold tracking-wider text-[var(--secondary-color)] uppercase">phone</p>
 			<p class="text-[var(--secondary-color)]">{order?.phone}</p>
 		</div>
 
 		<div class="items mb-4">
 			<!-- Header row -->
-			<div class="receipt-grid-line mb-2 pb-1">
+			<div class="receipt-grid-line mb-0 pb-1">
 				<div>Item</div>
 				<div>Price</div>
 				<div>Quantity</div>
@@ -77,13 +87,25 @@
 				>
 			</div>
 		</div>
+		<div>
+			{#if generate.state.lastImgUrl}<img
+					src={generate.state.lastImgUrl}
+					alt=""
+					style="width: 200px; height: 200px; margin:auto; display:block; padding:1rem;"
+				/>{/if}
+			{#if !generate.state.lastImgUrl && generate.state.cachedImg}<img
+					src={JSON.parse(generate.state.cachedImg)}
+					alt=""
+					style="width: 200px; height: 200px; margin:auto; display:block; padding:1rem;"
+				/>{/if}
+		</div>
 	</div>
 {/if}
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	.total-line {
-		@apply ml-auto flex w-[70%] items-center justify-between text-xl font-bold text-[var(--secondary-color)];
+		@apply ml-auto flex w-[70%] items-center justify-between text-base font-bold text-[var(--secondary-color)];
 	}
 	.receipt-grid-line {
 		@apply grid grid-cols-[1fr_75px_70px] gap-4 border-b border-gray-700 text-xs font-bold;

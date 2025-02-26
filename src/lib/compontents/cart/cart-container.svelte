@@ -16,10 +16,10 @@
 			{/each}
 		</div>
 		<div class="flex justify-between items-end gap-6 border-t">
-			<a class="btn-bauhaus" href="/checkout" aria-label="Checkout">Checkout</a>
 			<div class="total">
 				Total {formatPrice(cart.state.total)}
 			</div>
+			<a class="btn-bauhaus" href="/checkout" aria-label="Checkout">Checkout</a>
 		</div>
 	</div>
 {/if}
@@ -30,7 +30,7 @@
 	.cart-container {
 		/* margin-left: -10px; */
 		width: 98%;
-		@apply sticky top-0 mb-2 grid gap-2  bg-[var(--primary-color)] p-2;
+		@apply fixed bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2;
 		/* @apply border border-[var(--secondary-color)]; */
 	}
 
@@ -39,10 +39,10 @@
 	}
 
 	.total {
-		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-[10px];
+		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1;
 	}
 
 	a.btn-bauhaus {
-		@apply px-2 py-1 text-xs my-2;
+		@apply px-3 py-2 text-sm mb-0 mt-2;
 	}
 </style>

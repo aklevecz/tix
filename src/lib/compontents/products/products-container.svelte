@@ -16,11 +16,11 @@
 		<ProductItem {product} />
 	{/each}
 </div>
-{#if cart.getGroupedItems().length > 0}
+<!-- {#if cart.getGroupedItems().length > 0}
 	<div class="flex flex-col items-center gap-2 justify-around mt-8">
 		<div class="font-semibold text-center lowercase w-50">Psst you got some stuff in your cart to checkout :)</div>
 		<a href="/checkout" aria-label="Checkout" transition:fade class="btn-bauhaus"
 			>CHECKOUT</a
 		>
 	</div>
-{/if}
+{/if} -->

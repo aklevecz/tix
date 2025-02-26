@@ -3,12 +3,14 @@
 :root {
 	--yellow: #ffc73a;
 	--red: #ff2c2c;
+	--red: #fa4242;
 	--green: #ff00a2;
-	--primary-color: #e8e8e6;
+	--purple: #a857e5;
+	--primary-color: #fffffe;
 	--secondary-color: #514040;
 	--secondary-light-color: #565656;
 	--color-1: var(--red);
-	--color-2: #a857e5;
+	--color-2: var(--red);
 }
 
 html,

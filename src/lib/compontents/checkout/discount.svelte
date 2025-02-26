@@ -35,16 +35,16 @@
 </script>
 
 <div class="flex w-full items-center justify-between gap-6">
-	{#if !cart.state.discount && !discountIsOpen}<div class="mb-1 text-xs font-semibold">
+	<!-- {#if !cart.state.discount && !discountIsOpen}<div class="mb-1 text-xs font-semibold">
 			Have a discount code?
-		</div>{/if}
+		</div>{/if} -->
 	{#if cart.state.discount && !discountIsOpen}
 		<div class="mb- text-xs text-[var(--green)]">
 			Discount applied! {cart.state.discount}%
 		</div>
 	{/if}
 	{#if !discountIsOpen}
-		<button onclick={toggleDiscount} class="btn-bauhaus discount">Apply Discount</button>
+		<button onclick={toggleDiscount} class="btn-bauhaus discount ml-auto">Apply Discount</button>
 	{/if}
 
 	{#if discountIsOpen}
@@ -65,7 +65,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	input {
-		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-sm text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
+		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-xs text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
 	}
 	button.btn-bauhaus {
 		@apply text-xs;

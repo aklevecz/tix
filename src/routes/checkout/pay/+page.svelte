@@ -1,4 +1,5 @@
 <script>
+	import { browser } from '$app/environment';
 	import {
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID,
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST
@@ -6,10 +7,10 @@
 	import { checkoutActions, isDev } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
 	import cart from '$lib/stores/cart.svelte';
+	import generateSvelte from '$lib/stores/generate.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
 	import { formatPrice, phoneNumberToUid } from '$lib/utils';
-	import { fade, slide } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -28,8 +29,6 @@
 		if (!cart.state.id) {
 			return;
 		}
-		console.log('CREATING PAYMENT INTENT');
-
 		const response = await fetch(`/api/checkout`, {
 			method: 'POST',
 			body: JSON.stringify({
@@ -38,7 +37,9 @@
 				metadata: {
 					fullName: user.state.fullName,
 					email: user.state.email,
-					phoneNumber: phoneNumberToUid(`${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`),
+					phoneNumber: phoneNumberToUid(
+						`${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`
+					),
 					// street1: shop.state.userInfo.address.street1,
 					// street2: shop.state.userInfo.address.street2,
 					// city: shop.state.userInfo.address.city,
@@ -54,6 +55,7 @@
 		// @ts-ignore
 		stripe = Stripe(clientId);
 		if (!stripe) {
+			alert("Stripe failed to load. Bug Ari if it persists");
 			return;
 		}
 		elements = stripe.elements({ clientSecret, appearance });
@@ -63,7 +65,9 @@
 			paymentElementLoaded = true;
 			console.log('Payment Element is fully loaded.');
 			setTimeout(() => {
-				document.getElementById('payment-element')?.scrollIntoView({ behavior: 'smooth' });
+				if (browser && window.innerWidth < 768) {
+					document.getElementById('payment-element')?.scrollIntoView({ behavior: 'smooth' });
+				}
 			}, 100);
 		});
 		// paymentElement.on('change', (event) => {
@@ -88,10 +92,11 @@
 		// shouldn't throw the order completion and is loggd on the backend if it fails
 		// TODO: HANDLE ERRORS
 		await checkoutApi.orderConfirmed(cart.state, orderId);
+		document.cookie = `generate=true; path=/; max-age=300`;
+
 		const { error } = await stripe.confirmPayment({
 			elements: elements,
 			confirmParams: {
-				// Make sure to change this to your payment completion page
 				return_url: `${protocol}//${host}/receipt`
 				// receipt?date=${$appState.date}&event=${eventName}`,
 			}
@@ -172,7 +177,7 @@
 		align-items: center;
 		justify-content: center;
 		min-height: 300px;
-		height:300px;
+		height: 300px;
 		@apply mb-4;
 	}
 

@@ -11,7 +11,7 @@
 	let { fullName, email, phoneNumber } = $derived(user.state);
 
 	onMount(() => {
-		if (browser) {
+		if (browser && window.innerWidth < 768) {
 			//scroll to form
 			setTimeout(() => {
 				document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' });
@@ -33,7 +33,7 @@
 		goto('/checkout/pay');
 	}
 </script>
-<form transition:fade class="px-4 mb-6 space-y-4">
+<form class="px-4 mb-6 space-y-4">
 	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
 	<div class="flex gap-1">
 		<div class="flex-[0_0_40%]">

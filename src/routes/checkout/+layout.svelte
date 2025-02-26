@@ -1,10 +1,12 @@
 <script>
-	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { beforeNavigate, goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import CartLineItem from '$lib/compontents/cart/cart-line-item.svelte';
 	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
-	import { fade, slide } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
 	let { children } = $props();
@@ -15,13 +17,20 @@
 			goto('/');
 		}
 	});
+
+	let route = $state('');
+	beforeNavigate(() => {
+		if (browser) {
+			route =  page.url.pathname
+		}
+	});
 </script>
 
 <svelte:head>
 	<script src="https://js.stripe.com/v3/"></script>
 </svelte:head>
 
-<div class="mx-auto flex flex-col max-w-[380px]">
+<div class="mx-auto flex max-w-[380px] flex-col">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
@@ -52,22 +61,41 @@
 					>
 				</h2>
 				{#if cart.state.discount}
-				<h2 class="flex items-baseline justify-between text-base text-gray-400">
-					Discount<span class="text-[var(--color-2)]">-{cart.state.discount}% </span>
-				</h2>
+					<h2 class="flex items-baseline justify-between text-base text-gray-400">
+						Discount<span class="text-[var(--color-2)]">-{cart.state.discount}% </span>
+					</h2>
 				{/if}
 				<h2 class="flex items-baseline justify-between text-base font-bold">
 					Total<span class="text-[var(--secondary-color)]">{formatPrice(cart.state.total)}</span>
 				</h2>
 			</div>
-			<div class="justify- mx- mt-4 mb- flex flex-col px-">
+			<div class="justify- mx- mb- px- mt-4 flex flex-col">
 				<Discount />
 			</div>
 		</div>
 	</div>
-	{@render children()}
+	<div class="page-container">
+		{#key route}
+			<div class="page" transition:fade>
+				{@render children()}
+			</div>
+		{/key}
+	</div>
 </div>
-
+<style>
+	.page-container {
+		position: relative;
+		/* Optionally, set a min-height to avoid container collapse */
+		min-height: 50vh; /* or a fixed height that matches your design */
+	}
+	.page {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		/* Ensure the element doesn’t affect layout during transitions */
+	}
+</style>
 <!-- <button
 	onclick={() => {
 		cart.applyDiscount(50);
