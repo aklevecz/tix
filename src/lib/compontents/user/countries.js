@@ -11,6 +11,7 @@ function getFlagEmoji(countryCode) {
 // Full list of countries with flag emoji and dial code.
 // (Dial codes are approximations taken from public sources.)
 export default [
+	{ code: 'US', flag: getFlagEmoji('US'), dialCode: '+1' },
 	{ code: 'AC', flag: getFlagEmoji('AC'), dialCode: '+247' },
 	{ code: 'AD', flag: getFlagEmoji('AD'), dialCode: '+376' },
 	{ code: 'AE', flag: getFlagEmoji('AE'), dialCode: '+971' },
@@ -238,7 +239,6 @@ export default [
 	{ code: 'TZ', flag: getFlagEmoji('TZ'), dialCode: '+255' },
 	{ code: 'UA', flag: getFlagEmoji('UA'), dialCode: '+380' },
 	{ code: 'UG', flag: getFlagEmoji('UG'), dialCode: '+256' },
-	{ code: 'US', flag: getFlagEmoji('US'), dialCode: '+1' },
 	{ code: 'UY', flag: getFlagEmoji('UY'), dialCode: '+598' },
 	{ code: 'UZ', flag: getFlagEmoji('UZ'), dialCode: '+998' },
 	{ code: 'VA', flag: getFlagEmoji('VA'), dialCode: '+379' },

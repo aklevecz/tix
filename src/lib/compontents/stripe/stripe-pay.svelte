@@ -4,14 +4,12 @@
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID,
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST
 	} from '$env/static/public';
-	import { checkoutActions, isDev } from '$lib';
+	import { isDev } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
 	import cart from '$lib/stores/cart.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
-	import { formatPrice, phoneNumberToUid } from '$lib/utils';
-
-
+	import { formatPrice } from '$lib/utils';
 
 	const clientId = isDev ? PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST : PUBLIC_YAYTSO_STRIPE_CLIENT_ID;
 	/** @type {any} */
@@ -27,29 +25,7 @@
 		if (!cart.state.id) {
 			return;
 		}
-		const response = await fetch(`/api/checkout`, {
-			method: 'POST',
-			body: JSON.stringify({
-				action: checkoutActions.CREATE_INTENT,
-				cart: cart.state,
-				metadata: {
-					fullName: user.state.fullName,
-					email: user.state.email,
-					phoneNumber: phoneNumberToUid(
-						`${user.state.phoneNumber.countryCode}${user.state.phoneNumber.number}`
-					),
-					// street1: shop.state.userInfo.address.street1,
-					// street2: shop.state.userInfo.address.street2,
-					// city: shop.state.userInfo.address.city,
-					// state: shop.state.userInfo.address.state,
-					// postalCode: shop.state.userInfo.address.postalCode,
-					// country: shop.state.userInfo.address.country,
-					subtotal: cart.state.subtotal,
-					code: ''
-				}
-			})
-		});
-		const { clientSecret, error, paymentIntentId } = await response.json();
+		const { clientSecret, error, paymentIntentId } = await checkoutApi.createPaymentIntent({ cart, user });
 		// @ts-ignore
 		stripe = Stripe(clientId);
 		if (!stripe) {

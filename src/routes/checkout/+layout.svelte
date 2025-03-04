@@ -10,7 +10,7 @@
 	import { fade } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
-	let { children } = $props();
+	let { data, children } = $props();
 
 	$effect(() => {
 		if (cart.state.id && Object.entries(cart.state.items).length === 0) {
@@ -27,11 +27,12 @@
 	});
 
 	const squareScript = `https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js`
+	const stripeScript = `https://js.stripe.com/v3/`
+	const scriptSrc = data.paymentType === 'stripe' ? stripeScript : squareScript
 </script>
 
 <svelte:head>
-	<script src="https://js.stripe.com/v3/"></script>
-	<script type="text/javascript" src={squareScript}></script>
+	<script type="text/javascript" src={scriptSrc}></script>
 </svelte:head>
 
 <div class="mx-auto flex max-w-[380px] flex-col">

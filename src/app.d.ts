@@ -22,6 +22,9 @@ declare global {
 			caches: CacheStorage & { default: Cache };
 		}
 	}
+	interface Window {
+		Square?: any;
+	}
 }
 
 export {};

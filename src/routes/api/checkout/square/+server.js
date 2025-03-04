@@ -21,7 +21,7 @@ export async function POST({ platform, request }) {
 		sourceId: payload.sourceId,
 		amountMoney: {
 			// the expected amount is in cents, meaning this is $1.00.
-			amount: BigInt('100'),
+			amount: BigInt(payload.cart.total),
 			// If you are a non-US account, you must change the currency to match the country in which
 			// you are accepting the payment.
 			currency: 'USD'

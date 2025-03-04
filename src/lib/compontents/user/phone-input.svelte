@@ -82,7 +82,7 @@
 <style lang="postcss">
     @reference "tailwindcss/theme";
 	.phone-input-container {
-		max-width: 400px;
+		/* max-width: 400px; */
 		margin: 20px auto;
 	}
 
@@ -112,6 +112,7 @@
 		padding: 10px;
 		border: 1px solid;
 		font-size: 1rem;
+		flex: 1 0 auto;
         /* width: 135px; */
         @apply text-sm;
 	}

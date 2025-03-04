@@ -145,3 +145,42 @@
  * @property {string} seed
  * @property {string} prompt
  */
+
+/**
+ * @typedef {Object} TokenResult
+ * @property {'OK'|'ERROR'} status - Status of the tokenization operation
+ * @property {string} [token] - Payment token when status is 'OK'
+ * @property {Array<{code: string, detail: string, field: string}>} [errors] - Errors when status is 'ERROR'
+ */
+
+/**
+ * @typedef {Object} PaymentMethod
+ * @property {function(): Promise<TokenResult>} tokenize - Tokenize the payment method
+ * @property {function(string): Promise<void>} attach - Attach to a DOM element
+ * @property {function(): void} destroy - Clean up the payment method
+ */
+
+/**
+ * @typedef {PaymentMethod} CardPaymentMethod
+ */
+
+/**
+ * @typedef {PaymentMethod} ApplePayMethod
+ */
+
+/** 
+ * @typedef {PaymentMethod} GooglePayMethod
+ */
+
+/**
+ * @typedef {Object} Payments
+ * @property {function(Object=): Promise<CardPaymentMethod>} card - Create a card payment method
+ * @property {function(PaymentRequest): Promise<ApplePayMethod>} applePay - Create an Apple Pay payment method
+ * @property {function(PaymentRequest): Promise<GooglePayMethod>} googlePay - Create a Google Pay payment method
+ * @property {function(Object): PaymentRequest} paymentRequest - Create a payment request
+ */
+
+/**
+ * @typedef {Object} Square
+ * @property {function(string, string): Payments} payments - Create a payments object
+ */

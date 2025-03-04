@@ -35,7 +35,7 @@
 </script>
 <form class="px-4 mb-6 space-y-4">
 	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
-	<div class="flex gap-1">
+	<!-- <div class="flex gap-1"> -->
 		<div class="flex-[0_0_40%]">
 			<label for="name">Name</label>
 			<TextInput name="fullName" placeholder="Your Name" value={fullName} />
@@ -44,7 +44,7 @@
 			<label for="email">Email</label>
 			<TextInput name="email" placeholder="Your Email" value={email} />
 		</div>
-	</div>
+	<!-- </div> -->
 	<PhoneInput />
 
 </form>
