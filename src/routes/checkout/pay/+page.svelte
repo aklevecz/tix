@@ -38,6 +38,7 @@
 
 			try {
 				applePay = await initializeApplePay(payments);
+				console.log(applePay);
 			} catch (e) {
 				console.error('Initializing Apple Pay failed', e);
 				// There are a number of reason why Apple Pay might not be supported.
