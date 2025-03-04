@@ -21,13 +21,39 @@
 	let route = $state('');
 	beforeNavigate(() => {
 		if (browser) {
-			route =  page.url.pathname
+			route = page.url.pathname;
 		}
 	});
 </script>
 
 <svelte:head>
 	<script src="https://js.stripe.com/v3/"></script>
+	<script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+	<script>
+		// const appId = 'sandbox-sq0idb-GnSGYpfUxfSeUgc-RixoEA';
+		// const locationId = 'LCGAF8NYM7C23';
+		// async function initializeCard(payments) {
+		// 	const card = await payments.card();
+		// 	await card.attach('#card-container');
+		// 	return card;
+		// }
+
+		// document.addEventListener('DOMContentLoaded', async function () {
+		// 	if (!window.Square) {
+		// 		throw new Error('Square.js failed to load properly');
+		// 	}
+		// 	const payments = window.Square.payments(appId, locationId);
+		// 	let card;
+		// 	try {
+		// 		card = await initializeCard(payments);
+		// 	} catch (e) {
+		// 		console.error('Initializing Card failed', e);
+		// 		return;
+		// 	}
+
+		// 	// Step 5.2: create card payment
+		// });
+	</script>
 </svelte:head>
 
 <div class="mx-auto flex max-w-[380px] flex-col">
@@ -82,6 +108,12 @@
 		{/key}
 	</div>
 </div>
+<!-- <button
+	onclick={() => {
+		cart.applyDiscount(50);
+	}}>DISCOUNT 50</button
+> -->
+
 <style>
 	.page-container {
 		position: relative;
@@ -96,8 +128,3 @@
 		/* Ensure the element doesn’t affect layout during transitions */
 	}
 </style>
-<!-- <button
-	onclick={() => {
-		cart.applyDiscount(50);
-	}}>DISCOUNT 50</button
-> -->
