@@ -28,7 +28,7 @@
 
 <svelte:head>
 	<script src="https://js.stripe.com/v3/"></script>
-	<script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+	<script type="text/javascript" src="https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js"></script>
 	<script>
 		// const appId = 'sandbox-sq0idb-GnSGYpfUxfSeUgc-RixoEA';
 		// const locationId = 'LCGAF8NYM7C23';
