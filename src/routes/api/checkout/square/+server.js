@@ -38,7 +38,13 @@ export async function POST({ platform, request }) {
 	const res = await square.payments.create(payment);
 
 	if (res.payment) {
-		const { id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl } = res.payment;
+		const { id, createdAt, updatedAt, status, orderId, receiptUrl } = res.payment;
+
+        const amountMoney = res.payment.amountMoney ? {
+            amount: res.payment.amountMoney.amount?.toString(),
+            currency: res.payment.amountMoney.currency
+        } : null;
+
 		if (platform && orderId) {
             const {context, env} = platform
 			const tixOrder = {
