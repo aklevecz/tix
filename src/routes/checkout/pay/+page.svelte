@@ -149,4 +149,16 @@
 	<button onclick={handlePaymentMethodSubmission} id="card-button" type="button">Pay $1.00</button>
 </form>
 <div id="payment-status-container"></div>
+
 <!-- <StripePay /> -->
+
+<style>
+	#apple-pay-button {
+		height: 48px;
+		width: 100%;
+		display: inline-block;
+		-webkit-appearance: -apple-pay-button;
+		-apple-pay-button-type: plain;
+		-apple-pay-button-style: black;
+	}
+</style>
