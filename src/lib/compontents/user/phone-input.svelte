@@ -88,7 +88,7 @@
 
 	.phone-input {
 		display: flex;
-		gap: 12px;
+		gap: 4px;
 		align-items: center;
 	}
 
@@ -112,8 +112,7 @@
 		padding: 10px;
 		border: 1px solid;
 		font-size: 1rem;
-        width: 135px;
-        letter-spacing: 2px;
+        /* width: 135px; */
         @apply text-sm;
 	}
 

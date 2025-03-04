@@ -1,17 +1,20 @@
 import { dev } from '$app/environment';
 import { SQUARE_ACCESS_TOKEN_TEST } from '$env/static/private';
-import { json } from '@sveltejs/kit';
+import { isDev } from '$lib';
+import dbOrders from '$lib/db/orders';
+import { error, json } from '@sveltejs/kit';
 import { SquareClient, SquareEnvironment } from 'square';
 
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request }) {
+export async function POST({ platform, request }) {
 	const payload = await request.json();
 
 	const square = new SquareClient({
-		environment: dev ? SquareEnvironment.Sandbox : SquareEnvironment.Production,
-		token: dev ? SQUARE_ACCESS_TOKEN_TEST : SQUARE_ACCESS_TOKEN_TEST
+		environment: isDev ? SquareEnvironment.Sandbox : SquareEnvironment.Production,
+		token: isDev ? SQUARE_ACCESS_TOKEN_TEST : SQUARE_ACCESS_TOKEN_TEST
 	});
 
+	/** @type {import('square').Square.CreatePaymentRequest} */
 	const payment = {
 		idempotencyKey: payload.idempotencyKey,
 		locationId: payload.locationId,
@@ -31,12 +34,31 @@ export async function POST({ request }) {
 	if (payload.verificationToken) {
 		payment.verificationToken = payload.verificationToken;
 	}
+
 	const res = await square.payments.create(payment);
 
 	if (res.payment) {
 		const { id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl } = res.payment;
+		if (platform && orderId) {
+            const {context, env} = platform
+			const tixOrder = {
+				pi_id: orderId,
+				items: JSON.stringify(payload.cart.items),
+				name: payload.metadata.fullName,
+				phone: payload.metadata.phoneNumber,
+				email: payload.metadata.email,
+				discount: payload.cart.discount,
+				subtotal: payload.cart.subtotal,
+				amount: payload.cart.total,
+				// status: 'intent_created',
+                status: 'completed',
+				project_name: 'test_project_name',
+				origin: 'test_origin'
+			};
+			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
+		}
 		json({ id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl });
 	}
 
-	return new Response();
+	return new Response('FAILED TO CREATE SQUARE PAYMENT', { status: 500 });
 }

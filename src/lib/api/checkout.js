@@ -2,13 +2,38 @@ import { checkoutActions } from '$lib';
 import { phoneNumberToUid } from '$lib/utils';
 
 const endpoints = {
-	checkout: '/api/checkout'
+	checkout: '/api/checkout',
+	checkoutSquare: '/api/checkout/square'
 };
 
 const checkoutApi = () => {
 	return {
+		/** @param {{cart:Cart, user:User, locationId:string, token:string}} props */
+		createPaymentSquare: async ({ cart, user, locationId, token }) => {
+			const body = JSON.stringify({
+				locationId,
+				sourceId: token,
+				idempotencyKey: window.crypto.randomUUID(),
+				cart,
+				metadata: {
+					fullName: user.fullName,
+					email: user.email,
+					phoneNumber: phoneNumberToUid(
+						`${user.phoneNumber.countryCode}${user.phoneNumber.number}`
+					)
+				}
+			});
+			const paymentResponse = await fetch(endpoints.checkoutSquare, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body
+			});
+			return paymentResponse
+		},
 		/** @param {{cart:*, user:*}} props */
-		createPaymentIntent: async ({cart, user}) => {
+		createPaymentIntent: async ({ cart, user }) => {
 			const response = await fetch(`/api/checkout`, {
 				method: 'POST',
 				body: JSON.stringify({
@@ -46,7 +71,7 @@ const checkoutApi = () => {
 				})
 			});
 		},
-        /** @param {Cart} cart @param {string} orderId */
+		/** @param {Cart} cart @param {string} orderId */
 		orderFailed: async (cart, orderId) => {
 			fetch(endpoints.checkout, {
 				method: 'POST',

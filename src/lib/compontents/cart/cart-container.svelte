@@ -19,7 +19,7 @@
 			<div class="total">
 				Total {formatPrice(cart.state.total)}
 			</div>
-			<a class="btn-bauhaus" href="/checkout" aria-label="Checkout">Checkout</a>
+			<a class="checkout btn-bauhaus" href="/checkout" aria-label="Checkout">Checkout</a>
 		</div>
 	</div>
 {/if}
@@ -30,7 +30,7 @@
 	.cart-container {
 		/* margin-left: -10px; */
 		width: 98%;
-		@apply fixed bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2;
+		@apply fixed bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2 md:mb-20 md:w-[500px] md:rounded-md md:border md:p-4;
 		/* @apply border border-[var(--secondary-color)]; */
 	}
 
@@ -39,10 +39,14 @@
 	}
 
 	.total {
-		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1;
+		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl;
 	}
 
 	a.btn-bauhaus {
 		@apply px-3 py-2 text-sm mb-0 mt-2;
+	}
+
+	a.checkout {
+		@apply md:text-2xl;
 	}
 </style>

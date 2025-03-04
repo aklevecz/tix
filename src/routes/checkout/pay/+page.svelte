@@ -4,16 +4,23 @@
 		PUBLIC_SQUARE_APPLICATION_ID,
 		PUBLIC_SQUARE_APPLICATION_ID_TEST
 	} from '$env/static/public';
+	import { isDev } from '$lib';
 	import StripePay from '$lib/compontents/stripe/stripe-pay.svelte';
+	import cart from '$lib/stores/cart.svelte';
+	import user from '$lib/stores/user.svelte';
 	import { onMount } from 'svelte';
+	import checkoutApi from '$lib/api/checkout';
+
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
-	const locationId = dev ? 'LCGAF8NYM7C23' : 'LA6PWVD0KD3Z9';
-	const appId = dev ? PUBLIC_SQUARE_APPLICATION_ID_TEST : PUBLIC_SQUARE_APPLICATION_ID;
+	const locationId = isDev ? 'LCGAF8NYM7C23' : 'LA6PWVD0KD3Z9';
+	const appId = isDev ? PUBLIC_SQUARE_APPLICATION_ID_TEST : PUBLIC_SQUARE_APPLICATION_ID;
 
 	let card = $state(null);
 	let applePay = $state(null);
+
+	let orderId = $state('');
 
 	onMount(() => {
 		async function initializeCard(payments) {
@@ -73,17 +80,11 @@
 	}
 
 	async function createPayment(token) {
-		const body = JSON.stringify({
-			locationId,
-			sourceId: token,
-			idempotencyKey: window.crypto.randomUUID()
-		});
-		const paymentResponse = await fetch('/api/checkout/square', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body
+		const paymentResponse = await checkoutApi.createPaymentSquare({
+			cart: cart.state,
+			user: user.state,
+			token,
+			locationId
 		});
 		if (paymentResponse.ok) {
 			return paymentResponse.json();
@@ -133,6 +134,7 @@
 			const token = await tokenize(paymentMethod);
 			const paymentResults = await createPayment(token);
 			displayPaymentResults('SUCCESS');
+			orderId = paymentResults.orderId;
 
 			console.debug('Payment Success', paymentResults);
 		} catch (e) {
@@ -142,7 +144,7 @@
 		}
 	}
 </script>
-
+{orderId}
 <form id="payment-form">
 	<div onclick={(e) => handlePaymentMethodSubmission(e, applePay)} id="apple-pay-button"></div>
 	<div id="card-container"></div>
