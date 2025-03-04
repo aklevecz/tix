@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { beforeNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import { isDev } from '$lib';
 	import CartLineItem from '$lib/compontents/cart/cart-line-item.svelte';
 	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import cart from '$lib/stores/cart.svelte';
@@ -24,36 +25,13 @@
 			route = page.url.pathname;
 		}
 	});
+
+	const squareScript = `https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js`
 </script>
 
 <svelte:head>
 	<script src="https://js.stripe.com/v3/"></script>
-	<script type="text/javascript" src="https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js"></script>
-	<script>
-		// const appId = 'sandbox-sq0idb-GnSGYpfUxfSeUgc-RixoEA';
-		// const locationId = 'LCGAF8NYM7C23';
-		// async function initializeCard(payments) {
-		// 	const card = await payments.card();
-		// 	await card.attach('#card-container');
-		// 	return card;
-		// }
-
-		// document.addEventListener('DOMContentLoaded', async function () {
-		// 	if (!window.Square) {
-		// 		throw new Error('Square.js failed to load properly');
-		// 	}
-		// 	const payments = window.Square.payments(appId, locationId);
-		// 	let card;
-		// 	try {
-		// 		card = await initializeCard(payments);
-		// 	} catch (e) {
-		// 		console.error('Initializing Card failed', e);
-		// 		return;
-		// 	}
-
-		// 	// Step 5.2: create card payment
-		// });
-	</script>
+	<script type="text/javascript" src={squareScript}></script>
 </svelte:head>
 
 <div class="mx-auto flex max-w-[380px] flex-col">
