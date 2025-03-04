@@ -121,9 +121,9 @@
 		//    statusContainer.style.visibility = 'visible';
 	}
 
-	async function handlePaymentMethodSubmission(event) {
+	async function handlePaymentMethodSubmission(event, paymentMethod) {
 		event.preventDefault();
-		const paymentMethod = card;
+		// const paymentMethod = card;
 
 		try {
 			// disable the submit button as we await tokenization and make a
@@ -144,9 +144,9 @@
 </script>
 
 <form id="payment-form">
-	<div id="apple-pay-button"></div>
+	<div onclick={(e) => handlePaymentMethodSubmission(e, applePay)} id="apple-pay-button"></div>
 	<div id="card-container"></div>
-	<button onclick={handlePaymentMethodSubmission} id="card-button" type="button">Pay $1.00</button>
+	<button onclick={(e) => handlePaymentMethodSubmission(e, card)} id="card-button" type="button">Pay $1.00</button>
 </form>
 <div id="payment-status-container"></div>
 
