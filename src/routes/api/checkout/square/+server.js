@@ -63,7 +63,7 @@ export async function POST({ platform, request }) {
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
 		}
-		json({ id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl });
+		return json({ id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl });
 	}
 
 	return new Response('FAILED TO CREATE SQUARE PAYMENT', { status: 500 });
