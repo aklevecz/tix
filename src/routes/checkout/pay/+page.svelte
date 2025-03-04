@@ -9,7 +9,7 @@
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
-	const locationId = 'LCGAF8NYM7C23';
+	const locationId = dev ? 'LCGAF8NYM7C23' : 'LA6PWVD0KD3Z9';
 	const appId = dev ? PUBLIC_SQUARE_APPLICATION_ID_TEST : PUBLIC_SQUARE_APPLICATION_ID;
 
 	let card = $state(null);
@@ -146,7 +146,9 @@
 <form id="payment-form">
 	<div onclick={(e) => handlePaymentMethodSubmission(e, applePay)} id="apple-pay-button"></div>
 	<div id="card-container"></div>
-	<button onclick={(e) => handlePaymentMethodSubmission(e, card)} id="card-button" type="button">Pay $1.00</button>
+	<button onclick={(e) => handlePaymentMethodSubmission(e, card)} id="card-button" type="button"
+		>Pay $1.00</button
+	>
 </form>
 <div id="payment-status-container"></div>
 
