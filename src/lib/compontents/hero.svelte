@@ -25,7 +25,7 @@
 	});
 </script>
 
-<div class="flex min-h-[100vh] flex-col gap-4 px-3">
+<div class="flex flex-col gap-4 px-3">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
 		<img class="hero-img w-200" src={featured?.img} alt="literally underground" />

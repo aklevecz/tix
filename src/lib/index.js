@@ -97,7 +97,9 @@ export const mockProducts = [
 		},
 		date: '2025-05-02',
 		dates: ['2025-05-02'],
-		img: '/images/ticket.png'
+		img: '/images/ticket.png',
+		primaryColor: 'var(--faight-orange)',
+		secondaryColor: 'var(--faight-yellow)'
 	}
 ];
 

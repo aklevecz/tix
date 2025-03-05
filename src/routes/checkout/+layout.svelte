@@ -61,9 +61,7 @@
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
 			<div class="mb-0 space-y-1">
 				<h2 class="flex items-baseline justify-between text-base">
-					Subtotal<span
-						>{formatPrice(cart.state.subtotal)}</span
-					>
+					Subtotal<span>{formatPrice(cart.state.subtotal)}</span>
 				</h2>
 				{#if cart.state.discount}
 					<h2 class="flex items-baseline justify-between text-base text-gray-400">
@@ -80,11 +78,15 @@
 		</div>
 	</div>
 	<div class="page-container">
-		{#key route}
+		<!-- {#key route}
 			<div class="page" transition:fade>
 				{@render children()}
 			</div>
-		{/key}
+		{/key} -->
+
+		<!-- <div class="page"> -->
+		{@render children()}
+		<!-- </div> -->
 	</div>
 </div>
 
@@ -99,6 +101,7 @@
 		position: relative;
 		/* Optionally, set a min-height to avoid container collapse */
 		min-height: 50vh; /* or a fixed height that matches your design */
+		padding: 10px;
 	}
 	.page {
 		display: flex;
@@ -107,7 +110,7 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		min-height:300px;
+		min-height: 300px;
 		/* height: 100%; */
 		align-items: center;
 		justify-content: center;

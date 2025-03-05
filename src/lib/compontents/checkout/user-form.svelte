@@ -15,7 +15,7 @@
 			//scroll to form
 			setTimeout(() => {
 				document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' });
-			}, 100);
+			}, 500);
 		}
 	});
 
