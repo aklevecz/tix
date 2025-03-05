@@ -35,7 +35,7 @@
 	<script type="text/javascript" src={scriptSrc}></script>
 </svelte:head>
 
-<div class="checkout-layout bg-yellow- flex max-w-[380px] flex-col p-2 pt-0">
+<div class="checkout-layout mx-auto bg-yellow- flex max-w-[380px] flex-col p-2 pt-0">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1

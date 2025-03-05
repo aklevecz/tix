@@ -64,7 +64,7 @@ export async function POST({ platform, request }) {
 				origin: 'test_origin'
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
-			const literallyUndergroundQuantity = payload.cart.items['literally-underground'].quantity;
+			const literallyUndergroundQuantity = payload.cart.items['literally-underground-1'].quantity;
 			const literallyUndergroundMessage = `You have completed your order for ${literallyUndergroundQuantity} tickets to Literally Underground`;
 			context.waitUntil(
 				env.MESSENGER_QUEUE.send({
