@@ -33,8 +33,8 @@
 		goto('/checkout/pay');
 	}
 </script>
-<form class="px-4 mb-6 space-y-4">
-	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase">INFO</h2>
+<form class="px-0 mb-6 space-y-4">
+	<h2 class="text-2xl font-bold tracking-tight text-[var(--secondary-color)] mb-2 uppercase">INFO</h2>
 	<!-- <div class="flex gap-1"> -->
 		<div class="flex-[0_0_40%]">
 			<label for="name">Name</label>

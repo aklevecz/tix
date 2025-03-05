@@ -66,7 +66,7 @@
 	}
 
 	.product-image {
-		@apply h-auto w-full object-cover filter-[brightness(0%)];
+		@apply h-auto w-full object-cover filter-[brightness(100%)];
 	}
 
 	.product-description {

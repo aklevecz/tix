@@ -39,7 +39,7 @@
 	}
 
 	.total {
-		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl;
+		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl md:mt-12;
 	}
 
 	a.btn-bauhaus {

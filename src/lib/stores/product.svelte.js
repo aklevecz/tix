@@ -6,6 +6,12 @@ const defaultState = {
 	name: '',
 	title: '',
 	description: '',
+	place: {
+		name: '',
+		address: '',
+		lat: 0,
+		lng: 0
+	},
     price: 0,
 	priceConfig: {
 		base: 0,

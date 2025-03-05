@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import {
 		PUBLIC_SQUARE_APPLICATION_ID,
 		PUBLIC_SQUARE_APPLICATION_ID_TEST
@@ -172,6 +173,7 @@
 	 * @param {PaymentMethod|null} paymentMethod - The payment method to use
 	 */
 	async function handlePaymentMethodSubmission(event, paymentMethod) {
+        fetching = true;
 		event.preventDefault();
 		// const paymentMethod = card;
 		if (!paymentMethod) {
@@ -186,6 +188,7 @@
 			const paymentResults = await createPayment(token);
 			displayPaymentResults('SUCCESS');
 			orderId = paymentResults.orderId;
+            goto(`/receipt/?square_order_id=${orderId}`)
 
 			console.debug('Payment Success', paymentResults);
 		} catch (/** @type {*} */ e) {
@@ -193,6 +196,7 @@
 			displayPaymentResults('FAILURE');
 			console.error(e.message);
 		}
+        fetching = false
 	}
 </script>
 

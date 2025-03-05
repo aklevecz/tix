@@ -18,12 +18,12 @@
 		} else {
 			generate.init();
 		}
-		const res = await fetch(`/api/checkout?paymentIntentId=${data.paymentIntentId}`);
+		// const res = await fetch(`/api/checkout?paymentIntentId=${data.paymentIntentId}`);
 
-		/** @type {{ paymentIntent: PaymentIntent }} */
-		const { paymentIntent } = await res.json();
+		// /** @type {{ paymentIntent: PaymentIntent }} */
+		// const { paymentIntent } = await res.json();
 
-		receipt = paymentIntent;
+		// receipt = paymentIntent;
 	});
 </script>
 
@@ -83,7 +83,7 @@
 			<div class="total-line">
 				<span class="w-32 uppercase">Total</span>
 				<span class="text-right text-[var(--secondary-color)]"
-					>{formatPrice(receipt?.amount || 0)}</span
+					>{formatPrice(order?.amount || 0)}</span
 				>
 			</div>
 		</div>

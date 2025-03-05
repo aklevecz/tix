@@ -40,13 +40,15 @@ export async function POST({ platform, request }) {
 	if (res.payment) {
 		const { id, createdAt, updatedAt, status, orderId, receiptUrl } = res.payment;
 
-        const amountMoney = res.payment.amountMoney ? {
-            amount: res.payment.amountMoney.amount?.toString(),
-            currency: res.payment.amountMoney.currency
-        } : null;
+		const amountMoney = res.payment.amountMoney
+			? {
+					amount: res.payment.amountMoney.amount?.toString(),
+					currency: res.payment.amountMoney.currency
+				}
+			: null;
 
 		if (platform && orderId) {
-            const {context, env} = platform
+			const { context, env } = platform;
 			const tixOrder = {
 				pi_id: orderId,
 				items: JSON.stringify(payload.cart.items),
@@ -57,11 +59,19 @@ export async function POST({ platform, request }) {
 				subtotal: payload.cart.subtotal,
 				amount: payload.cart.total,
 				// status: 'intent_created',
-                status: 'completed',
+				status: status || 'unknown',
 				project_name: 'test_project_name',
 				origin: 'test_origin'
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
+			const literallyUndergroundQuantity = payload.cart.items['literally-underground'].quantity;
+			const literallyUndergroundMessage = `You have completed your order for ${literallyUndergroundQuantity} tickets to Literally Underground`;
+			context.waitUntil(
+				env.MESSENGER_QUEUE.send({
+					defaultMessage: literallyUndergroundMessage,
+					phoneNumber: payload.metadata.phoneNumber
+				})
+			);
 		}
 		return json({ id, createdAt, updatedAt, status, amountMoney, orderId, receiptUrl });
 	}

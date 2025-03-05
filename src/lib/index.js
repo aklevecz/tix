@@ -58,6 +58,26 @@ const locations = {
 /** @type {Product[]} */
 export const mockProducts = [
 	{
+		id: 'literally-underground-1',
+		projectId: 'literally-underground',
+		productType: 'ticket',
+		name: 'ticket',
+		title: 'Literally Underground',
+		description: `San Francisco's underground music discovery night - Sun Casino, Honey Bucket, Loon`,
+		place: locations.faight,
+		price: 1500,
+		priceConfig: {
+			base: 1500,
+			slidingScale: true,
+			min: 100,
+			max: 5000,
+			step: 500
+		},
+		date: '2025-03-14',
+		dates: ['2025-03-14'],
+		img: '/images/literally-underground/1/image.png'
+	},
+	{
 		id: 'raptor-faight-2',
 		projectId: 'raptor-faight-2',
 		productType: 'ticket',

@@ -114,7 +114,6 @@
 		font-size: 1rem;
 		flex: 1 0 auto;
         /* width: 135px; */
-        @apply text-sm;
 	}
 
 	input:focus,

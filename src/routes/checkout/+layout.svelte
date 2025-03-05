@@ -26,29 +26,29 @@
 		}
 	});
 
-	const squareScript = `https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js`
-	const stripeScript = `https://js.stripe.com/v3/`
-	const scriptSrc = data.paymentType === 'stripe' ? stripeScript : squareScript
+	const squareScript = `https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js`;
+	const stripeScript = `https://js.stripe.com/v3/`;
+	const scriptSrc = data.paymentType === 'stripe' ? stripeScript : squareScript;
 </script>
 
 <svelte:head>
 	<script type="text/javascript" src={scriptSrc}></script>
 </svelte:head>
 
-<div class="mx-auto flex max-w-[380px] flex-col">
+<div class="checkout-layout bg-yellow- flex max-w-[380px] flex-col p-2 pt-0">
 	<div class="mb- relative">
 		<!-- <div class="absolute top-0 left-1 h-[20px] w-[20px] bg-[var(--color-2)]"></div> -->
 		<h1
-			class="relative z-10 pl-2 text-xl font-bold tracking-tight text-[var(--secondary-color)] uppercase"
+			class="relative z-10 mb-0 pl-0 text-2xl font-bold tracking-tight text-[var(--secondary-color)] uppercase"
 		>
 			Checkout
 		</h1>
 	</div>
 
-	<div class="card-base max-w-[600px] p-4 pt-0">
+	<div class="card-base mb-4 max-w-[600px] p-0 pt-0">
 		<div class="relative">
 			<!-- <div class="absolute -left-0 top-0 w-1 h-full bg-[var(--color-1)]"></div> -->
-			<div class="mt-4 space-y-4 border-0 border-b-0 px-0">
+			<div class="mt-2 space-y-4 border-0 border-b-0 px-0">
 				{#each cart.getGroupedItems() as { item, quantity }}
 					<div class="border p-2">
 						<CartLineItem {item} {quantity} price={item.price} />
@@ -87,6 +87,7 @@
 		{/key}
 	</div>
 </div>
+
 <!-- <button
 	onclick={() => {
 		cart.applyDiscount(50);
@@ -100,10 +101,16 @@
 		min-height: 50vh; /* or a fixed height that matches your design */
 	}
 	.page {
+		display: flex;
+		flex-direction: column;
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 100%;
+		min-height:300px;
+		/* height: 100%; */
+		align-items: center;
+		justify-content: center;
 		/* Ensure the element doesn’t affect layout during transitions */
 	}
 </style>
