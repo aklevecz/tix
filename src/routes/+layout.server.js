@@ -7,6 +7,5 @@ export async function load({ cookies, url, locals }) {
 	const userSession = JSON.parse(cookies.get('user') || "{}")
 	const token = cookies.get('token') || ""
 	const featured = mockProducts.find(p => p.id = 'literally-underground-1')
-	console.log(featured)
 	return { cart, user: userSession, products: mockProducts, token, featured};
 }

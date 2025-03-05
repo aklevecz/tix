@@ -35,9 +35,15 @@
 	<h1>{phoneNumber}</h1>
 	<img src="/api/img?id={phoneNumber}/raptor.jpeg" alt="" />
 	<h1 class="mt-4">Freebees</h1>
+	{#if !freebee}
+		<div>You have not won a freebee</div>
+	{/if}
 	{freebee?.id}
 
 	<h1 class="mt-4">Orders</h1>
+	{#if !orders}
+		<div>You have not made any orders</div>
+	{/if}
 	{#each orders as order}
 		<div>{order.project_name}</div>
 	{/each}

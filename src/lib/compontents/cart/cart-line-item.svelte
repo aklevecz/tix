@@ -15,7 +15,8 @@
 
 <div class="cart-line-item">
 	<div class="cart-line-item__title">
-		<span class="cart-line-item__quantity">{quantity}<span class="text-[var(--color-2)] lowercase mx-[2px]">x</span>{formatPrice(price)}</span>{item.title}{" "}({formatDate(item.date).split(',')[0]})
+		<!-- <span class="cart-line-item__quantity">{quantity}<span class="text-[var(--color-2)] lowercase mx-[2px]">x</span>{formatPrice(price)}</span>{item.title}{" "}({formatDate(item.date).split(',')[0]}) -->
+		<span class="cart-line-item__quantity">{quantity} {item.productType}{quantity > 1 ? 's' : ''}</span><br/>{item.title}{" "}({formatDate(item.date).split(',')[0]})
 	</div>
 	<button class="btn-outline" onclick={onRemove} aria-label={`Remove ${item.title} from cart`}>
 		<svg viewBox="0 0 12 2" width="8" height="2">
@@ -42,6 +43,6 @@
 	}
 
 	.cart-line-item__quantity {
-		@apply pr-1 font-bold text-[var(--secondary-color)];
+		@apply pr-1 font-bold text-[var(--secondary-color)] text-lg;
 	}
 </style>

@@ -9,18 +9,18 @@
 	--purple: #a857e5;
 	--faight-orange: #ff764f;
 	--light-bg: #fffffe;
-	--primary-color: var(--faight-orange);
+	/* --primary-color: var(--faight-orange); */
 	/* --primary-color: rgb(173, 173, 174); */
-	--secondary-color: #514040;
-	--secondary-color: var(var(--faight-yellow));
+	/* --secondary-color: #514040; */
+	/* --secondary-color: var(var(--faight-yellow)); */
 	--secondary-light-color: #565656;
-	--color-1: var(--faight-yellow);
-	--color-2: var(--faight-yellow);
+	/* --color-1: var(--secondary-color); */
+	/* --color-2: var(--secondary-color); */
 }
 
 html,
 body {
-	background-color: var(--primary-color);
+	/* background-color: var(--primary-color); */
 	color: var(--secondary-color);
 	text-transform: uppercase;
 	display: flex;
@@ -42,7 +42,7 @@ button,
 }
 
 .btn-bauhaus {
-	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide uppercase transition-colors duration-200;
+	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] text-black px-4 py-2 font-bold tracking-wide uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus:hover {

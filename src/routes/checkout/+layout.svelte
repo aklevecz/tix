@@ -60,8 +60,8 @@
 		<div class="relative mt-[-18px] border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
 			<div class="mb-0 space-y-1">
-				<h2 class="flex items-baseline justify-between text-base text-gray-400">
-					Subtotal<span class="text-[var(--secondary-color)]"
+				<h2 class="flex items-baseline justify-between text-base">
+					Subtotal<span
 						>{formatPrice(cart.state.subtotal)}</span
 					>
 				</h2>
@@ -103,7 +103,7 @@
 	.page {
 		display: flex;
 		flex-direction: column;
-		position: absolute;
+		/* position: absolute; */
 		top: 0;
 		left: 0;
 		width: 100%;

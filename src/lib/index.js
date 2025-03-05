@@ -75,7 +75,9 @@ export const mockProducts = [
 		},
 		date: '2025-03-14',
 		dates: ['2025-03-14'],
-		img: '/images/literally-underground/1/image.png'
+		img: '/images/literally-underground/1/image.png',
+		primaryColor: 'var(--faight-orange)',
+		secondaryColor: 'var(--faight-yellow)'
 	},
 	{
 		id: 'raptor-faight-2',

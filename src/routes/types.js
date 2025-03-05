@@ -37,6 +37,8 @@
  * @property {string} date
  * @property {string[]} dates
  * @property {string} img
+ * @property {string} primaryColor
+ * @property {string} secondaryColor
  */
 
 /**
