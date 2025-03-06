@@ -1,21 +1,31 @@
 <script>
-	import {slide} from 'svelte/transition'
+	import { slide } from 'svelte/transition';
 
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
 	import CartLineItem from './cart-line-item.svelte';
 
 	let hasItems = $derived(Object.entries(cart.state.items).length);
+
+	const pushHeight = 130;
+
+	$effect(() => {
+		if (hasItems) {
+			window.scrollTo(0, pushHeight);
+		}
+	});
 </script>
 
 {#if hasItems}
+	<div class="h-[{pushHeight}px]"></div>
+
 	<div class="cart-container" transition:slide>
 		<div class="cart-item-wrapper">
 			{#each cart.getGroupedItems() as { item, quantity }}
-				<CartLineItem {item} {quantity} price={item.price}/>
+				<CartLineItem {item} {quantity} price={item.price} />
 			{/each}
 		</div>
-		<div class="flex justify-between items-end gap-6 border-t">
+		<div class="flex items-end justify-between gap-6 border-t">
 			<div class="total">
 				Total {formatPrice(cart.state.total)}
 			</div>
@@ -29,7 +39,7 @@
 
 	.cart-container {
 		/* margin-left: -10px; */
-		@apply  mt-4 w-full bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2 px-3 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
+		@apply fixed bottom-0 mt-4 mb-0 grid w-full gap-2 bg-[var(--primary-color)] p-2 px-3 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
 		/* @apply border border-[var(--secondary-color)]; */
 	}
 
@@ -38,11 +48,11 @@
 	}
 
 	.total {
-		@apply border-[var(--color-1)]/20 pt-0 text-2xl leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl md:mt-12;
+		@apply mb-1 border-[var(--color-1)]/20 pt-0 pb-1 text-2xl leading-[1rem] font-medium text-[var(--secondary-color)] md:mt-12 md:text-2xl;
 	}
 
 	a.btn-bauhaus {
-		@apply px-3 py-2 text-sm mb-0 mt-2;
+		@apply mt-2 mb-0 px-3 py-2 text-sm;
 	}
 
 	a.checkout {
