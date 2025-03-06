@@ -28,7 +28,7 @@
 <div class="flex flex-col gap-4 px-3 max-w-[700px]">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<img class="hero-img max-w-[700px]" src={featured?.img} alt="literally underground" />
+		<img class="hero-img max-w-[700px] min-h-[100px]" src={featured?.img} alt="literally underground" />
 		<div class="text-lg font-semibold">
 			{featured.title} @ {featured.place.name}
 		</div>
@@ -36,11 +36,15 @@
 			{featured?.description}
 		</div>
 
-		<div class="quantity-message">
+		<!-- <div class="quantity-message">
 			{quantityMessage}
-		</div>
+		</div> -->
 		<button onclick={() => cart.add(featured)} class="btn-bauhaus">
 			Add {quantityInCart ? 'More' : formatPrice(featured.price)}
+			{featured.productType}
+		</button>
+		<button onclick={() => cart.remove(featured)} class="btn-bauhaus w-[200px] mx-auto">
+			REMOVE
 			{featured.productType}
 		</button>
 	{/if}

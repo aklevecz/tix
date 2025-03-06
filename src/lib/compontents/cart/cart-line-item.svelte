@@ -23,7 +23,7 @@
 			<line x1="0" y1="1" x2="12" y2="1" stroke="currentColor" stroke-width="2" />
 		</svg>
 	</button>
-	<button class="btn-outline" onclick={onAdd} aria-label={`Remove ${item.title} from cart`}>
+	<button class="btn-outline" onclick={onAdd} aria-label={`add ${item.title} to the cart`}>
 		<svg viewBox="0 0 12 2" width="8" height="8">
 			<line x1="0" y1="1" x2="12" y2="1" stroke="currentColor" stroke-width="2" />
 			<line x1="6" y1="-6" x2="6" y2="7" stroke="currentColor" stroke-width="2" />
@@ -33,6 +33,9 @@
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
+
+	button.btn-outline {
+	}
 
 	.cart-line-item {
 		@apply flex items-center gap-2 text-sm transition-colors hover:text-[var(--secondary-color)];

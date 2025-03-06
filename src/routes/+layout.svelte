@@ -21,10 +21,13 @@
 	
 	const primaryColor = data.featured?.primaryColor || '#ffffff';
 	const secondaryColor = data.featured?.secondaryColor || '#000000';
+
+	onMount(() => {
+		document.body.style.backgroundColor = primaryColor
+	})
 </script>
 
 <div
-class="min-h-[100vh]"
 	style="--primary-color: {primaryColor}; background-color: var(--primary-color); --secondary-color: {secondaryColor}; color: var(--secondary-color); --color-1: {secondaryColor}; --color-2: {secondaryColor};"
 >
 	<Header />

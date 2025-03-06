@@ -29,8 +29,7 @@
 
 	.cart-container {
 		/* margin-left: -10px; */
-		width: 98%;
-		@apply fixed bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
+		@apply fixed w-full bottom-0 mb-0 grid gap-2  bg-[var(--primary-color)] p-2 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
 		/* @apply border border-[var(--secondary-color)]; */
 	}
 
