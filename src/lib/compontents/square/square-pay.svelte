@@ -4,9 +4,10 @@
 		PUBLIC_SQUARE_APPLICATION_ID,
 		PUBLIC_SQUARE_APPLICATION_ID_TEST
 	} from '$env/static/public';
-	import { isDev } from '$lib';
+	import { colors, isDev } from '$lib';
 	import checkoutApi from '$lib/api/checkout';
 	import cart from '$lib/stores/cart.svelte';
+	import generate from '$lib/stores/generate.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { formatPrice } from '$lib/utils';
 	import { onMount } from 'svelte';
@@ -14,6 +15,7 @@
 	const locationId = isDev ? 'LCGAF8NYM7C23' : 'LA6PWVD0KD3Z9';
 	const appId = isDev ? PUBLIC_SQUARE_APPLICATION_ID_TEST : PUBLIC_SQUARE_APPLICATION_ID;
 
+	let loading = $state(false);
 	let fetching = $state(false);
 
 	/** @type {CardPaymentMethod|null} */
@@ -34,13 +36,56 @@
 		 * @returns {Promise<CardPaymentMethod>} The card payment method
 		 */
 		async function initializeCard(payments) {
-			const card = await payments.card();
+			const darkModeCardStyle = {
+				'.input-container': {
+					borderColor: 'white',
+					borderRadius: '12px'
+				},
+				'.input-container.is-focus': {
+					borderColor: '#006AFF'
+				},
+				'.input-container.is-error': {
+					borderColor: '#ff1600'
+				},
+				'.message-text': {
+					color: '#999999'
+				},
+				'.message-icon': {
+					color: '#999999'
+				},
+				'.message-text.is-error': {
+					color: '#ff1600'
+				},
+				'.message-icon.is-error': {
+					color: '#ff1600'
+				},
+				input: {
+					backgroundColor: colors.faightYellow,
+					color: colors.faightOrange,
+					fontSize: '24px',
+					fontFamily: 'helvetica neue, sans-serif'
+				},
+				'input::placeholder': {
+					color: '#000'
+				},
+				'input.is-error': {
+					color: '#ff1600'
+				},
+				'@media screen and (max-width: 600px)': {
+					input: {
+						fontSize: '18px'
+					}
+				}
+			};
+			const card = await payments.card({ style: darkModeCardStyle });
 			await card.attach('#card-container');
 			return card;
 		}
 
 		async function init() {
+			loading = true;
 			if (!window.Square) {
+				alert('Error loading Square -- try reloading the page');
 				throw new Error('Square.js failed to load properly');
 			}
 
@@ -65,6 +110,7 @@
 			} catch (e) {
 				console.error('Initializing Google Pay failed', e);
 			}
+			loading = false;
 		}
 
 		init();
@@ -173,7 +219,7 @@
 	 * @param {PaymentMethod|null} paymentMethod - The payment method to use
 	 */
 	async function handlePaymentMethodSubmission(event, paymentMethod) {
-        fetching = true;
+		fetching = true;
 		event.preventDefault();
 		// const paymentMethod = card;
 		if (!paymentMethod) {
@@ -188,7 +234,8 @@
 			const paymentResults = await createPayment(token);
 			displayPaymentResults('SUCCESS');
 			orderId = paymentResults.orderId;
-            goto(`/receipt/?square_order_id=${orderId}`)
+			generate.generateCD();
+			goto(`/receipt/?square_order_id=${orderId}`);
 
 			console.debug('Payment Success', paymentResults);
 		} catch (/** @type {*} */ e) {
@@ -196,53 +243,59 @@
 			displayPaymentResults('FAILURE');
 			console.error(e.message);
 		}
-        fetching = false
+		fetching = false;
 	}
 </script>
 
-<form id="payment-form">
-	{#if applePay}
-		<div
-			aria-label="apple pay button"
-			role="button"
-			tabindex="0"
-			onclick={(e) => handlePaymentMethodSubmission(e, applePay)}
-			onkeydown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					handlePaymentMethodSubmission(e, applePay);
-				}
-			}}
-			id="apple-pay-button"
-		></div>
-		<div class="m-2 text-center font-semibold">OR</div>
-	{/if}
-	{#if googlePay}
-		<div
-			aria-label="google pay button"
-			role="button"
-			tabindex="0"
-			onclick={(e) => handlePaymentMethodSubmission(e, googlePay)}
-			onkeydown={(e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					handlePaymentMethodSubmission(e, googlePay);
-				}
-			}}
-			id="google-pay-button"
-		></div>
-		<div class="m-2 text-center font-semibold">OR</div>
-	{/if}
-	<div class="text-sm font-semibold">Credit Card</div>
-	<div id="card-container"></div>
-	<button
-		class="btn-bauhaus m-auto block"
-		onclick={(e) => handlePaymentMethodSubmission(e, card)}
-		id="card-button"
-		type="button">{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
-	>
-</form>
-<div id="payment-status-container"></div>
+<div class="relative">
+	{#if loading}
+		<div class="absolute w-full h-full flex min-h-[200px] items-center justify-center text-2xl font-bold">
+			Loading...
+		</div>{/if}
+	<form id="payment-form">
+		{#if applePay}
+			<div
+				aria-label="apple pay button"
+				role="button"
+				tabindex="0"
+				onclick={(e) => handlePaymentMethodSubmission(e, applePay)}
+				onkeydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						handlePaymentMethodSubmission(e, applePay);
+					}
+				}}
+				id="apple-pay-button"
+			></div>
+			<!-- <div class="m-2 text-center font-semibold">OR</div> -->
+		{/if}
+		{#if googlePay}
+			<div
+				aria-label="google pay button"
+				role="button"
+				tabindex="0"
+				onclick={(e) => handlePaymentMethodSubmission(e, googlePay)}
+				onkeydown={(e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						e.preventDefault();
+						handlePaymentMethodSubmission(e, googlePay);
+					}
+				}}
+				id="google-pay-button"
+			></div>
+			<!-- <div class="m-2 text-center font-semibold">OR</div> -->
+		{/if}
+		<!-- <div class="text-sm font-semibold">Credit Card</div> -->
+		<div id="card-container"></div>
+		{#if !loading}<button
+			class="btn-bauhaus m-auto block"
+			onclick={(e) => handlePaymentMethodSubmission(e, card)}
+			id="card-button"
+			type="button">{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
+		>{/if}
+	</form>
+	<div id="payment-status-container"></div>
+</div>
 
 <style>
 	#apple-pay-button {

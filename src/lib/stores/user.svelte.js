@@ -26,6 +26,9 @@ const createUserStore = () => {
 		get token() {
 			return token;
 		},
+		get cleanPhoneNumber() {
+			return `${user.phoneNumber.countryCode.replace('+', '')}${user.phoneNumber.number}`
+		},
 		/**
 		 * Update the user with new properties.
 		 * @param {Partial<User>} props

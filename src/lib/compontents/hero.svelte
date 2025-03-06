@@ -25,10 +25,10 @@
 	});
 </script>
 
-<div class="flex flex-col gap-4 px-3">
+<div class="flex flex-col gap-4 px-3 max-w-[700px]">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<img class="hero-img w-200" src={featured?.img} alt="literally underground" />
+		<img class="hero-img max-w-[700px]" src={featured?.img} alt="literally underground" />
 		<div class="text-lg font-semibold">
 			{featured.title} @ {featured.place.name}
 		</div>

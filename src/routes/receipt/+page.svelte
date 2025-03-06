@@ -32,7 +32,9 @@
 		class="receipt-container mx-auto max-w-lg rounded-md bg-[var(--primary-color)] p-4 pt-0 shadow-lg"
 	>
 		{#if generate.state.generating || (!generate.state.cachedImg && !generate.state.lastImgUrl)}
-			<GenerationStatus />
+			<div class="mb-4">
+				<GenerationStatus />
+			</div>
 		{/if}
 		<h1 class="mb-2 text-xl font-bold tracking-wide text-[var(--secondary-color)] uppercase">
 			Receipt
@@ -108,6 +110,6 @@
 		@apply ml-auto flex w-[70%] items-center justify-between text-base font-bold text-[var(--secondary-color)];
 	}
 	.receipt-grid-line {
-		@apply grid grid-cols-[1fr_75px_70px] gap-4 border-b border-gray-700 text-xs font-bold;
+		@apply grid grid-cols-[1fr_75px_70px] gap-4 border-b border-[var(--secondary-color)] text-xs font-bold;
 	}
 </style>

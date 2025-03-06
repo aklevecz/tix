@@ -111,4 +111,10 @@ export const responses = {
 	LOGGED_OUT: 'Logged out'
 };
 
-export const EVENT_ID = 'raptor-faight-2';
+export const EVENT_ID = 'literally-underground-1';
+
+
+export const colors = {
+	faightOrange: '#ff764f',
+	faightYellow: '#ffda4e',
+}

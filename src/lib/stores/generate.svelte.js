@@ -2,6 +2,7 @@ import backgrounds from '$lib/backgrounds';
 import configurations from '$lib/configurations';
 import storage from '$lib/storage';
 import { fetchImageAsBase64 } from '$lib/utils';
+import user from './user.svelte';
 
 export const GenerationErrors = {
 	NETWORK: 'Check your internet connection and try again',
@@ -26,6 +27,7 @@ const api = (function () {
 		 */
 		generate: async (prompt, model) => {
 			let configuration = configurations[model];
+
 			try {
 				let res = await fetch(endpoints.generate, {
 					method: 'POST',
@@ -33,6 +35,7 @@ const api = (function () {
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
+						phoneNumber: user.cleanPhoneNumber,
 						model: model,
 						// could also do this server side
 						prompt: prompt
@@ -62,9 +65,10 @@ const api = (function () {
 	};
 })();
 
-/** @type {{generating: boolean, status: Status, outputs: any[], percentage: number, cachedImgs: GeneratedImgEntry[], cachedImg:string; lastImgUrl: string}} */
+/** @type {{generating: boolean, generationType: string, status: Status, outputs: any[], percentage: number, cachedImgs: GeneratedImgEntry[], cachedImg:string; lastImgUrl: string}} */
 const defaultState = {
 	generating: false,
+	generationType: 'cd',
 	status: 'idle',
 	outputs: [],
 	percentage: 0,
@@ -76,7 +80,8 @@ const createGenerateStore = () => {
 	let generate = $state({ ...defaultState });
 
 	async function fetchUploadedGeneration() {
-		const res = await fetch('api/upload');
+		let queryParams = `?phoneNumber=${user.cleanPhoneNumber}&generationType=${generate.generationType}`;
+		const res = await fetch(`/api/upload${queryParams}`);
 		if (res.ok) {
 			const imgBuffer = await res.arrayBuffer();
 			const blob = new Blob([imgBuffer], { type: 'image/jpeg' }); // adjust mime type as needed
@@ -234,8 +239,10 @@ const createGenerateStore = () => {
 						const imageBlob = new Blob([blob], { type: 'image/jpeg' });
 						formData.append('image', imageBlob, `raptor.jpg`);
 						// formData.append('id', "cd-" + Math.round(Date.now() /1000));
-						formData.append('id', 'raptor');
+						formData.append('id', generate.generationType);
 						formData.append('prompt', prompt || 'missing prompt');
+
+						formData.append('phoneNumber', user.cleanPhoneNumber);
 
 						console.log('Upload sizes:', {
 							original: imageBlob.size
@@ -294,7 +301,7 @@ const createGenerateStore = () => {
 		fetchUploadedGeneration,
 		refreshAllGeneratedImgs,
 		async generateRaptor() {
-			// const text = `A compact disc (CD) with the word '${auth.state.user.name.split(" ")[0]}' handwritten in black marker on the silver surface. Abstract pastel colored smoke or mist effects swirl in the background. cute retro style. photo realistic.`
+			generate.generationType = 'raptor'
 			const randomBetween0and100 = Math.floor(Math.random() * 100);
 			const randomBackground = backgrounds[randomBetween0and100];
 			const text = `a baby raptor hatching from an egg ${randomBackground}`;
@@ -304,7 +311,25 @@ const createGenerateStore = () => {
 				if (!data?.id) {
 					throw new Error('id is missing');
 				}
-        console.log(`Polling generation: ${data.id}`);
+				console.log(`Polling generation: ${data.id}`);
+				this.pollGeneration(data.id);
+			} catch (/** @type {*} */ e) {
+				alert(e.message);
+			}
+		},
+		async generateCD() {
+			generate.generationType = 'cd'
+			const randomBetween0and100 = Math.floor(Math.random() * 100);
+			const randomBackground = backgrounds[randomBetween0and100];
+			const text = `A compact disc (CD) with the word '${user.state.fullName.split(' ')[0]}' handwritten in black marker on the silver surface. Abstract pastel colored smoke or mist effects swirl in a ${randomBackground}. cute retro style. photo realistic.`;
+			// const text = `a baby raptor hatching from an egg ${randomBackground}`;
+			const model = 'black-forest-labs/flux-schnell';
+			try {
+				let data = await this.createGeneration(text, model);
+				if (!data?.id) {
+					throw new Error('id is missing');
+				}
+				console.log(`Polling generation: ${data.id}`);
 				this.pollGeneration(data.id);
 			} catch (/** @type {*} */ e) {
 				alert(e.message);
@@ -316,5 +341,5 @@ const createGenerateStore = () => {
 		}
 	};
 };
-
-export default createGenerateStore();
+const generate = createGenerateStore();
+export default generate;

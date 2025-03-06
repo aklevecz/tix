@@ -52,16 +52,18 @@ const makeReplicateRequestPublic = async (prompt, configuration) => {
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ cookies, platform, request }) {
-	const token = cookies.get('token');
-	if (!token) {
-		throw new Error('No authentication token provided');
-	}
+	let { prompt, model = 'aklevecz/bao-flux-schnell', phoneNumber } = await request.json();
+	// GET NUMBER FROM TOKEN?
+	// const token = cookies.get('token');
+	// if (!token) {
+	// 	throw new Error('No authentication token provided');
+	// }
 
-	const { phoneNumber } = await platform?.env.AUTH_SERVICE.authorizeToken(token);
-	if (!phoneNumber) {
-		throw new Error('Invalid authentication payload');
-	}
-	const { prompt, model = 'aklevecz/bao-flux-schnell' } = await request.json();
+	// const { phoneNumber } = await platform?.env.AUTH_SERVICE.authorizeToken(token);
+	// if (!phoneNumber) {
+	// 	throw new Error('Invalid authentication payload');
+	// }
+	console.log(`phoneNumber: ${phoneNumber}`);
 	const configuration = configurations[model];
 	const data = await makeReplicateRequestPublic(prompt, configuration);
 
@@ -75,9 +77,9 @@ export async function POST({ cookies, platform, request }) {
 
 export async function GET({ url }) {
 	const id = url.searchParams.get('id');
-  console.log(`Polling id ${id}`);
+	console.log(`Polling id ${id}`);
 	const res = await fetch(`https://api.replicate.com/v1/predictions/${id}`, { headers });
 	const data = await res.json();
-  console.log(data)
+	console.log(data);
 	return json(data);
 }
