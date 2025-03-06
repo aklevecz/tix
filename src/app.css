@@ -42,7 +42,7 @@ button,
 }
 
 .btn-bauhaus {
-	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] text-black px-4 py-2 font-bold tracking-wide uppercase transition-colors duration-200;
+	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide text-black uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus:hover {
@@ -51,6 +51,18 @@ button,
 
 .btn-nofill {
 	@apply rounded-md border-2 border-[var(--secondary-color)] bg-transparent px-4 py-2 font-bold tracking-wide text-[var(--secondary-color)] uppercase transition-colors duration-200;
+}
+
+button {
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.15s ease,
+		background-color 0.2s ease;
+}
+button:active {
+	transform: translateY(8px);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+	background-color: #2a70c2 !important;
 }
 
 .btn-onlytext {

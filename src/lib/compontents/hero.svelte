@@ -19,18 +19,25 @@
 
 	$effect(() => {
 		quantityMessage = quantityMessageMap[quantityInCart];
-        if (quantityInCart > 4) {
-            quantityMessage = 'You have a lot of friends';
-        }
+		if (quantityInCart > 4) {
+			quantityMessage = 'You have a lot of friends';
+		}
 	});
 </script>
 
-<div class="flex flex-col gap-4 px-3 max-w-[700px]">
+<div class="flex max-w-[700px] flex-col gap-4 px-3">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<img class="hero-img max-w-[700px] min-h-[100px]" src={featured?.img} alt="literally underground" />
-		<div class="text-lg font-semibold">
-			{featured.title} @ {featured.place.name}
+		<img
+			class="hero-img min-h-[100px] max-w-[700px]"
+			src={featured?.img}
+			alt="literally underground"
+		/>
+		<div class="flex items-center gap-4">
+			<img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" />
+			<div class="text-lg font-semibold">
+				{featured.title}
+			</div>
 		</div>
 		<div class="desc">
 			{featured?.description}
@@ -43,7 +50,7 @@
 			Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 			{featured.productType}
 		</button>
-		<button onclick={() => cart.remove(featured)} class="btn-bauhaus w-[200px] mx-auto">
+		<button onclick={() => cart.remove(featured)} class="btn-bauhaus mx-auto w-[200px]">
 			REMOVE
 			{featured.productType}
 		</button>
