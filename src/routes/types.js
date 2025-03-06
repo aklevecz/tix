@@ -23,6 +23,13 @@
  * @property {number} step
  */
 
+/** 
+ * @typedef Seo  
+ * @property {string} title
+ * @property {string} description
+ * @property {string} image
+ * */
+
 /**
  * @typedef Product
  * @property {string} id
@@ -39,6 +46,7 @@
  * @property {string} img
  * @property {string} primaryColor
  * @property {string} secondaryColor
+ * @property {Seo} seo
  */
 
 /**

@@ -77,7 +77,12 @@ export const mockProducts = [
 		dates: ['2025-03-14'],
 		img: '/images/literally-underground/1/image.png',
 		primaryColor: 'var(--faight-orange)',
-		secondaryColor: 'var(--faight-yellow)'
+		secondaryColor: 'var(--faight-yellow)',
+		seo: {
+			title: 'Literally Underground | The Faight Collective',
+			description: `The Faight Collective presents San Francisco's underground music discovery night - Sun Casino, Honey Bucket, Loon`,
+			image: '/images/literally-underground/1/image.png'
+		}
 	},
 	{
 		id: 'raptor-faight-2',
@@ -99,7 +104,12 @@ export const mockProducts = [
 		dates: ['2025-05-02'],
 		img: '/images/ticket.png',
 		primaryColor: 'var(--faight-orange)',
-		secondaryColor: 'var(--faight-yellow)'
+		secondaryColor: 'var(--faight-yellow)',
+		seo: {
+			title: 'Raptor Faight 2 | The Faight Collective',
+			description: 'A ticket to the concert raptors takeover at the faight part 2',
+			image: '/images/ticket.png'
+		}
 	}
 ];
 
