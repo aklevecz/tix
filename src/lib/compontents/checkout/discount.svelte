@@ -65,7 +65,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	input {
-		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-xs text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
+		@apply w-full flex-1 border border-[var(--secondary-color)] bg-transparent p-2 text-base text-[var(--secondary-color)] focus:border-[var(--color-2)] focus:outline-none;
 	}
 	button.btn-bauhaus {
 		@apply text-xs;

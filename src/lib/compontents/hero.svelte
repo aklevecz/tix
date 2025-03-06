@@ -69,6 +69,6 @@
 		@apply m-1 text-center text-base font-bold;
 	}
 	img.hero-img {
-		@apply max-h-[220px] max-w-[700px];
+		@apply max-h-[300px] mx-auto;
 	}
 </style>

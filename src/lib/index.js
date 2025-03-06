@@ -68,7 +68,7 @@ export const mockProducts = [
 		price: 1500,
 		priceConfig: {
 			base: 1500,
-			slidingScale: true,
+			slidingScale: false,
 			min: 100,
 			max: 5000,
 			step: 500
@@ -105,7 +105,7 @@ export const mockProducts = [
 		},
 		date: '2025-05-02',
 		dates: ['2025-05-02'],
-		img: '/raptor/raptor-red-svg.svg',
+		img: '/raptor/part-2-flyer.jpg',
 		theme: {
 			primaryColor: 'black',
 			secondaryColor: 'red',
@@ -113,8 +113,8 @@ export const mockProducts = [
 		},
 		seo: {
 			title: 'Raptor Faight 2 | The Faight Collective',
-			description: 'A ticket to the concert raptors takeover at the faight part 2',
-			image: '/images/favicon.png'
+			description: 'The Concert Raptors run it back for part 2 at The Faight Collective',
+			image: '/raptor/part-2-flyer.jpg'
 		}
 	}
 ];

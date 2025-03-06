@@ -21,10 +21,6 @@
 		selectedDate = date;
 		cart.updateTicketDate(product.id, date);
 	}
-
-	$effect(() => {
-		console.log()
-	})
 </script>
 
 <div class="product-item">
