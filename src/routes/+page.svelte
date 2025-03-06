@@ -4,11 +4,7 @@
 
 	const { data } = $props();
 	const { featured } = data;
-
-
 </script>
 
 <Hero {featured} />
 <CartContainer />
-
-

@@ -30,6 +30,13 @@
  * @property {string} image
  * */
 
+/** 
+ * @typedef Theme
+ * @property {string} primaryColor
+ * @property {string} secondaryColor
+ * @property {string} thirdColor
+ */
+
 /**
  * @typedef Product
  * @property {string} id
@@ -44,8 +51,7 @@
  * @property {string} date
  * @property {string[]} dates
  * @property {string} img
- * @property {string} primaryColor
- * @property {string} secondaryColor
+ * @property {Theme} theme
  * @property {Seo} seo
  */
 

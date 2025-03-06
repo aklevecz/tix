@@ -38,7 +38,7 @@
 	}
 
 	.total {
-		@apply border-[var(--color-1)]/20 pt-0 text-lg leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl md:mt-12;
+		@apply border-[var(--color-1)]/20 pt-0 text-2xl leading-[1rem] font-medium text-[var(--secondary-color)] mb-1 md:text-2xl md:mt-12;
 	}
 
 	a.btn-bauhaus {
@@ -46,6 +46,6 @@
 	}
 
 	a.checkout {
-		@apply md:text-2xl;
+		@apply mt-4 md:text-2xl;
 	}
 </style>

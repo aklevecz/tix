@@ -1,6 +1,7 @@
 <script>
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
+	import { slide } from 'svelte/transition';
 
 	let { featured } = $props();
 
@@ -28,14 +29,10 @@
 <div class="flex max-w-[700px] flex-col gap-4 px-3">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<img
-			class="hero-img min-h-[100px] max-w-[700px]"
-			src={featured?.img}
-			alt="literally underground"
-		/>
+		<img class="hero-img" src={featured?.img} alt="literally underground" />
 		<div class="flex items-center gap-4">
 			<img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" />
-			<div class="text-lg font-semibold">
+			<div class="text-lg font-semibold tracking-wide capitalize">
 				{featured.title}
 			</div>
 		</div>
@@ -49,11 +46,13 @@
 		<button onclick={() => cart.add(featured)} class="btn-bauhaus">
 			Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 			{featured.productType}
+			<!-- ({quantityInCart}) -->
 		</button>
-		<button onclick={() => cart.remove(featured)} class="btn-bauhaus">
-			REMOVE
-			{featured.productType}
-		</button>
+		{#if quantityInCart}
+			<button transition:slide onclick={() => cart.remove(featured)} class="btn-bauhaus">
+				REMOVE
+				{featured.productType}
+			</button>{/if}
 	{/if}
 </div>
 
@@ -70,5 +69,6 @@
 		@apply m-1 text-center text-base font-bold;
 	}
 	img.hero-img {
+		@apply max-h-[220px] max-w-[700px];
 	}
 </style>

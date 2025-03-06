@@ -46,6 +46,6 @@
 	}
 
 	.cart-line-item__quantity {
-		@apply pr-1 font-bold text-[var(--secondary-color)] text-lg;
+		@apply pr-1 font-bold text-[var(--third-color)] text-lg;
 	}
 </style>

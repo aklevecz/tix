@@ -46,7 +46,7 @@ export const collectCookies = () => {
 };
 
 /** @type {Record<string, Locale>} */
-const locations = {
+export const locations = {
 	faight: {
 		name: 'the faight collective',
 		address: '473A Haight St, San Francisco, CA 94117',
@@ -76,8 +76,11 @@ export const mockProducts = [
 		date: '2025-03-14',
 		dates: ['2025-03-14'],
 		img: '/images/literally-underground/1/image.png',
-		primaryColor: 'var(--faight-orange)',
-		secondaryColor: 'var(--faight-yellow)',
+		theme: {
+			primaryColor: 'var(--faight-orange)',
+			secondaryColor: 'var(--faight-yellow)',
+			thirdColor: 'white'
+		},
 		seo: {
 			title: 'Literally Underground | The Faight Collective',
 			description: `The Faight Collective presents San Francisco's underground music discovery night - Sun Casino, Honey Bucket, Loon`,
@@ -102,13 +105,16 @@ export const mockProducts = [
 		},
 		date: '2025-05-02',
 		dates: ['2025-05-02'],
-		img: '/images/ticket.png',
-		primaryColor: 'var(--faight-orange)',
-		secondaryColor: 'var(--faight-yellow)',
+		img: '/raptor/raptor-red-svg.svg',
+		theme: {
+			primaryColor: 'black',
+			secondaryColor: 'red',
+			thirdColor: 'white'
+		},
 		seo: {
 			title: 'Raptor Faight 2 | The Faight Collective',
 			description: 'A ticket to the concert raptors takeover at the faight part 2',
-			image: '/images/ticket.png'
+			image: '/images/favicon.png'
 		}
 	}
 ];
@@ -123,8 +129,7 @@ export const responses = {
 
 export const EVENT_ID = 'literally-underground-1';
 
-
 export const colors = {
 	faightOrange: '#ff764f',
-	faightYellow: '#ffda4e',
-}
+	faightYellow: '#ffda4e'
+};
