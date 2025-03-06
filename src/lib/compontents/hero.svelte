@@ -50,7 +50,7 @@
 			Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 			{featured.productType}
 		</button>
-		<button onclick={() => cart.remove(featured)} class="btn-bauhaus mx-auto w-[200px]">
+		<button onclick={() => cart.remove(featured)} class="btn-bauhaus">
 			REMOVE
 			{featured.productType}
 		</button>
