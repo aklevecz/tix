@@ -249,24 +249,28 @@
 
 <div class="relative">
 	{#if loading}
-		<div class="absolute w-full h-full flex min-h-[200px] items-center justify-center text-2xl font-bold">
+		<div
+			class="absolute flex h-full min-h-[200px] w-full items-center justify-center text-2xl font-bold"
+		>
 			Loading...
 		</div>{/if}
 	<form id="payment-form">
 		{#if applePay}
-			<div
-				aria-label="apple pay button"
-				role="button"
-				tabindex="0"
-				onclick={(e) => handlePaymentMethodSubmission(e, applePay)}
-				onkeydown={(e) => {
-					if (e.key === 'Enter' || e.key === ' ') {
-						e.preventDefault();
-						handlePaymentMethodSubmission(e, applePay);
-					}
-				}}
-				id="apple-pay-button"
-			></div>
+			<div id="apple-pay-wrapper">
+				<div
+					aria-label="apple pay button"
+					role="button"
+					tabindex="0"
+					onclick={(e) => handlePaymentMethodSubmission(e, applePay)}
+					onkeydown={(e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							e.preventDefault();
+							handlePaymentMethodSubmission(e, applePay);
+						}
+					}}
+					id="apple-pay-button"
+				></div>
+			</div>
 			<!-- <div class="m-2 text-center font-semibold">OR</div> -->
 		{/if}
 		{#if googlePay}
@@ -288,16 +292,26 @@
 		<!-- <div class="text-sm font-semibold">Credit Card</div> -->
 		<div id="card-container"></div>
 		{#if !loading}<button
-			class="btn-bauhaus m-auto block"
-			onclick={(e) => handlePaymentMethodSubmission(e, card)}
-			id="card-button"
-			type="button">{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
-		>{/if}
+				class="btn-bauhaus m-auto block"
+				onclick={(e) => handlePaymentMethodSubmission(e, card)}
+				id="card-button"
+				type="button">{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
+			>{/if}
 	</form>
 	<div id="payment-status-container"></div>
 </div>
 
 <style>
+	#apple-pay-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: white;
+		padding: 3px;
+		margin-bottom: 1rem;
+		border-radius: 5px;
+	}
+	
 	#apple-pay-button {
 		height: 48px;
 		width: 100%;

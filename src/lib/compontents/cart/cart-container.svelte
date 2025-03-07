@@ -11,7 +11,13 @@
 
 	$effect(() => {
 		if (hasItems) {
-			window.scrollTo(0, pushHeight);
+			setTimeout(() => {
+				window.scrollTo({
+					top: pushHeight,
+					left: 0,
+					behavior: 'smooth'
+				});
+			}, 100);
 		}
 	});
 </script>

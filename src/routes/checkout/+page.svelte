@@ -4,6 +4,7 @@
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
+	console.log(data.featured?.id);
 	if (data.featured?.priceConfig.slidingScale === false) {
 		goto('/checkout/info');
 	}

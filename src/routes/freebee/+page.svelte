@@ -1,9 +1,8 @@
 <script>
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
-	import PhoneInput from '$lib/compontents/user/phone-input.svelte';
 	import freebee from '$lib/stores/freebee.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { concatDateTime, dateAndTimeToDateZ } from '$lib/utils';
+	import { concatDateTime } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -79,23 +78,15 @@
 	}
 </script>
 
-<div class="flex min-h-[80vh] flex-col md:min-h-[90vh] max-w-[600px] mx-auto mb-10">
+<div class="mx-auto mb-10 flex min-h-[80vh] max-w-[600px] flex-col md:min-h-[90vh]">
 	{#if !user.token}
 		<div class="m-4 mb-10 rounded-md border p-4">
 			<h1 class="my-4 text-center text-lg font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
 			<AuthContainer />
 		</div>
 	{/if}
-	{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
-		<div class="rounded-lg border p-4 shadow-inner">
-			<div class="mb-2 text-2xl font-bold">
-				{object.value.toString().padStart(2, '0')}
-			</div>
-			<div class="text-xs text-gray-400">{object.label}</div>
-		</div>
-	{/snippet}
 
-	<h1 class="p-4 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
+	<h1 class="p-0 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
 
 	{#if won}
 		<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
@@ -104,7 +95,7 @@
 	{/if}
 
 	{#if !won}
-		<div class="p-4">
+		<div class="m-0">
 			{#if (!canWin && !alreadyClaimed) || true}
 				<!-- <h2 class="mb-2 text-xl font-semibold">Countdown</h2>
 			<div>
@@ -115,29 +106,14 @@
 				{minutes === 1 ? 'minute' : 'minutes'} , {seconds}
 				{seconds === 1 ? 'second' : 'seconds'}
 			</div> -->
-				<div class:flashing={canWin} class="rounded-xl border p-6 shadow-2xl">
-					<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
-					<div class="grid grid-cols-3 justify-center gap-4 text-center">
-						<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
-						{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
-						{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
-						{@render timeUnit({ value: seconds, label: 'Secs' })}
-						<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
-				<TimeUnit value={hours} label={hours === 1 ? 'Hour' : 'Hours'} />
-				<TimeUnit value={minutes} label={minutes === 1 ? 'Minute' : 'Minutes'} />
-				<TimeUnit value={seconds} label={seconds === 1 ? 'Second' : 'Seconds'} /> -->
-					</div>
-				</div>
+
 				{#if !canWin && !alreadyClaimed}
-					<p class="px-4 py-6 font-bold">
-						Occasionally, a free ticket becomes available. The first to press “WIN” once the
-						countdown ends claims it 🙃
+					<p class="cta-bubble text-lg text-black">
+						Occasionally, a free ticket becomes available.🙃
 					</p>
 				{/if}
 				{#if canWin && !alreadyClaimed}
-					<p class="my-12 px-4 pb-4 text-center text-2xl font-bold text-green-500">
-						OMG You can win! press the button!!!
-					</p>
+					<p class="cta-bubble text-green-500">OMG You can win! press the button!!!</p>
 				{/if}
 			{/if}
 
@@ -147,10 +123,32 @@
 			{/if}
 		</div>
 	{/if}
-
+	{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
+		<div class="rounded-lg border p-4 shadow-inner">
+			<div class="mb-2 text-2xl font-bold">
+				{object.value.toString().padStart(2, '0')}
+			</div>
+			<div class="text-xs">{object.label}</div>
+		</div>
+	{/snippet}
+	<div class:flashing={canWin} class="rounded-xl border p-6 m-4 my-0 shadow-2xl">
+		<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
+		<div class="grid grid-cols-3 justify-center gap-4 text-center">
+			<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
+			{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
+			{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
+			{@render timeUnit({ value: seconds, label: 'Secs' })}
+			<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
+<TimeUnit value={hours} label={hours === 1 ? 'Hour' : 'Hours'} />
+<TimeUnit value={minutes} label={minutes === 1 ? 'Minute' : 'Minutes'} />
+<TimeUnit value={seconds} label={seconds === 1 ? 'Second' : 'Seconds'} /> -->
+		</div>
+	</div>
 	{#if !alreadyClaimed}
 		<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
-		<button onclick={onWin} class="win-button">WIN</button>
+		<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
+			>WIN</button
+		>
 	{/if}
 </div>
 
@@ -161,6 +159,12 @@
 	}
 	.flashing {
 		animation: flashing 1s ease-in-out infinite;
+	}
+	.cta-bubble {
+		@apply w-3/4 m-[2rem_auto] p-6 bg-[var(--secondary-color)] rounded-md text-center font-bold;
+	}
+	.faded {
+		opacity: 0.5;
 	}
 	@keyframes flashing {
 		0% {
@@ -187,6 +191,22 @@
 		}
 		100% {
 			filter: hue-rotate(0deg);
+		}
+	}
+
+	.pulse {
+		animation: pulse 1s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0% {
+			transform: scale(1);
+		}
+		50% {200
+			transform: scale(1.1);
+		}
+		100% {
+			transform: scale(1);
 		}
 	}
 </style>
