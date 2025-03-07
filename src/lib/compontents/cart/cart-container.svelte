@@ -7,7 +7,7 @@
 
 	let hasItems = $derived(Object.entries(cart.state.items).length);
 
-	const pushHeight = 130;
+	const pushHeight = 150;
 
 	$effect(() => {
 		if (hasItems) {
@@ -17,7 +17,7 @@
 </script>
 
 {#if hasItems}
-	<div class="h-[{pushHeight}px]"></div>
+	<div style="height: {pushHeight}px"></div>
 
 	<div class="cart-container" transition:slide>
 		<div class="cart-item-wrapper">
