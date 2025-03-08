@@ -9,7 +9,7 @@
 <div class="flex flex-col justify-center bg-red">
 	<h1>Payment</h1>
 	{#if data.paymentType === 'square'}
-		<SquarePay />
+		<SquarePay theme={data.featured?.theme} />
 	{/if}
 
 	{#if data.paymentType === 'stripe'}

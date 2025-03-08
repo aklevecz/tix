@@ -55,6 +55,11 @@ export const locations = {
 	}
 };
 
+export const colors = {
+	faightOrange: '#ff764f',
+	faightYellow: '#ffda4e'
+};
+
 /** @type {Product[]} */
 export const mockProducts = [
 	{
@@ -77,8 +82,8 @@ export const mockProducts = [
 		dates: ['2025-03-14'],
 		img: '/images/literally-underground/1/image.png',
 		theme: {
-			primaryColor: 'var(--faight-orange)',
-			secondaryColor: 'var(--faight-yellow)',
+			primaryColor: colors.faightOrange,
+			secondaryColor: colors.faightYellow,
 			thirdColor: 'white'
 		},
 		seo: {
@@ -128,8 +133,3 @@ export const responses = {
 };
 
 export const EVENT_ID = 'literally-underground-1';
-
-export const colors = {
-	faightOrange: '#ff764f',
-	faightYellow: '#ffda4e'
-};

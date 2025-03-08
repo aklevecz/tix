@@ -7,7 +7,6 @@
 	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
-	import { fade } from 'svelte/transition';
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
 	let { data, children } = $props();
@@ -64,7 +63,7 @@
 					Subtotal<span>{formatPrice(cart.state.subtotal)}</span>
 				</h2>
 				{#if cart.state.discount}
-					<h2 class="flex items-baseline justify-between text-base text-gray-400">
+					<h2 class="flex items-baseline justify-between text-base text-[var(--green)]">
 						Discount<span class="text-[var(--color-2)]">-{cart.state.discount}% </span>
 					</h2>
 				{/if}

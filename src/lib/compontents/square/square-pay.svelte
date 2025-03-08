@@ -12,6 +12,8 @@
 	import { formatPrice } from '$lib/utils';
 	import { onMount } from 'svelte';
 
+	let { theme } = $props();
+
 	const locationId = isDev ? 'LCGAF8NYM7C23' : 'LA6PWVD0KD3Z9';
 	const appId = isDev ? PUBLIC_SQUARE_APPLICATION_ID_TEST : PUBLIC_SQUARE_APPLICATION_ID;
 
@@ -60,13 +62,13 @@
 					color: '#ff1600'
 				},
 				input: {
-					backgroundColor: colors.faightYellow,
-					color: colors.faightOrange,
+					backgroundColor: theme.primaryColor,
+					color: theme.secondaryColor,
 					fontSize: '24px',
 					fontFamily: 'helvetica neue, sans-serif'
 				},
 				'input::placeholder': {
-					color: '#000'
+					color: '#fff'
 				},
 				'input.is-error': {
 					color: '#ff1600'

@@ -1,4 +1,12 @@
 @import 'tailwindcss';
+/* SF Pro Display variants */
+@font-face {
+	font-family: 'SF Pro Rounded';
+	src: url('/fonts/SF-Pro-Rounded-Semibold.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
 
 :root {
 	--yellow: #ffc73a;
@@ -21,6 +29,7 @@
 html,
 body {
 	/* background-color: var(--primary-color); */
+	font-family: 'SF Pro Rounded', sans-serif;
 	color: var(--secondary-color);
 	text-transform: uppercase;
 	display: flex;

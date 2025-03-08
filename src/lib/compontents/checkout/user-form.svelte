@@ -20,7 +20,7 @@
 	});
 
 	function goToPayment() {
-		if (!fullName || !email || !phoneNumber) {
+		if (!fullName || !email || !phoneNumber.number) {
 			alert('Please fill out all fields');
 			return;
 		}

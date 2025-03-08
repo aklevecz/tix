@@ -46,7 +46,6 @@
 				won = true;
 			} else {
 				if (!res.winner) {
-					console.log('count');
 					updateCountdown();
 
 					interval = setInterval(updateCountdown, 1000);
@@ -109,7 +108,7 @@
 
 				{#if !canWin && !alreadyClaimed}
 					<p class="cta-bubble text-lg text-black">
-						Occasionally, a free ticket becomes available.🙃
+						Occasionally, a free ticket becomes available 🙃
 					</p>
 				{/if}
 				{#if canWin && !alreadyClaimed}
