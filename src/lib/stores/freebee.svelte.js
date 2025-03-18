@@ -4,13 +4,13 @@ import freebeeApi from '$lib/api/freebee';
 const defaultFreebee = {
 	id: '',
 	project_name: '',
-    winner: '',
+	winner: '',
 	date: null,
 	time: null
 };
 
 const createFreebeeStore = () => {
-	let freebee = $state(defaultFreebee);
+	let freebee = $state({ ...defaultFreebee });
 
 	return {
 		get state() {
@@ -18,9 +18,9 @@ const createFreebeeStore = () => {
 		},
 		async init() {
 			const config = await freebeeApi.getFreebeeConfig();
-            console.log(config.message)
+			console.log(config.message);
 			freebee = config;
-            return config
+			return config;
 		},
 		/** @param {Freebee} newState */
 		set(newState) {

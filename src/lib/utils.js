@@ -121,3 +121,5 @@ export async function fetchImageAsBase64(imageUrl, { maxWidth = 800, quality = 0
 export function phoneNumberToUid(phoneNumber) {
 	return phoneNumber.replace('+', '');
 }
+
+export const delay = (t = 500) => new Promise((r) => setTimeout(r, t));

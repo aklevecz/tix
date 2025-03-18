@@ -130,24 +130,26 @@
 			<div class="text-xs">{object.label}</div>
 		</div>
 	{/snippet}
-	<div class:flashing={canWin} class="rounded-xl border p-6 m-4 my-0 shadow-2xl">
-		<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
-		<div class="grid grid-cols-3 justify-center gap-4 text-center">
-			<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
-			{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
-			{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
-			{@render timeUnit({ value: seconds, label: 'Secs' })}
-			<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
+	{#if !won}
+		<div class:flashing={canWin} class="m-4 my-0 rounded-xl border p-6 shadow-2xl">
+			<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
+			<div class="grid grid-cols-3 justify-center gap-4 text-center">
+				<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
+				{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
+				{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
+				{@render timeUnit({ value: seconds, label: 'Secs' })}
+				<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
 <TimeUnit value={hours} label={hours === 1 ? 'Hour' : 'Hours'} />
 <TimeUnit value={minutes} label={minutes === 1 ? 'Minute' : 'Minutes'} />
 <TimeUnit value={seconds} label={seconds === 1 ? 'Second' : 'Seconds'} /> -->
+			</div>
 		</div>
-	</div>
-	{#if !alreadyClaimed}
-		<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
-		<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
-			>WIN</button
-		>
+		{#if !alreadyClaimed}
+			<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
+			<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
+				>WIN</button
+			>
+		{/if}
 	{/if}
 </div>
 

@@ -28,6 +28,7 @@
 
 	/** @type {GooglePayMethod|null} */
 	let googlePay = $state(null);
+	let googlePayLoaded = $state(true);
 
 	let orderId = $state('');
 
@@ -109,6 +110,8 @@
 
 			try {
 				googlePay = await initializeGooglePay(payments);
+				googlePayLoaded = true
+				console.log(`Google Pay initialized: ${googlePay}`);
 			} catch (e) {
 				console.error('Initializing Google Pay failed', e);
 			}
@@ -275,7 +278,7 @@
 			</div>
 			<!-- <div class="m-2 text-center font-semibold">OR</div> -->
 		{/if}
-		{#if googlePay}
+		{#if googlePayLoaded}
 			<div
 				aria-label="google pay button"
 				role="button"
@@ -327,5 +330,7 @@
 	#google-pay-button {
 		display: flex;
 		justify-content: center;
+		margin: 1rem 0;
+		width: 100%;
 	}
 </style>

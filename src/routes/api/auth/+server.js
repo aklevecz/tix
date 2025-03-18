@@ -1,7 +1,7 @@
 // import { EVENT_ID } from '$lib/content';
 // import db from '$lib/db';
 import { responses } from '$lib';
-import { phoneNumberToUid } from '$lib/utils';
+import { delay, phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 
 
@@ -42,7 +42,9 @@ export async function POST({ request, cookies, platform }) {
 			return json({ phoneNumber, message: responses.CODE_SENT });
 		};
 		// IF TEST PHONE NUMBER
-		if (phoneNumber === testPhoneNumber) {
+		if (phoneNumber === testPhoneNumber || phoneNumber === `+${testPhoneNumber}`) {
+			// simulate request
+			await delay(1000);
 			return success(testPhoneNumber);
 		}
 
@@ -79,6 +81,7 @@ export async function POST({ request, cookies, platform }) {
 			};
 			// IF TEST PHONE NUMBER
 			if (storedPhoneNumber === testPhoneNumber) {
+				await delay(1000);
 				return approved();
 			}
 			const r = await platform?.env.AUTH_SERVICE.verifyCode({

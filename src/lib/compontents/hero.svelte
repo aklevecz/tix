@@ -26,33 +26,38 @@
 	});
 </script>
 
-<div class="flex max-w-[700px] flex-col gap-4 px-3">
+<div class="mx-auto flex max-w-[700px] flex-col gap-4 px-3 md:flex-row">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<img class="hero-img" src={featured?.img} alt="literally underground" />
-		<div class="flex items-center gap-4">
-			<img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" />
-			<div class="text-lg font-semibold tracking-wide capitalize">
-				{featured.title}
+		<div>
+			<img class="hero-img" src={featured?.img} alt="literally underground" />
+			<div class="p-4">
+				<div class="flex items-center gap-4">
+					<img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" />
+					<div class="text-lg font-semibold tracking-wide capitalize">
+						{featured.title}
+					</div>
+				</div>
+				<div class="desc">
+					{featured?.description}
+				</div>
 			</div>
 		</div>
-		<div class="desc">
-			{featured?.description}
-		</div>
-
 		<!-- <div class="quantity-message">
 			{quantityMessage}
 		</div> -->
-		<button onclick={() => cart.add(featured)} class="btn-bauhaus">
-			Add {quantityInCart ? 'More' : formatPrice(featured.price)}
-			{featured.productType}
-			<!-- ({quantityInCart}) -->
-		</button>
-		{#if quantityInCart}
-			<button transition:slide onclick={() => cart.remove(featured)} class="btn-bauhaus">
-				REMOVE
+		<div class="flex flex-col gap-4">
+			<button onclick={() => cart.add(featured)} class="btn-bauhaus">
+				Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 				{featured.productType}
-			</button>{/if}
+				<!-- ({quantityInCart}) -->
+			</button>
+			{#if quantityInCart}
+				<button transition:slide onclick={() => cart.remove(featured)} class="btn-bauhaus">
+					REMOVE
+					{featured.productType}
+				</button>{/if}
+		</div>
 	{/if}
 </div>
 
@@ -69,6 +74,9 @@
 		@apply m-1 text-center text-base font-bold;
 	}
 	img.hero-img {
-		@apply max-h-[300px] mx-auto;
+		@apply mx-auto max-h-[300px];
+	}
+	.btn-bauhaus {
+		@apply mx-auto w-[200px];
 	}
 </style>

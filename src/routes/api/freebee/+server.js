@@ -85,6 +85,9 @@ export async function GET({ cookies, platform }) {
 		// create a new freebee when someone visits and there is none existing
 		let winner = '';
 		let time = getRandomTimeString();
+		console.log(time)
+		time = new Date().toISOString().split('T')[1];
+		console.log(time)
 		await dbFreebees(platform?.env.DB).saveFreebee(
 			{
 				id: today,
@@ -105,6 +108,7 @@ export async function GET({ cookies, platform }) {
 		});
 	}
 	let { id, winner, project_name, date, time, createdAt } = todaysFreebee;
+	console.log(date, time)
 	// if (!time) {
 	// 	// generate a random time of day after 12:00:00
 	// 	time = getRandomTimeString();
@@ -161,7 +165,6 @@ export async function POST({ cookies, platform, request }) {
 		});
 	}
 
-	console.log(freebeeEntry);
 	if (!freebeeEntry.winner) {
 		await dbFreebees(platform?.env.DB).updateFreebee(today, [
 			{
