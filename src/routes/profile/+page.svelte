@@ -22,6 +22,7 @@
 			phoneNumber = data.phoneNumber;
 			orders = data.orders;
 			freebee = data.freebee;
+			oldOrders = data.oldOrders;
 		});
 	});
 </script>
