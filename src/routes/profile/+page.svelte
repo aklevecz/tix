@@ -36,7 +36,7 @@
 {#if user.token}
 	<div class="p-4">
 		<h2>Phone: {phoneNumber}</h2>
-		<img src="/api/img?id={phoneNumber}/raptor.jpeg" alt="" />
+		<img src="/api/img?id={phoneNumber}/raptor.jpeg" alt="" class="w-[200px] h-[200px]"/>
 		<div class="section">
 			<h1 class="mt-4 mb-2">Freebees</h1>
 			{#if !freebee}
