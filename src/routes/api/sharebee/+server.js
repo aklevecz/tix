@@ -48,10 +48,14 @@ export async function POST({ cookies, request, platform }) {
 		const success = await db.claimSharebee(id, winner);
 
 		const r2Path = `order-qrs/${eventName}/${id}.jpeg`;
+		// await platform?.env.R2.put(r2Path, qr, {
+		// 	httpMetadata: {
+		// 		contentType: 'image/jpeg'
+		// 	}
+		// });
+
 		await platform?.env.R2.put(r2Path, qr, {
-			httpMetadata: {
-				contentType: 'image/jpeg'
-			}
+			contentType: 'image/jpeg'
 		});
 
 		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
