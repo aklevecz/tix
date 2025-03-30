@@ -16,7 +16,7 @@ export async function GET({cookies, platform}) {
 
     const orders = await dbOrders(platform?.env.DB).getOrdersByPhoneNumber(phoneNumber);
     const freebee = await platform?.env.DB.prepare(`SELECT * FROM freebees WHERE winner = ?`).bind(phoneNumber).first()
+    const sharebee = await platform?.env.DB.prepare(`SELECT * FROM sharebees WHERE winner = ?`).bind(phoneNumber).first()
     const {results: oldOrders} = await platform?.env.DB.prepare(`SELECT * FROM orders where phone_number = ?`).bind(phoneNumber).all()
-    console.log(oldOrders)
-    return json({phoneNumber, orders, freebee, oldOrders});
+    return json({phoneNumber, orders, freebee, sharebee, oldOrders});
 }

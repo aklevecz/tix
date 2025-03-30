@@ -1,3 +1,5 @@
+import { browser } from '$app/environment';
+
 /** @param {number} price */
 export function formatPrice(price) {
 	return new Intl.NumberFormat('en-US', {
@@ -9,7 +11,8 @@ export function formatPrice(price) {
 /** @param {string} date */
 export function formatDate(date) {
 	let timeDate = date;
-	if (!timeDate.includes('T')) {
+	// if (!timeDate.includes('T')) {
+	if (!timeDate.includes(':')) {
 		timeDate = `${date}T12:00:00`;
 	}
 	return new Date(timeDate).toLocaleDateString('en-US', {
@@ -123,3 +126,44 @@ export function phoneNumberToUid(phoneNumber) {
 }
 
 export const delay = (t = 500) => new Promise((r) => setTimeout(r, t));
+
+/**
+ * Simple hash function to detect changes in an object
+ * @param {Object} obj - The object to hash
+ * @return {string} A hash string representing the content
+ */
+export function hashFunction(obj) {
+	// Convert the object to a stable JSON string
+	// (ensures consistent property ordering)
+	const str = JSON.stringify(obj, Object.keys(obj).sort());
+
+	// Simple string hash function
+	let hash = 0;
+	for (let i = 0; i < str.length; i++) {
+		const char = str.charCodeAt(i);
+		hash = (hash << 5) - hash + char;
+		hash = hash & hash; // Convert to 32bit integer
+	}
+
+	// Convert to hex string to make it more readable
+	return Math.abs(hash).toString(16);
+}
+
+// this could be only serverside
+/** @param {string} id @param {string} phoneNumber */
+export function createSharebeeHash(id, phoneNumber) {
+	const hashedPhoneNumber = hashFunction(phoneNumber);
+	const hashedId = hashFunction(id);
+	const determinedSharebeeId = `${hashedPhoneNumber}-${hashedId}`;
+	return determinedSharebeeId;
+}
+
+/** @param {string} id */
+export function createSharebeeUrl(id) {
+	if (browser) {
+		// const baseUrl = window.location.href.split('/sharebee')[0];
+		const baseUrl = `${window.location.protocol}//${window.location.host}`;
+		return `${baseUrl}/sharebee/${encodeURIComponent(id)}`;
+	}
+	return '';
+}

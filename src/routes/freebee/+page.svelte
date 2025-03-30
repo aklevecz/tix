@@ -79,24 +79,25 @@
 
 <div class="mx-auto mb-10 flex min-h-[80vh] max-w-[600px] flex-col md:min-h-[90vh]">
 	{#if !user.token}
-		<div class="m-4 mb-10 rounded-md border p-4">
-			<h1 class="my-4 text-center text-lg font-bold">YOU MUST BE SIGNED IN TO WIN</h1>
+		<div class="m-4 mb-10 rounded-md border p-1">
+			<h1 class="mt-2 text-center text-lg font-bold">Sign in to win</h1>
 			<AuthContainer />
 		</div>
 	{/if}
 
-	<h1 class="p-0 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
+	<div class="{user.token ? 'opacity-100' : 'opacity-25'}">
+		<h1 class="p-0 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
 
-	{#if won}
-		<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
-		<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
-		<p class="filter-strobe mx-auto text-[170px]">🎉</p>
-	{/if}
+		{#if won}
+			<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
+			<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
+			<p class="filter-strobe mx-auto text-[170px]">🎉</p>
+		{/if}
 
-	{#if !won}
-		<div class="m-0">
-			{#if (!canWin && !alreadyClaimed) || true}
-				<!-- <h2 class="mb-2 text-xl font-semibold">Countdown</h2>
+		{#if !won}
+			<div class="m-0">
+				{#if (!canWin && !alreadyClaimed) || true}
+					<!-- <h2 class="mb-2 text-xl font-semibold">Countdown</h2>
 			<div>
 				{days}
 				{days === 1 ? 'day' : 'days'} , {hours}
@@ -106,57 +107,58 @@
 				{seconds === 1 ? 'second' : 'seconds'}
 			</div> -->
 
-				{#if !canWin && !alreadyClaimed}
-					<p class="cta-bubble text-lg text-black">
-						Occasionally, a free ticket becomes available 🙃
-					</p>
+					{#if !canWin && !alreadyClaimed}
+						<p class="cta-bubble text-lg text-black">
+							Occasionally, a free ticket becomes available 🙃
+						</p>
+					{/if}
+					{#if canWin && !alreadyClaimed}
+						<p class="cta-bubble text-green-500">OMG You can win! press the button!!!</p>
+					{/if}
 				{/if}
-				{#if canWin && !alreadyClaimed}
-					<p class="cta-bubble text-green-500">OMG You can win! press the button!!!</p>
-				{/if}
-			{/if}
 
-			{#if alreadyClaimed}
-				<p class="mt-10 px-4 text-2xl font-bold">Todays freebee has been claimed</p>
-				<p class="px-4 py-4 pr-0 text-lg font-bold">Check back tomorrow 😎</p>
-			{/if}
-		</div>
-	{/if}
-	{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
-		<div class="rounded-lg border p-4 shadow-inner">
-			<div class="mb-2 text-2xl font-bold">
-				{object.value.toString().padStart(2, '0')}
+				{#if alreadyClaimed}
+					<p class="mt-10 px-4 text-2xl font-bold">Todays freebee has been claimed</p>
+					<p class="px-4 py-4 pr-0 text-lg font-bold">Check back tomorrow 😎</p>
+				{/if}
 			</div>
-			<div class="text-xs">{object.label}</div>
-		</div>
-	{/snippet}
-	{#if !won}
-		<div class:flashing={canWin} class="m-4 my-0 rounded-xl border p-6 shadow-2xl">
-			<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
-			<div class="grid grid-cols-3 justify-center gap-4 text-center">
-				<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
-				{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
-				{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
-				{@render timeUnit({ value: seconds, label: 'Secs' })}
-				<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
+		{/if}
+		{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
+			<div class="rounded-lg border p-4 shadow-inner">
+				<div class="mb-2 text-2xl font-bold">
+					{object.value.toString().padStart(2, '0')}
+				</div>
+				<div class="text-xs">{object.label}</div>
+			</div>
+		{/snippet}
+		{#if !won}
+			<div class:flashing={canWin} class="m-4 my-0 rounded-xl border p-6 shadow-2xl">
+				<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
+				<div class="grid grid-cols-3 justify-center gap-4 text-center">
+					<!-- {@render timeUnit({ value: days, label: days === 1 ? 'Day' : 'Days' })} -->
+					{@render timeUnit({ value: hours, label: hours === 1 ? 'Hr' : 'Hrs' })}
+					{@render timeUnit({ value: minutes, label: minutes === 1 ? 'Min' : 'Mins' })}
+					{@render timeUnit({ value: seconds, label: 'Secs' })}
+					<!-- <TimeUnit value={days} label={days === 1 ? 'Day' : 'Days'} />
 <TimeUnit value={hours} label={hours === 1 ? 'Hour' : 'Hours'} />
 <TimeUnit value={minutes} label={minutes === 1 ? 'Minute' : 'Minutes'} />
 <TimeUnit value={seconds} label={seconds === 1 ? 'Second' : 'Seconds'} /> -->
+				</div>
 			</div>
-		</div>
-		{#if !alreadyClaimed}
-			<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
-			<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
-				>WIN</button
-			>
+			{#if !alreadyClaimed}
+				<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
+				<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
+					>WIN</button
+				>
+			{/if}
 		{/if}
-	{/if}
+	</div>
 </div>
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	button.win-button {
-		@apply m-auto block w-[155px] bg-[var(--color-2)] p-4 text-3xl font-bold tracking-wide text-green-400 transition-colors duration-200 hover:bg-[var(--color-1)];
+		@apply m-auto mt-4 block w-[155px] bg-[var(--color-2)] p-4 text-3xl font-bold tracking-wide text-green-400 transition-colors duration-200 hover:bg-[var(--color-1)];
 	}
 	.flashing {
 		animation: flashing 1s ease-in-out infinite;

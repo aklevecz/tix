@@ -28,11 +28,31 @@ export async function GET({ request, platform, url }) {
 	// return json(partiers);
 	return json({});
 }
-const myNumber = '14159671642';
-const testPhoneNumber = myNumber;
+
+const TEST_NUMBERS = {
+	full: ['+14159671642', '+19999999999'],
+	short: ['14159671642', '11234', '999999999']
+};
+
+/**
+ * Checks if a phone number is a test number
+ * @param {string} phoneNumber - The phone number to check
+ * @returns {boolean} - True if the number is a test number
+ */
+function isTestNumber(phoneNumber) {
+	if (!phoneNumber) return false;
+
+	// Remove any '+' prefix for consistent checking
+	const cleanNumber = phoneNumber.replace('+', '');
+
+	return TEST_NUMBERS.full.includes(phoneNumber) || 
+		   TEST_NUMBERS.short.includes(cleanNumber);
+}
+
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies, platform }) {
 	const { phoneNumber, name, code } = await request.json();
+	console.log('phoneNumber', phoneNumber);
 	// sending code
 	if (phoneNumber) {
 		/** @param {string} phoneNumber */
@@ -42,10 +62,10 @@ export async function POST({ request, cookies, platform }) {
 			return json({ phoneNumber, message: responses.CODE_SENT });
 		};
 		// IF TEST PHONE NUMBER
-		if (phoneNumber === testPhoneNumber || phoneNumber === `+${testPhoneNumber}`) {
+		if (isTestNumber(phoneNumber)) {
 			// simulate request
 			await delay(1000);
-			return success(testPhoneNumber);
+			return success(phoneNumber);
 		}
 
 		const r = await platform?.env.AUTH_SERVICE.sendCode(phoneNumber);
@@ -80,7 +100,7 @@ export async function POST({ request, cookies, platform }) {
 				return json({ message: responses.AUTHED });
 			};
 			// IF TEST PHONE NUMBER
-			if (storedPhoneNumber === testPhoneNumber) {
+			if (isTestNumber(storedPhoneNumber)) {
 				await delay(1000);
 				return approved();
 			}

@@ -98,7 +98,7 @@ export const mockProducts = [
 		productType: 'ticket',
 		name: 'ticket',
 		title: 'Raptor Faight 2',
-		description: 'A ticket to the concert raptors takeover at the faight part 2',
+		description: 'Tickets will be available for Raptor Faight 2 soon',
 		place: locations.faight,
 		price: 1500,
 		priceConfig: {
@@ -132,4 +132,4 @@ export const responses = {
 	LOGGED_OUT: 'Logged out'
 };
 
-export const EVENT_ID = 'literally-underground-1';
+export const EVENT_ID = 'raptor-faight-2';

@@ -14,12 +14,14 @@
 	import countries from './countries';
 	import user from '$lib/stores/user.svelte';
 
+	let { onSubmit, hasSubmittedCode = $bindable() } = $props();
+
 	/** @type {import('libphonenumber-js').CountryCode }*/
 	let selectedCountry = $state('US');
 	let phone = $state('');
 	let error = $state('');
 
-    let phoneValue = $derived(user.state.phoneNumber.number)
+	let phoneValue = $derived(user.state.phoneNumber.number);
 	function validatePhone() {
 		if (!phone.trim()) {
 			error = '';
@@ -30,12 +32,19 @@
 			if (parsed && parsed.isValid()) {
 				error = '';
 			} else {
-				error = 'Invalid phone number';
+				error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
 			}
 		} catch (err) {
-			error = 'Invalid phone number';
+			console.log(err)
+			error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
 		}
 	}
+
+	$effect(() => {
+		if (hasSubmittedCode) {
+			validatePhone();
+		}
+	});
 
 	const getCountryPrefix = () => {
 		return countries.find((c) => c.code === selectedCountry)?.dialCode || '+1';
@@ -43,6 +52,7 @@
 
 	/** @param {*} e*/
 	function handleInput(e) {
+		hasSubmittedCode = false
 		phone = e.target.value;
 		validatePhone();
 		user.updateUser({
@@ -72,7 +82,17 @@
 				</option>
 			{/each}
 		</select>
-		<input type="tel" placeholder="Enter phone number" value={phoneValue} oninput={handleInput} />
+		<input
+			onkeypress={(e) => {
+				if (e.key === 'Enter') {
+					onSubmit();
+				}
+			}}
+			type="tel"
+			placeholder="Enter phone number"
+			value={phoneValue}
+			oninput={handleInput}
+		/>
 	</div>
 	{#if error}
 		<div class="error">{error}</div>
@@ -80,7 +100,7 @@
 </div>
 
 <style lang="postcss">
-    @reference "tailwindcss/theme";
+	@reference "tailwindcss/theme";
 	.phone-input-container {
 		/* max-width: 400px; */
 		margin: 20px auto;
@@ -101,19 +121,19 @@
 		background-repeat: no-repeat;
 		background-position: right 10px center;
 		background-size: 10px 5px;
-        @apply text-sm;
+		@apply text-sm;
 	}
 
-    label {
-        @apply text-sm mb-1;
-    }
+	label {
+		@apply mb-1 text-sm;
+	}
 
 	input {
 		padding: 10px;
 		border: 1px solid;
 		font-size: 1rem;
 		flex: 1 0 auto;
-        /* width: 135px; */
+		/* width: 135px; */
 	}
 
 	input:focus,
