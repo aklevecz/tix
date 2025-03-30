@@ -54,7 +54,7 @@ export async function POST({ cookies, request, platform }) {
 			}
 		});
 
-		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}.jpeg`;
 		await platform?.env.MESSENGER_QUEUE.send({
 			defaultMessage: `You got a free ticket for Raptor Faight 2! Here is your QR code`,
 			phoneNumber: phoneNumber,
