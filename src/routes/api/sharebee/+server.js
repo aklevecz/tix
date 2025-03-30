@@ -47,14 +47,14 @@ export async function POST({ cookies, request, platform }) {
 		const db = dbSharebees(platform?.env.DB);
 		const success = await db.claimSharebee(id, winner);
 
-		const r2Path = `order-qrs/${eventName}/${id}`;
+		const r2Path = `order-qrs/${eventName}/${id}.jpeg`;
 		await platform?.env.R2.put(r2Path, qr, {
 			httpMetadata: {
 				contentType: 'image/jpeg'
 			}
 		});
 
-		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}.jpeg`;
+		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		await platform?.env.MESSENGER_QUEUE.send({
 			defaultMessage: `You got a free ticket for Raptor Faight 2! Here is your QR code`,
 			phoneNumber: phoneNumber,
