@@ -14,7 +14,7 @@ export async function GET({ platform }) {
 	});
 }
 
-const eventName = 'raptor-faight-2'
+const eventName = 'raptor-faight-2';
 
 export async function POST({ cookies, request, platform }) {
 	try {
@@ -47,11 +47,14 @@ export async function POST({ cookies, request, platform }) {
 		const db = dbSharebees(platform?.env.DB);
 		const success = await db.claimSharebee(id, winner);
 
-		await platform?.env.R2.put(`order-qrs/${eventName}/${id}`, qr, {
+		const r2Path = `order-qrs/${eventName}/${id}`;
+		console.log('R2 path', r2Path);
+		await platform?.env.R2.put(r2Path, qr, {
 			httpMetadata: {
 				contentType: 'image/jpeg'
 			}
 		});
+		console.log("done saving r2")
 
 		const assetUrl = `https://r2-tix.yaytso.art/orders-qrs/${eventName}/${id}`;
 		await platform?.env.MESSENGER_QUEUE.send({
@@ -63,7 +66,6 @@ export async function POST({ cookies, request, platform }) {
 		// save new sharebee
 		const sharebeeId = createSharebeeHash(id, phoneNumber);
 		await db.saveSharebee(sharebeeId, eventName);
-
 
 		if (!success) {
 			return new Response(JSON.stringify({ error: 'Failed to claim sharebee' }), {
