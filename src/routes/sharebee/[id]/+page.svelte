@@ -2,10 +2,8 @@
 	import sharebee from '$lib/api/sharebee';
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
-	import generate from '$lib/stores/generate.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { createSharebeeUrl, formatDate } from '$lib/utils';
-	import { onMount } from 'svelte';
+	import { createSharebeeUrl } from '$lib/utils';
 	import { Byte, Encoder } from '@nuintun/qrcode';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -58,7 +56,7 @@
 </script>
 
 <div class="container">
-	<h1 class="title">sharebees</h1>
+	<h1 class="title">Sharebees</h1>
 
 	{#if !user.token}
 		<h2 class="subtitle">You must sign in to claim a ticket</h2>
@@ -66,7 +64,7 @@
 	{/if}
 
 	{#if isShareer && !claimed_at}
-		<div class="info">This is your sharebee</div>
+		<div class="info">This is your ticket to share</div>
 		<div class="info">It is still unclaimed. share it already!</div>
 		<div class="link">{createSharebeeUrl(id)}</div>
 		<div class="copy-wrapper">
@@ -97,15 +95,12 @@
 		{/if}
 
 		{#if claimed_at}
-			<div class="status">This Sharebee has been claimed</div>
-
-			<div class="date">{formatDate(claimed_at)}</div>
-			<img alt="raptor" class="raptor" src="/raptor/raptor-svg.svg" />
+			<div class="status">This ticket has been claimed</div>
+			<!-- <div class="date">{formatDate(claimed_at)}</div> -->
+			<div class="highlight">Oh it was claimed by you!</div>
+			<img alt="raptor" class="raptor my-8" src="/raptor/raptor-svg.svg" />
 			{#if isWinner && followingSharebeeUrl}
-				<div class="highlight">Oh it was claimed by you!</div>
-				<div class="status">
-					You can share the link below with someone else (if you haven't already)
-				</div>
+				<div class="status">Here is you link to share</div>
 				<div class="link mt-4">{followingSharebeeUrl}</div>
 				<div class="copy-wrapper">
 					<CopyButton link={followingSharebeeUrl} />
@@ -161,7 +156,7 @@
 	}
 
 	.status {
-		margin-top: 1rem;
+		/* margin-top: 1rem; */
 		font-size: 1.5rem;
 		line-height: 2rem;
 	}

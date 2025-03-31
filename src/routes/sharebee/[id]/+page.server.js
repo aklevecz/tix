@@ -3,7 +3,7 @@ import { createSharebeeHash, hashFunction } from '$lib/utils';
 import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ cookies, params, platform }) {
+export async function load({url, cookies, params, platform, request }) {
 	const { id } = params;
 	const sharebee = await dbSharebees(platform?.env.DB).getSharebee(id);
 	if (!sharebee) {
@@ -32,7 +32,7 @@ export async function load({ cookies, params, platform }) {
 	if (phoneNumber && winner) {
 		isWinner = phoneNumber === winner;
 		if (isWinner) {
-			const baseUrl = `http://localhost:5173`;
+			const baseUrl = url.origin
 			const determinedSharebeeId = createSharebeeHash(id, phoneNumber);
 			followingSharebeeId = determinedSharebeeId;
 			followingSharebeeUrl = `${baseUrl}/sharebee/${determinedSharebeeId}`;
@@ -44,8 +44,6 @@ export async function load({ cookies, params, platform }) {
 	if (shareHash === hashFunction(phoneNumber)) {
 		isShareer = true;
 	}
-	console.log('isShareer', isShareer);
-
 	return {
 		id,
 		isWinner,

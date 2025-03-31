@@ -44,4 +44,3 @@ npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS shareb
 npx wrangler d1 execute DB --remote --command "DELETE FROM sharebees;"
 npx wrangler d1 execute DB --remote --command "INSERT INTO sharebees (id, project_name) VALUES ('TEST', 'raptor-faight-2');"
 npx wrangler d1 execute DB --local --command "SELECT id from sharebees;"
-http://localhost:5173/sharebee/-7c90adb2%3Aaa7a85f1-349c-47c0-a6de-2d4878bb0a26

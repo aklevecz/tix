@@ -30,6 +30,9 @@
 	/** @type {Sharebee | null} */
 	let sharebee = $state(null);
 
+	/** @type {string} sharebeeQRUrl */
+	let sharebeeQRUrl = $state('')
+
 	onMount(() => {
 		meApi.getMe().then((data) => {
 			phoneNumber = data.phoneNumber;
@@ -37,6 +40,7 @@
 			freebee = data.freebee;
 			oldOrders = data.oldOrders;
 			sharebee = data.sharebee;
+			sharebeeQRUrl = data.sharebeeQRUrl
 		});
 	});
 </script>
@@ -90,7 +94,7 @@
 					{sharebee?.project_name.replace(/-/g, ' ')}
 				</div>
 				<div class="w-5/6 lowercase">You got a free ticket!</div>
-				<div class="mb-4 h-20 w-20 bg-white"></div>
+				<img src={sharebeeQRUrl} alt="sharebee qr code" class="w-30 h-30 bg-amber-300">
 				<div class="lowercase">You also have a sharebee to share with someone else</div>
 				<!-- <div>
 					{createSharebeeUrl(createSharebeeHash(sharebee.id, phoneNumber))}

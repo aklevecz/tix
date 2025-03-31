@@ -1,3 +1,4 @@
+import { EVENT_ID } from '$lib';
 import dbSharebees from '$lib/db/sharebees';
 import { createSharebeeHash, hashFunction } from '$lib/utils';
 import { json } from '@sveltejs/kit';
@@ -14,9 +15,8 @@ export async function GET({ platform }) {
 	});
 }
 
-const eventName = 'raptor-faight-2';
 
-export async function POST({ cookies, request, platform }) {
+export async function POST({ cookies, request, platform, url }) {
 	try {
 		// const { id } = await request.json();
 		const formData = await request.formData();
@@ -47,7 +47,7 @@ export async function POST({ cookies, request, platform }) {
 		const db = dbSharebees(platform?.env.DB);
 		const success = await db.claimSharebee(id, winner);
 
-		const r2Path = `order-qrs/${eventName}/${id}.png`;
+		const r2Path = `order-qrs/${EVENT_ID}/${id}.png`;
 		// await platform?.env.R2.put(r2Path, qr, {
 		// 	httpMetadata: {
 		// 		contentType: 'image/jpeg'
@@ -58,16 +58,16 @@ export async function POST({ cookies, request, platform }) {
 			contentType: 'image/png'
 		});
 
+		// save new sharebee
+		const sharebeeId = createSharebeeHash(id, phoneNumber);
+		await db.saveSharebee(sharebeeId, EVENT_ID);
+
 		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		await platform?.env.MESSENGER_QUEUE.send({
-			defaultMessage: `You got a free ticket for Raptor Faight 2! Here is your QR code`,
+			defaultMessage: `You got a free ticket for Raptor Faight 2! Here is your QR code. Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}`,
 			phoneNumber: phoneNumber,
 			mediaUrls: [assetUrl]
 		});
-
-		// save new sharebee
-		const sharebeeId = createSharebeeHash(id, phoneNumber);
-		await db.saveSharebee(sharebeeId, eventName);
 
 		if (!success) {
 			return new Response(JSON.stringify({ error: 'Failed to claim sharebee' }), {
