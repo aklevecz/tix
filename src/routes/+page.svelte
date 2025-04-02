@@ -6,5 +6,8 @@
 	const { featured } = data;
 </script>
 
+<svelte:head>
+	<meta property="og:image" content="/images/og-image.png" />
+</svelte:head>
 <Hero {featured} />
 <CartContainer />

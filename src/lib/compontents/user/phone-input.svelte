@@ -102,14 +102,14 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	.phone-input-container {
-		/* max-width: 400px; */
+		/* max-width: 200px; */
 		margin: 20px auto;
 	}
 
 	.phone-input {
 		display: flex;
 		gap: 4px;
-		align-items: center;
+		/* align-items: center; */
 	}
 
 	select {
@@ -121,6 +121,7 @@
 		background-repeat: no-repeat;
 		background-position: right 10px center;
 		background-size: 10px 5px;
+		flex: 0 0 10%;
 		@apply text-sm;
 	}
 
@@ -132,8 +133,7 @@
 		padding: 10px;
 		border: 1px solid;
 		font-size: 1rem;
-		flex: 1 0 auto;
-		/* width: 135px; */
+		width: 235px;
 	}
 
 	input:focus,

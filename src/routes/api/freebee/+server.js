@@ -1,3 +1,4 @@
+import { dev } from '$app/environment';
 import dbFreebees from '$lib/db/freebees';
 import { concatDateTime, dateAndTimeToDateZ, phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
@@ -12,7 +13,7 @@ let freebeeConfig = {
 const cookieOptions = {
 	path: '/',
 	expires: new Date('2100-01-01'),
-	secure: true, // Only sent over HTTPS
+	secure: dev ? false : true, // Only sent over HTTPS
 	httpOnly: true, // Not accessible via JavaScript
 	sameSite: 'lax' // Protects against CSRF while allowing normal navigation
 };

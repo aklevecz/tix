@@ -24,7 +24,7 @@ export async function load({url, cookies, params, platform, request }) {
 		};
 	}
 	const { phoneNumber } = await platform?.env.AUTH_SERVICE.authorizeToken(token);
-	const { winner, project_name, created_at, claimed_at } = sharebee;
+		const { winner, project_name, created_at, claimed_at } = sharebee;
 
 	let isWinner = false;
 	let followingSharebeeId;

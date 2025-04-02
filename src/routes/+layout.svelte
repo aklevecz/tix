@@ -10,11 +10,18 @@
 	let { data, children } = $props();
 
 	onMount(() => {
-		const { cartSession } = collectCookies();
-		products.set(data.products);
-		cart.set(cartSession);
-		user.updateUser(data.user);
-		user.updateToken(data.token);
+		try {
+			// FOR SOME REASON THIS FAILS IF THERE IS NO CART PREVIOUSLY OR SOMETHING
+			const { cartSession } = collectCookies();
+			if (cartSession) cart.set(cartSession);
+
+			products.set(data.products);
+
+			user.updateUser(data.user);
+			user.updateToken(data.token);
+		} catch (e) {
+			alert(e);
+		}
 	});
 
 	const primaryColor = data.featured?.theme.primaryColor || '#ffffff';
@@ -43,7 +50,7 @@
 	<meta name="twitter:image" content={seo.image} />
 	<meta property="og:title" content={seo.title} />
 	<meta property="og:description" content={seo.description} />
-	<meta property="og:image" content={seo.image} />
+	<!-- <meta property="og:image" content={seo.image} /> -->
 	<!-- <meta property="og:url" content={'https://tickets.yaytso.art/' + eventName} /> -->
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="TIX" />

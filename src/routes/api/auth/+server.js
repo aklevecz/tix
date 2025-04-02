@@ -1,15 +1,15 @@
 // import { EVENT_ID } from '$lib/content';
 // import db from '$lib/db';
+import { dev } from '$app/environment';
 import { responses } from '$lib';
 import { delay, phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
-
 
 /** @type {import('cookie').CookieSerializeOptions & {path: string}} */
 const cookieOptions = {
 	path: '/',
 	expires: new Date('2100-01-01'),
-	secure: true, // Only sent over HTTPS
+	secure: dev ? false : true, // Only sent over HTTPS
 	httpOnly: true, // Not accessible via JavaScript
 	sameSite: 'lax' // Protects against CSRF while allowing normal navigation
 };
@@ -45,18 +45,17 @@ function isTestNumber(phoneNumber) {
 	// Remove any '+' prefix for consistent checking
 	const cleanNumber = phoneNumber.replace('+', '');
 
-	return TEST_NUMBERS.full.includes(phoneNumber) || 
-		   TEST_NUMBERS.short.includes(cleanNumber);
+	return TEST_NUMBERS.full.includes(phoneNumber) || TEST_NUMBERS.short.includes(cleanNumber);
 }
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, cookies, platform }) {
 	const { phoneNumber, name, code } = await request.json();
-	console.log('phoneNumber', phoneNumber);
 	// sending code
 	if (phoneNumber) {
 		/** @param {string} phoneNumber */
 		const success = async (phoneNumber) => {
+			console.log(`saving phoneNumber: ${phoneNumber}, uuid ${phoneNumberToUid(phoneNumber)}`);
 			cookies.set('phoneNumber', phoneNumberToUid(phoneNumber), cookieOptions);
 			cookies.set('name', name, cookieOptions);
 			return json({ phoneNumber, message: responses.CODE_SENT });
@@ -78,7 +77,7 @@ export async function POST({ request, cookies, platform }) {
 	if (code) {
 		const storedPhoneNumber = cookies.get('phoneNumber');
 		const storedName = cookies.get('name');
-
+		console.log(`stored phoneNumber: ${storedPhoneNumber}`);
 		if (storedPhoneNumber) {
 			const approved = async () => {
 				const token = await platform?.env.AUTH_SERVICE.generateToken({
@@ -86,7 +85,7 @@ export async function POST({ request, cookies, platform }) {
 				});
 				// const token = await createJwt({ phoneNumber: storedPhoneNumber });
 				try {
-          // CREATE USER - but dont necessarily need to do this because the order will have it?
+					// CREATE USER - but dont necessarily need to do this because the order will have it?
 					// await db.createPartier(platform?.env.DATABASE, {
 					// 	phoneNumber: storedPhoneNumber.trim(),
 					// 	name: storedName || 'missing name'

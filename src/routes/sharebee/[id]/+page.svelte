@@ -54,6 +54,7 @@
 		});
 	}
 </script>
+
 <svelte:head>
 	<title>Sharebees</title>
 	<meta property="og:title" content="Sharebees" />
@@ -62,10 +63,11 @@
 </svelte:head>
 <div class="container">
 	<h1 class="title">Sharebees</h1>
-
 	{#if !user.token}
-		<h2 class="subtitle">You must sign in to claim a ticket</h2>
-		<AuthContainer />
+		<div class="w-full">
+			<h2 class="subtitle">You must sign in to claim a ticket</h2>
+			<AuthContainer />
+		</div>
 	{/if}
 
 	{#if isShareer && !claimed_at}
@@ -81,8 +83,8 @@
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
 			<div class="hero">Free ticket - May 2nd</div>
 			<img alt="raptor" class="raptor" src="/raptor/raptor-svg.svg" />
-			<div class="mt-10 text-xl text-[var(--yellow)]">
-				Someone sharebeed a free ticket with you to the party at the faight on may 2nd ({id})
+			<div class="mt-8 px-8 text-xl text-[var(--yellow)]">
+				Someone sharebeed a free ticket with you to the party at the faight on may 2nd
 			</div>
 			<button onclick={onClaim} class="btn-claim">claim ticket</button>
 		{/if}
@@ -90,8 +92,8 @@
 		{#if newSharebeeUrl}
 			<div class="info">woohoo! you have a ticket to the party!</div>
 			<div class="info">
-				You have a sharebee to share with a friend now. Send them this link and they will be able to
-				claim a free ticket
+				You have a ticket to sharebee with a friend now. Send them this link and they will be able
+				to claim a free ticket
 			</div>
 			<div class="link">{newSharebeeUrl}</div>
 			<div class="copy-wrapper">
@@ -102,10 +104,10 @@
 		{#if claimed_at}
 			<div class="status">This ticket has been claimed</div>
 			<!-- <div class="date">{formatDate(claimed_at)}</div> -->
-			<div class="highlight">Oh it was claimed by you!</div>
 			<img alt="raptor" class="raptor my-8" src="/raptor/raptor-svg.svg" />
 			{#if isWinner && followingSharebeeUrl}
-				<div class="status">Here is you link to share</div>
+				<!-- <div class="highlight text-center mb-4">Oh it was claimed by you!</div> -->
+				<div class="status">Here is your ticket to sharebee with a friend</div>
 				<div class="link mt-4">{followingSharebeeUrl}</div>
 				<div class="copy-wrapper">
 					<CopyButton link={followingSharebeeUrl} />
@@ -125,7 +127,7 @@
 		margin: 0 auto;
 		display: flex;
 		flex-direction: column;
-		min-height: 85vh;
+		min-height: 75vh;
 		width: 90%;
 		max-width: 32rem;
 	}
@@ -201,7 +203,9 @@
 	.btn-claim {
 		margin-top: auto;
 		font-size: 1.875rem;
-		line-height: 2.25rem;
+		line-height: 2.75rem;
+		width: 250px;
+		margin: auto auto;
 		animation: glow 1s ease-in-out infinite alternate;
 	}
 
