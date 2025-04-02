@@ -1,8 +1,6 @@
 <script>
 	import cart from '$lib/stores/cart.svelte';
-	import { formatPrice } from '$lib/utils';
-	import { slide } from 'svelte/transition';
-
+	
 	let { featured } = $props();
 
 	let quantityInCart = $derived(featured ? cart.getQuantity(featured.id) : 0);
@@ -31,10 +29,11 @@
 	{#if featured}
 		<div class="flex-[1_0_auto]">
 			<!-- <img class="hero-img" src={featured?.img} alt="literally underground" /> -->
-			<img src="raptor/raptor-red-svg.svg" alt="raptor" class="hero-img" />
+			<!-- <img src="raptor/raptor-red-svg.svg" alt="raptor" class="hero-img" /> -->
+			 <img src="/raptor/dinotopia/bazaar-scene.jpeg" alt="bazaar scene">
 			<div class="p-4">
 				<div class="flex items-center gap-4">
-					<img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" />
+					<!-- <img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" /> -->
 					<div class="text-2xl font-semibold tracking-wide capitalize">
 						{featured.title}
 					</div>

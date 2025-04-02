@@ -2,8 +2,9 @@
 	import sharebee from '$lib/api/sharebee';
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
+	import LoadingSpinner from '$lib/compontents/loading-spinner.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { createSharebeeUrlBrowser } from '$lib/utils';
+	import { createSharebeeUrlBrowser, delay } from '$lib/utils';
 	import { Byte, Encoder } from '@nuintun/qrcode';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -19,7 +20,9 @@
 	} = data;
 
 	let newSharebeeUrl = $state('');
+	let isClaiming = $state(false);
 	async function onClaim() {
+		isClaiming = true;
 		if (id) {
 			const encoder = new Encoder({
 				level: 'H'
@@ -42,6 +45,7 @@
 				console.log('fail');
 			}
 		}
+		isClaiming = false;
 	}
 
 	function resetSharebees() {
@@ -83,18 +87,22 @@
 	{#if user.token}
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
 			<div class="hero">Free ticket - May 2nd</div>
-			<img alt="raptor" class="raptor" src="/raptor/raptor-svg.svg" />
-			<div class="mt-8 px-8 text-xl text-[var(--yellow)]">
-				Someone sharebeed a free ticket with you to the party at the faight on may 2nd
+			<img alt="raptor" class="raptor" src="/raptor/faight-2/dinotopia-raptor.svg" />
+			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
+				Someone sharebeed a free ticket with you to the party at on may 2nd
 			</div>
-			<button onclick={onClaim} class="btn-claim">claim ticket</button>
+			<button onclick={onClaim} class="btn-claim"
+				>{#if isClaiming}
+					<LoadingSpinner />
+				{:else}
+					claim ticket{/if}</button
+			>
 		{/if}
 
 		{#if newSharebeeUrl}
 			<div class="info">woohoo! you have a ticket to the party!</div>
 			<div class="info">
-				You have a ticket to sharebee with a friend now. Send them this link and they will be able
-				to claim a free ticket
+				Here is your own sharebee to send to a friend now. Here is the link:
 			</div>
 			<div class="link">{newSharebeeUrl}</div>
 			<div class="copy-wrapper">
@@ -105,7 +113,10 @@
 		{#if claimed_at}
 			<div class="status">This ticket has been claimed</div>
 			<!-- <div class="date">{formatDate(claimed_at)}</div> -->
-			<img alt="raptor" class="raptor my-8" src="/raptor/raptor-svg.svg" />
+			<img alt="raptor" class="raptor my-8" src="/raptor/faight-2/dinotopia-raptor.svg" />
+			{#if !isWinner}
+				<div class="text-2xl">See if your friend has another one or bug @teh.raptor 🙃</div>
+			{/if}
 			{#if isWinner && followingSharebeeUrl}
 				<!-- <div class="highlight text-center mb-4">Oh it was claimed by you!</div> -->
 				<div class="status">Here is your ticket to sharebee with a friend</div>
@@ -187,7 +198,7 @@
 		margin-right: auto;
 		height: 10rem;
 		width: 10rem;
-		filter: invert(1);
+		/* filter: invert(1); */
 	}
 
 	.link {
@@ -202,11 +213,11 @@
 
 	/* Buttons */
 	.btn-claim {
-		margin-top: auto;
+		margin: 50px auto;
 		font-size: 1.875rem;
 		line-height: 2.75rem;
 		width: 250px;
-		margin: auto auto;
+		/* margin: auto auto; */
 		animation: glow 1s ease-in-out infinite alternate;
 	}
 

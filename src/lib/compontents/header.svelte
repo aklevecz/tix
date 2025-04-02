@@ -4,11 +4,14 @@
 </script>
 
 <header class="flex items-center gap-4 p-2 font-bold">
-	<a href="/"><h1 class="text-2xl">Tix</h1></a>
+	<a href="/">
+		<!-- <h1 class="text-2xl">Tix</h1> -->
+		<img class="w-10 h-10" src="/raptor/faight-2/dinotopia-raptor.svg" alt="raptor logo">
+	</a>
 	<nav class="flex items-center gap-4 w-full bg-yellow-">
 		<!-- <a class:active={page.url.pathname === '/'} href="/">Home</a> -->
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">Checkout</a> -->
-		<a class:active={page.url.pathname === '/freebee'} href="/freebee">Freebee</a>
+		<a class:active={page.url.pathname === '/freebee'} href="/freebee">freebee</a>
 		<a class:active={page.url.pathname === '/profile'} href="/profile">profile</a>
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">checkout</a> -->
 		<div class="flex-[1_0_auto]"></div>

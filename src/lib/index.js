@@ -97,8 +97,8 @@ export const mockProducts = [
 		projectId: 'raptor-faight-2',
 		productType: 'ticket',
 		name: 'ticket',
-		title: 'Raptor Faight 2',
-		description: 'Tickets will be available for Raptor Faight 2 soon',
+		title: 'May 2nd',
+		description: 'Join us for some dino magic ✨',
 		place: locations.faight,
 		price: 1500,
 		priceConfig: {
@@ -110,11 +110,11 @@ export const mockProducts = [
 		},
 		date: '2025-05-02',
 		dates: ['2025-05-02'],
-		img: '/raptor/part-2-flyer.jpg',
+		img: '/raptor/faight-2/og-image.jpg',
 		theme: {
-			primaryColor: 'black',
-			secondaryColor: 'red',
-			thirdColor: 'white'
+			primaryColor: '#9eac7a',
+			secondaryColor: '#f0502b',
+			thirdColor: '#e2f0f0'
 		},
 		seo: {
 			title: 'Raptor Faight 2 | The Faight Collective',
