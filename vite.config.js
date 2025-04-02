@@ -3,8 +3,8 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [sveltekit(), tailwindcss()],
-	server: {
-		allowedHosts: ['local-tix.yaytso.art', 'tix.concertraptors.com']
-	}
+	plugins: [sveltekit(), tailwindcss()]
+	// server: {
+	// 	allowedHosts: ['local-tix.yaytso.art', 'tix.concertraptors.com']
+	// }
 });
