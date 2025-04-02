@@ -5,6 +5,6 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
 	server: {
-		allowedHosts: ['local-tix.yaytso.art']
+		allowedHosts: ['local-tix.yaytso.art', 'tix.concertraptors.com']
 	}
 });

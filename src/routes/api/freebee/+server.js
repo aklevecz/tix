@@ -73,6 +73,14 @@ export async function GET({ cookies, platform }) {
 		if (winnerSession && winnerSession === phoneNumberToUid(decodedToken.phoneNumber)) {
 			return json({ message: 'You have already won!' });
 		}
+		// check if has won a freebee
+		const freebee = await dbFreebees(platform?.env.DB).getFreebeeByPhoneNumberAndProjectName(decodedToken.phoneNumber, freebeeConfig.project_name);
+		if (freebee) {
+			return json({
+				message: 'You have already won!',
+			})
+		}
+
 	} catch (e) {
 		// return json({
 		// 	success: false,
@@ -86,9 +94,9 @@ export async function GET({ cookies, platform }) {
 		// create a new freebee when someone visits and there is none existing
 		let winner = '';
 		let time = getRandomTimeString();
-		console.log(time)
-		time = new Date().toISOString().split('T')[1];
-		console.log(time)
+		// console.log(time)
+		// time = new Date().toISOString().split('T')[1];
+		// console.log(time)
 		await dbFreebees(platform?.env.DB).saveFreebee(
 			{
 				id: today,

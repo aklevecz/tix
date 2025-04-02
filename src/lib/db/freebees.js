@@ -6,14 +6,16 @@ const dbFreebees = (db) => {
 		saveFreebee: async (freebee, winner) => {
 			const { id, project_name, date, time } = freebee;
 			await db
-				.prepare(`INSERT INTO ${tableName} (id, winner, project_name, date, time) VALUES (?, ?, ?, ?, ?)`)
+				.prepare(
+					`INSERT INTO ${tableName} (id, winner, project_name, date, time) VALUES (?, ?, ?, ?, ?)`
+				)
 				.bind(id, winner, project_name, date, time)
 				.run();
 		},
-		/** 
-         * @param {string} id 
-         * @returns {Promise<FreebeeEntry | null>}
-        */
+		/**
+		 * @param {string} id
+		 * @returns {Promise<FreebeeEntry | null>}
+		 */
 		async getFreebee(id) {
 			return db.prepare(`SELECT * FROM ${tableName} WHERE id = ?`).bind(id).first();
 		},
@@ -32,6 +34,13 @@ const dbFreebees = (db) => {
 				console.log(e);
 				console.error(`Failed to update ${id} with values ${JSON.stringify(newValues)}`);
 			}
+		},
+		/** @param {string} phoneNumber @param {string} project_name */
+		async getFreebeeByPhoneNumberAndProjectName(phoneNumber, project_name) {
+			return db
+				.prepare(`SELECT * FROM ${tableName} WHERE winner = ? AND project_name = ?`)
+				.bind(phoneNumber, project_name)
+				.first();
 		}
 	};
 };

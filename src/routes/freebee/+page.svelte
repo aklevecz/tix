@@ -91,7 +91,7 @@
 		{#if won}
 			<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
 			<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
-			<p class="filter-strobe mx-auto text-[170px]">🎉</p>
+			<p class="filter-strobe mx-auto text-[170px] text-center">🎉</p>
 		{/if}
 
 		{#if !won}
@@ -109,7 +109,7 @@
 
 					{#if !canWin && !alreadyClaimed}
 						<p class="cta-bubble text-lg text-black">
-							Occasionally, a free ticket becomes available 🙃
+							Wait for the timer to finish and press the win button to claim the freebee today 🙃
 						</p>
 					{/if}
 					{#if canWin && !alreadyClaimed}
