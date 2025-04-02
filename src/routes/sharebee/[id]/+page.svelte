@@ -59,8 +59,8 @@
 	<title>Sharebees</title>
 	<meta property="og:title" content="Sharebees" />
 	<meta property="og:description" content="Sharebees" />
-	<meta property="og:image" content="/raptor/faight-2/sharebee-preview.jpg" />
-	<meta name="twitter:image" content="/raptor/faight-2/sharebee-preview.jpg" />
+	<meta property="og:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
+	<meta name="twitter:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
 </svelte:head>
 <div class="container">
 	<h1 class="title">Sharebees</h1>
