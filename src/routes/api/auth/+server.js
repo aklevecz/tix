@@ -30,8 +30,8 @@ export async function GET({ request, platform, url }) {
 }
 
 const TEST_NUMBERS = {
-	full: ['+14159671642', '+19999999999'],
-	short: ['14159671642', '11234', '999999999']
+	full: ['+19999999999'],
+	short: ['11234', '999999999']
 };
 
 /**

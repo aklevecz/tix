@@ -24,9 +24,15 @@
 		}
 	});
 
-	const primaryColor = data.featured?.theme.primaryColor || '#ffffff';
-	const secondaryColor = data.featured?.theme.secondaryColor || '#000000';
-	const thirdColor = data.featured?.theme.thirdColor || '#ffffff';
+	const defaultTheme = {
+		primaryColor: '#9eac7a',
+		secondaryColor: '#f0502b',
+		thirdColor: '#e2f0f0'
+	};
+
+	const primaryColor = data.featured?.theme.primaryColor || defaultTheme.primaryColor
+	const secondaryColor = data.featured?.theme.secondaryColor || defaultTheme.secondaryColor
+	const thirdColor = data.featured?.theme.thirdColor || defaultTheme.thirdColor
 
 	let seo = data.featured?.seo || {
 		title: 'Tickets',
