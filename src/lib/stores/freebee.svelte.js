@@ -26,8 +26,9 @@ const createFreebeeStore = () => {
 		set(newState) {
 			freebee = { ...freebee, ...newState };
 		},
-		win() {
-			return freebeeApi.win();
+		/** @param {{qrBlob:Blob}} data */
+		win({ qrBlob }) {
+			return freebeeApi.win({ qrBlob });
 		}
 	};
 };

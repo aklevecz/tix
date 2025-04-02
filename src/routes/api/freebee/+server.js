@@ -1,4 +1,5 @@
 import { dev } from '$app/environment';
+import { EVENT_ID } from '$lib';
 import dbFreebees from '$lib/db/freebees';
 import { concatDateTime, dateAndTimeToDateZ, phoneNumberToUid } from '$lib/utils';
 import { json } from '@sveltejs/kit';
@@ -136,6 +137,9 @@ export async function GET({ cookies, platform }) {
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ cookies, platform, request }) {
+	const formData = await request.formData();
+	const qr = formData.get('qr');
+
 	const token = cookies.get('token');
 	let decodedToken = null;
 	try {
@@ -181,6 +185,18 @@ export async function POST({ cookies, platform, request }) {
 				value: phoneNumberToUid(decodedToken.phoneNumber)
 			}
 		]);
+		const r2Path = `order-qrs/${EVENT_ID}/${today}.png`;
+
+		await platform?.env.R2.put(r2Path, qr, {
+			contentType: 'image/png'
+		});
+		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		await platform?.env.MESSENGER_QUEUE.send({
+			defaultMessage: `You got a free ticket for May 2nd! Here is your QR code`,
+			phoneNumber: decodedToken.phoneNumber,
+			mediaUrls: [assetUrl]
+		});
+
 		cookies.set('winner', phoneNumberToUid(decodedToken.phoneNumber), cookieOptions);
 		return json({ success: true, message: 'You won the freebee!' });
 	} else {

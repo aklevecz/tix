@@ -64,7 +64,7 @@ export async function POST({ cookies, request, platform, url }) {
 
 		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		await platform?.env.MESSENGER_QUEUE.send({
-			defaultMessage: `You got a free ticket for Raptor Faight 2! Here is your QR code. Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}`,
+			defaultMessage: `You got a free ticket for May 2nd! Here is your QR code. Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}`,
 			phoneNumber: phoneNumber,
 			mediaUrls: [assetUrl]
 		});

@@ -1,5 +1,6 @@
 <script>
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
+	import { generateQR } from '$lib/qr';
 	import freebee from '$lib/stores/freebee.svelte';
 	import user from '$lib/stores/user.svelte';
 	import { concatDateTime } from '$lib/utils';
@@ -67,7 +68,8 @@
 			alert('You must be signed in to win');
 			return;
 		}
-		const response = await freebee.win();
+		const { blob } = await generateQR(`freebee:${freebee.state.id}`);
+		const response = await freebee.win({qrBlob: blob});
 		if (response.success) {
 			won = true;
 			alert(response.message);
@@ -85,13 +87,13 @@
 		</div>
 	{/if}
 
-	<div class="{user.token ? 'opacity-100' : 'opacity-25'}">
+	<div class={user.token ? 'opacity-100' : 'opacity-25'}>
 		<h1 class="p-0 text-center text-2xl font-bold">WIN A FREE TICKET</h1>
 
 		{#if won}
 			<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
 			<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
-			<p class="filter-strobe mx-auto text-[170px] text-center">🎉</p>
+			<p class="filter-strobe mx-auto text-center text-[170px]">🎉</p>
 		{/if}
 
 		{#if !won}

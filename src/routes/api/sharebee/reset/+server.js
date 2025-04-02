@@ -7,6 +7,7 @@ export async function GET() {
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ platform }) {
+    return new Response("")
     try {
         const db = dbSharebees(platform?.env.DB);
         const success = await db.resetSharebees();

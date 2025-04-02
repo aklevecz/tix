@@ -1,5 +1,5 @@
-npx wrangler d1 execute DB --remote --command "DROP TABLE tix_orders"
-npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS tix_orders (
+npx wrangler d1 execute DB --local --command "DROP TABLE tix_orders"
+npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS tix_orders (
   pi_id TEXT PRIMARY KEY,
   items TEXT,
   name TEXT,
@@ -14,11 +14,11 @@ npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS tix_or
   origin TEXT
 );"
 
-npx wrangler d1 execute DB --remote --command "SELECT * FROM tix_orders;"
-npx wrangler d1 execute DB --remote --command "DELETE FROM tix_orders;"
+npx wrangler d1 execute DB --local --command "SELECT * FROM tix_orders;"
+npx wrangler d1 execute DB --local --command "DELETE FROM tix_orders;"
 
-npx wrangler d1 execute DB --remote --command "DROP TABLE freebees;"
-npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS freebees (
+npx wrangler d1 execute DB --local --command "DROP TABLE freebees;"
+npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS freebees (
   id TEXT PRIMARY KEY,
   winner TEXT,
   project_name TEXT,
@@ -26,19 +26,19 @@ npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS freebe
   time TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );"
-npx wrangler d1 execute DB --remote --command "DELETE FROM freebees;"
+npx wrangler d1 execute DB --local --command "DELETE FROM freebees;"
 
-npx wrangler d1 execute DB --remote --command "SELECT * FROM freebees;"
-npx wrangler d1 execute DB --remote --command "INSERT INTO freebees (id, winner, project_name, date, time) VALUES ('2025-02-15', '', 'raptor-faight-2', '2025-02-15', '');"
+npx wrangler d1 execute DB --local --command "SELECT * FROM freebees;"
+npx wrangler d1 execute DB --local --command "INSERT INTO freebees (id, winner, project_name, date, time) VALUES ('2025-02-15', '', 'raptor-faight-2', '2025-02-15', '');"
 
-npx wrangler d1 execute DB --remote --command "UPDATE freebees SET time='23:00:00' WHERE id='2025-02-15';"
-npx wrangler d1 execute DB --remote --command "UPDATE freebees SET winner='' WHERE id='2025-02-15';"
+npx wrangler d1 execute DB --local --command "UPDATE freebees SET time='23:00:00' WHERE id='2025-02-15';"
+npx wrangler d1 execute DB --local --command "UPDATE freebees SET winner='' WHERE id='2025-02-15';"
 
 
 THIS IS NOT EVEN USED????
-npx wrangler d1 execute DB --remote --command "DELETE FROM winners"
+npx wrangler d1 execute DB --local --command "DELETE FROM winners"
 
-npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS sharebees (
+npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS sharebees (
   id TEXT PRIMARY KEY,
   winner TEXT,
   project_name TEXT,
@@ -46,6 +46,6 @@ npx wrangler d1 execute DB --remote --command "CREATE TABLE IF NOT EXISTS shareb
   claimed_at DATETIME
 );"
 
-npx wrangler d1 execute DB --remote --command "DELETE FROM sharebees;"
-npx wrangler d1 execute DB --remote --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
-npx wrangler d1 execute DB --remote --command "SELECT id from sharebees;"
+npx wrangler d1 execute DB --local --command "DELETE FROM sharebees;"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "SELECT id from sharebees;"

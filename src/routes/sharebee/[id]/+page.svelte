@@ -3,9 +3,9 @@
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
 	import LoadingSpinner from '$lib/compontents/loading-spinner.svelte';
+	import { generateQR } from '$lib/qr';
 	import user from '$lib/stores/user.svelte';
-	import { createSharebeeUrlBrowser, delay } from '$lib/utils';
-	import { Byte, Encoder } from '@nuintun/qrcode';
+	import { createSharebeeUrlBrowser } from '$lib/utils';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -24,17 +24,7 @@
 	async function onClaim() {
 		isClaiming = true;
 		if (id) {
-			const encoder = new Encoder({
-				level: 'H'
-			});
-
-			const qrcode = encoder.encode(new Byte(id));
-
-			const qrCodeUrl = qrcode.toDataURL(5, {
-				// First arg: moduleSize is now 20
-				margin: 4 // Optional margin
-			});
-			const qrBlob = await fetch(qrCodeUrl).then((res) => res.blob());
+			const { blob: qrBlob } = await generateQR(`sharebee:${id}`);
 
 			const response = await sharebee.claim(id, qrBlob);
 			const { success, sharebeeId } = response;
@@ -42,7 +32,7 @@
 				// generate.generateRaptor();
 				newSharebeeUrl = createSharebeeUrlBrowser(sharebeeId);
 			} else {
-				console.log('fail');
+				alert('couldnt claim -- probably already claimed or something else-- try refreshing');
 			}
 		}
 		isClaiming = false;
@@ -67,7 +57,7 @@
 	<meta name="twitter:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
 </svelte:head>
 <div class="container">
-	<h1 class="title">Sharebees</h1>
+	<!-- <h1 class="title">Sharebees</h1> -->
 	{#if !user.token}
 		<div class="w-full">
 			<h2 class="subtitle">You must sign in to claim a ticket</h2>
@@ -87,7 +77,15 @@
 	{#if user.token}
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
 			<div class="hero">Free ticket - May 2nd</div>
-			<img alt="raptor" class="raptor" src="/raptor/faight-2/dinotopia-raptor.svg" />
+			<div class="raptor-img-container">
+				<img
+					alt="raptor"
+					class="raptor absolute mix-blend-color"
+					src="/raptor/faight-2/dinotopia-raptor.svg"
+				/>
+				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
+			</div>
+
 			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
 				Someone sharebeed a free ticket with you to the party at on may 2nd
 			</div>
@@ -101,9 +99,15 @@
 
 		{#if newSharebeeUrl}
 			<div class="info">woohoo! you have a ticket to the party!</div>
-			<div class="info">
-				Here is your own sharebee to send to a friend now. Here is the link:
+			<div class="raptor-img-container">
+				<img
+					alt="raptor"
+					class="raptor absolute mix-blend-color"
+					src="/raptor/faight-2/dinotopia-raptor.svg"
+				/>
+				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
 			</div>
+			<div class="info">Here is your own sharebee to send to a friend now</div>
 			<div class="link">{newSharebeeUrl}</div>
 			<div class="copy-wrapper">
 				<CopyButton link={newSharebeeUrl} />
@@ -113,7 +117,14 @@
 		{#if claimed_at}
 			<div class="status">This ticket has been claimed</div>
 			<!-- <div class="date">{formatDate(claimed_at)}</div> -->
-			<img alt="raptor" class="raptor my-8" src="/raptor/faight-2/dinotopia-raptor.svg" />
+			<div class="raptor-img-container">
+				<img
+					alt="raptor"
+					class="raptor absolute mix-blend-color"
+					src="/raptor/faight-2/dinotopia-raptor.svg"
+				/>
+				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
+			</div>
 			{#if !isWinner}
 				<div class="text-2xl">See if your friend has another one or bug @teh.raptor 🙃</div>
 			{/if}
@@ -167,8 +178,8 @@
 	}
 
 	.info {
-		margin-top: 1.5rem;
-		margin-bottom: 1.5rem;
+		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
 		font-size: 1.5rem;
 		line-height: 2rem;
 		color: var(--yellow);
@@ -192,12 +203,18 @@
 		color: var(--third-color);
 	}
 
+	.raptor-img-container {
+		position: relative;
+		width: 250px;
+		height: 250px;
+		margin: auto;
+	}
 	/* UI Elements */
 	.raptor {
 		margin-left: auto;
 		margin-right: auto;
-		height: 10rem;
-		width: 10rem;
+		height: 100%;
+		width: 100%;
 		/* filter: invert(1); */
 	}
 
