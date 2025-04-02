@@ -3,7 +3,7 @@
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { createSharebeeUrl } from '$lib/utils';
+	import { createSharebeeUrlBrowser } from '$lib/utils';
 	import { Byte, Encoder } from '@nuintun/qrcode';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -37,7 +37,7 @@
 			const { success, sharebeeId } = response;
 			if (success) {
 				// generate.generateRaptor();
-				newSharebeeUrl = createSharebeeUrl(sharebeeId);
+				newSharebeeUrl = createSharebeeUrlBrowser(sharebeeId);
 			} else {
 				console.log('fail');
 			}
@@ -54,7 +54,12 @@
 		});
 	}
 </script>
-
+<svelte:head>
+	<title>Sharebees</title>
+	<meta name="og:title" content="Sharebees" />
+	<meta name="og:description" content="Sharebees" />
+	<meta name="og:image" content="/rapptor/faight-2/sharebee-preview.jpg" />
+</svelte:head>
 <div class="container">
 	<h1 class="title">Sharebees</h1>
 
@@ -66,9 +71,9 @@
 	{#if isShareer && !claimed_at}
 		<div class="info">This is your ticket to share</div>
 		<div class="info">It is still unclaimed. share it already!</div>
-		<div class="link">{createSharebeeUrl(id)}</div>
+		<div class="link">{createSharebeeUrlBrowser(id)}</div>
 		<div class="copy-wrapper">
-			<CopyButton link={createSharebeeUrl(id)} />
+			<CopyButton link={createSharebeeUrlBrowser(id)} />
 		</div>
 	{/if}
 

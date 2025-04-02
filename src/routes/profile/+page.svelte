@@ -3,7 +3,7 @@
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { createSharebeeHash, createSharebeeUrl } from '$lib/utils';
+	import { createSharebeeHash, createSharebeeUrlBrowser } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -31,7 +31,9 @@
 	let sharebee = $state(null);
 
 	/** @type {string} sharebeeQRUrl */
-	let sharebeeQRUrl = $state('')
+	let sharebeeQRUrl = $state('');
+
+	let followingSharebeeIsClaimed = $state(false);
 
 	onMount(() => {
 		meApi.getMe().then((data) => {
@@ -40,7 +42,8 @@
 			freebee = data.freebee;
 			oldOrders = data.oldOrders;
 			sharebee = data.sharebee;
-			sharebeeQRUrl = data.sharebeeQRUrl
+			sharebeeQRUrl = data.sharebeeQRUrl;
+			followingSharebeeIsClaimed = data.followingSharebeeIsClaimed;
 		});
 	});
 </script>
@@ -94,12 +97,20 @@
 					{sharebee?.project_name.replace(/-/g, ' ')}
 				</div>
 				<div class="w-5/6 lowercase">You got a free ticket!</div>
-				<img src={sharebeeQRUrl} alt="sharebee qr code" class="w-30 h-30 bg-amber-300">
-				<div class="lowercase">You also have a sharebee to share with someone else</div>
-				<!-- <div>
+				<img src={sharebeeQRUrl} alt="sharebee qr code" class="h-30 w-30 bg-amber-300" />
+
+				{#if !followingSharebeeIsClaimed}
+					<div class="mt-10">
+						<div class="lowercase">You also have a sharebee to share with someone else</div>
+						<div class="text-[var(--yellow)]">{createSharebeeUrlBrowser(createSharebeeHash(sharebee.id, phoneNumber))}</div>
+						<!-- <div>
 					{createSharebeeUrl(createSharebeeHash(sharebee.id, phoneNumber))}
 				</div> -->
-				<CopyButton link={createSharebeeUrl(createSharebeeHash(sharebee.id, phoneNumber))} />
+						<CopyButton
+							link={createSharebeeUrlBrowser(createSharebeeHash(sharebee.id, phoneNumber))}
+						/>
+					</div>
+				{/if}
 			{/if}
 		</div>
 	</div>

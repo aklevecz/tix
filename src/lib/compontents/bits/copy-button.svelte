@@ -12,12 +12,13 @@
 	}
 </script>
 
-<div>
-	<div class="mt-4 text-[var(--third-color)] text-center">copy link</div>
+<div class="w-20">
+	<div class="text-center text-[var(--third-color)]">copy link</div>
 	<button class="copy-btn mt-2" onclick={() => copyLinkToClipboard(link)}>
 		{#if copySuccess}
 			✓
 		{:else}
-			<img class="mx-auto h-10 w-10" src="/icons/copy.svg" alt="Copy" />{/if}
+			<img class="mx-auto h-10 w-10" src="/icons/copy.svg" alt="Copy" />
+		{/if}
 	</button>
 </div>

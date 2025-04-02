@@ -159,7 +159,7 @@ export function createSharebeeHash(id, phoneNumber) {
 }
 
 /** @param {string} id */
-export function createSharebeeUrl(id) {
+export function createSharebeeUrlBrowser(id) {
 	if (browser) {
 		// const baseUrl = window.location.href.split('/sharebee')[0];
 		const baseUrl = `${window.location.protocol}//${window.location.host}`;
