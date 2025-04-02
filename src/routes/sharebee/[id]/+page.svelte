@@ -56,6 +56,16 @@
 	<meta property="og:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
 	<meta name="twitter:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
 </svelte:head>
+{#snippet raptorImg()}
+<div class="raptor-img-container">
+	<img
+		alt="raptor"
+		class="raptor absolute mix-blend-color"
+		src="/raptor/faight-2/dinotopia-raptor.svg"
+	/>
+	<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
+</div>
+{/snippet}
 <div class="container">
 	<!-- <h1 class="title">Sharebees</h1> -->
 	{#if !user.token}
@@ -67,6 +77,7 @@
 
 	{#if isShareer && !claimed_at}
 		<div class="info">This is your ticket to share</div>
+		{@render raptorImg()}
 		<div class="info">It is still unclaimed. share it already!</div>
 		<div class="link">{createSharebeeUrlBrowser(id)}</div>
 		<div class="copy-wrapper">
@@ -77,15 +88,7 @@
 	{#if user.token}
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
 			<div class="hero">Free ticket - May 2nd</div>
-			<div class="raptor-img-container">
-				<img
-					alt="raptor"
-					class="raptor absolute mix-blend-color"
-					src="/raptor/faight-2/dinotopia-raptor.svg"
-				/>
-				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
-			</div>
-
+			{@render raptorImg()}
 			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
 				Someone sharebeed a free ticket with you to the party at on may 2nd
 			</div>
@@ -99,14 +102,7 @@
 
 		{#if newSharebeeUrl}
 			<div class="info">woohoo! you have a ticket to the party!</div>
-			<div class="raptor-img-container">
-				<img
-					alt="raptor"
-					class="raptor absolute mix-blend-color"
-					src="/raptor/faight-2/dinotopia-raptor.svg"
-				/>
-				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
-			</div>
+			{@render raptorImg()}
 			<div class="info">Here is your own sharebee to send to a friend now</div>
 			<div class="link">{newSharebeeUrl}</div>
 			<div class="copy-wrapper">
@@ -117,14 +113,7 @@
 		{#if claimed_at}
 			<div class="status">This ticket has been claimed</div>
 			<!-- <div class="date">{formatDate(claimed_at)}</div> -->
-			<div class="raptor-img-container">
-				<img
-					alt="raptor"
-					class="raptor absolute mix-blend-color"
-					src="/raptor/faight-2/dinotopia-raptor.svg"
-				/>
-				<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
-			</div>
+			{@render raptorImg()}
 			{#if !isWinner}
 				<div class="text-2xl">See if your friend has another one or bug @teh.raptor 🙃</div>
 			{/if}

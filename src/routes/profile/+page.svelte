@@ -33,6 +33,9 @@
 	/** @type {string} sharebeeQRUrl */
 	let sharebeeQRUrl = $state('');
 
+	/** @type {string} */
+	let freebeeQRUrl = $state('');
+
 	let followingSharebeeIsClaimed = $state(false);
 
 	onMount(() => {
@@ -43,6 +46,7 @@
 			oldOrders = data.oldOrders;
 			sharebee = data.sharebee;
 			sharebeeQRUrl = data.sharebeeQRUrl;
+			freebeeQRUrl = data.freebeeQRUrl;
 			followingSharebeeIsClaimed = data.followingSharebeeIsClaimed;
 		});
 	});
@@ -68,9 +72,9 @@
 				<div class="tracking-wider text-[var(--third-color)] capitalize">
 					{freebee?.project_name.replace(/-/g, ' ')}
 				</div>
-				<div class="w-5/6 lowercase">
-					You have a freebee! Ari will confirm with you at some point and eventually send you a QR
-					code
+				<div class="w-5/6 lowercase">You have a freebee!</div>
+				<div>
+					<img src={freebeeQRUrl} alt="freebee qr code" class="h-30 w-30 bg-amber-300" />
 				</div>
 			{/if}
 		</div>
@@ -102,7 +106,9 @@
 				{#if !followingSharebeeIsClaimed}
 					<div class="mt-10">
 						<div class="lowercase">You also have a sharebee to share with someone else</div>
-						<div class="text-[var(--yellow)]">{createSharebeeUrlBrowser(createSharebeeHash(sharebee.id, phoneNumber))}</div>
+						<div class="text-[var(--yellow)]">
+							{createSharebeeUrlBrowser(createSharebeeHash(sharebee.id, phoneNumber))}
+						</div>
 						<!-- <div>
 					{createSharebeeUrl(createSharebeeHash(sharebee.id, phoneNumber))}
 				</div> -->

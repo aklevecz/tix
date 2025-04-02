@@ -43,6 +43,12 @@ export async function GET({ cookies, platform, url }) {
 		}
 	}
 
+	let freebeeQRUrl = ''
+	if (freebee) {
+		const r2Path = `order-qrs/${EVENT_ID}/${freebee.id}.png`;
+		freebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+	}
+
 	const { results: oldOrders } = await platform?.env.DB.prepare(
 		`SELECT * FROM orders where phone_number = ?`
 	)
@@ -55,6 +61,7 @@ export async function GET({ cookies, platform, url }) {
 		freebee,
 		sharebee,
 		sharebeeQRUrl,
+		freebeeQRUrl,
 		followingSharebeeUrl,
 		followingSharebeeIsClaimed,
 		oldOrders
