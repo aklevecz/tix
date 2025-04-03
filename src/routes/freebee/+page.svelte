@@ -132,7 +132,7 @@
 		{/if}
 		{#snippet timeUnit(/** @type {{ value: number, label: string }} */ object)}
 			<div class="rounded-lg border p-4 shadow-inner">
-				<div class="mb-2 text-2xl font-bold">
+				<div class="mb-2 text-2xl font-bold text-[var(--third-color)]">
 					{object.value.toString().padStart(2, '0')}
 				</div>
 				<div class="text-xs">{object.label}</div>
