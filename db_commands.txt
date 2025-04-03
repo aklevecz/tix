@@ -32,6 +32,7 @@ npx wrangler d1 execute DB --local --command "SELECT * FROM freebees;"
 npx wrangler d1 execute DB --local --command "INSERT INTO freebees (id, winner, project_name, date, time) VALUES ('2025-02-15', '', 'raptor-faight-2', '2025-02-15', '');"
 
 npx wrangler d1 execute DB --local --command "UPDATE freebees SET time='23:00:00' WHERE id='2025-02-15';"
+npx wrangler d1 execute DB --local --command "UPDATE freebees SET time='12:00:00'"
 npx wrangler d1 execute DB --local --command "UPDATE freebees SET winner='' WHERE id='2025-02-15';"
 
 
@@ -46,6 +47,6 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS sharebe
   claimed_at DATETIME
 );"
 
-npx wrangler d1 execute DB --local --command "DELETE FROM sharebees;"
-npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --remote --command "DELETE FROM sharebees;"
+npx wrangler d1 execute DB --remote --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
 npx wrangler d1 execute DB --local --command "SELECT id from sharebees;"

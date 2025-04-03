@@ -1,9 +1,10 @@
 <script>
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
+	import LoadingSpinner from '$lib/compontents/loading-spinner.svelte';
 	import { generateQR } from '$lib/qr';
 	import freebee from '$lib/stores/freebee.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { concatDateTime } from '$lib/utils';
+	import { concatDateTime, delay } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */
@@ -63,19 +64,22 @@
 	});
 
 	let won = $state(false);
+	let isLoading = $state(false);
 	async function onWin() {
+		isLoading = true;
 		if (!user.token) {
 			alert('You must be signed in to win');
 			return;
 		}
 		const { blob } = await generateQR(`freebee:${freebee.state.id}`);
-		const response = await freebee.win({qrBlob: blob});
+		const response = await freebee.win({ qrBlob: blob });
 		if (response.success) {
 			won = true;
 			alert(response.message);
 		} else {
 			alert(response.message);
 		}
+		isLoading = false;
 	}
 </script>
 
@@ -92,8 +96,14 @@
 
 		{#if won}
 			<p class="p-4 text-center text-5xl font-bold text-green-400">You won!</p>
-			<p class="p-4 text-center text-3xl font-bold">Ari will contact you to confirm your ticket</p>
-			<p class="filter-strobe mx-auto text-center text-[170px]">🎉</p>
+			<div class="p-4 text-center text-2xl font-bold">
+				Bao should have texted you your QR code, but you can also see it in your profile
+			</div>
+
+			<p class="filter-strobe mx-auto text-center text-[100px]">🎉</p>
+			<a href="/profile" class="btn-bauhaus mx-auto mt-12 mb-4 block w-[175px] text-center text-xl">
+				Go to profile
+			</a>
 		{/if}
 
 		{#if !won}
@@ -150,7 +160,7 @@
 			{#if !alreadyClaimed}
 				<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
 				<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
-					>WIN</button
+					>{#if isLoading}<LoadingSpinner />{:else}Win{/if}</button
 				>
 			{/if}
 		{/if}
