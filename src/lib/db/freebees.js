@@ -28,7 +28,10 @@ const dbFreebees = (db) => {
 			}
 			try {
 				await db
-					.prepare(`UPDATE ${tableName} SET ${newValues.map((o) => `${o.key} ='${o.value}'`)}`)
+					.prepare(
+						`UPDATE ${tableName} SET ${newValues.map((o) => `${o.key} ='${o.value}' WHERE id = ?`)}`
+					)
+					.bind(id)
 					.run();
 			} catch (e) {
 				console.log(e);
