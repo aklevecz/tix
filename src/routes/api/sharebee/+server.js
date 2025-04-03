@@ -45,6 +45,17 @@ export async function POST({ cookies, request, platform, url }) {
 		const winner = phoneNumber;
 
 		const db = dbSharebees(platform?.env.DB);
+
+		// check if they already have a sharebee for the event
+		const existingSharebee = await db.getSharebeeByPhoneNumberAndProjectName(winner, EVENT_ID);
+		console.log(`Existing shareebee ${JSON.stringify(existingSharebee)}`);
+		if (existingSharebee) {
+			return new Response(JSON.stringify({ error: 'You already have a sharebee for this event' }), {
+				status: 400,
+				headers: { 'Content-Type': 'application/json' }
+			});
+		}
+
 		const success = await db.claimSharebee(id, winner);
 
 		const r2Path = `order-qrs/${EVENT_ID}/${id}.png`;
