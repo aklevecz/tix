@@ -122,5 +122,9 @@ export async function DELETE({ cookies }) {
 	cookies.delete('name', cookieOptions);
 	cookies.delete('token', cookieOptions);
 	cookies.delete('authed', cookieOptions);
+	cookies.delete('winner', cookieOptions);
+	cookies.delete('cart', cookieOptions);
+	cookies.delete('event', cookieOptions);
+	cookies.delete('user', cookieOptions);
 	return json({ success: true, message: responses.LOGGED_OUT });
 }
