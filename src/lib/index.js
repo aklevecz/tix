@@ -117,9 +117,9 @@ export const mockProducts = [
 			thirdColor: '#e2f0f0'
 		},
 		seo: {
-			title: 'Raptor Faight 2 | The Faight Collective',
-			description: 'The Concert Raptors run it back for part 2 at The Faight Collective',
-			image: '/raptor/part-2-flyer.jpg'
+			title: 'concert raptors - may 2nd',
+			description: 'dino magic on may 2nd',
+			image: '/raptor/faight-2/og-image.jpg'
 		}
 	}
 ];
