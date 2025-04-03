@@ -32,7 +32,8 @@
 				// generate.generateRaptor();
 				newSharebeeUrl = createSharebeeUrlBrowser(sharebeeId);
 			} else {
-				alert('couldnt claim -- probably already claimed or something else-- try refreshing');
+				alert(response.error)
+				// alert('couldnt claim -- probably already claimed or something else-- try refreshing');
 			}
 		}
 		isClaiming = false;

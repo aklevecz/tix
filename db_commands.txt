@@ -26,6 +26,7 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS freebee
   time TEXT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
 );"
+
 npx wrangler d1 execute DB --local --command "DELETE FROM freebees;"
 
 npx wrangler d1 execute DB --local --command "SELECT * FROM freebees;"
@@ -47,6 +48,10 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS sharebe
   claimed_at DATETIME
 );"
 
-npx wrangler d1 execute DB --remote --command "DELETE FROM sharebees;"
-npx wrangler d1 execute DB --remote --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "DELETE FROM sharebees;"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('tritopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('brontopia', 'raptor-faight-2');"
 npx wrangler d1 execute DB --local --command "SELECT id from sharebees;"
+npx wrangler d1 execute DB --local --command "SELECT * from sharebees;"
+npx wrangler d1 execute DB --local --command "UPDATE sharebees set winner=null AND claimed_at=null;"
