@@ -87,7 +87,7 @@
 
 	{#if user.token}
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
-			<div class="hero">Free ticket - May 2nd</div>
+			<div class="hero">Free ticket</div>
 			{@render raptorImg()}
 			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
 				Someone sharebeed a free ticket with you to the party at on may 2nd

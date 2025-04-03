@@ -119,11 +119,6 @@
 				{seconds === 1 ? 'second' : 'seconds'}
 			</div> -->
 
-					{#if !canWin && !alreadyClaimed}
-						<p class="cta-bubble text-lg text-black">
-							Wait for the timer to finish and press the win button to claim the freebee today 🙃
-						</p>
-					{/if}
 					{#if canWin && !alreadyClaimed}
 						<p class="cta-bubble text-green-500">OMG You can win! press the button!!!</p>
 					{/if}
@@ -143,6 +138,7 @@
 				<div class="text-xs">{object.label}</div>
 			</div>
 		{/snippet}
+
 		{#if !won}
 			<div class:flashing={canWin} class="m-4 my-0 rounded-xl border p-6 shadow-2xl">
 				<h2 class="mb-6 text-center text-xl font-semibold">Time Remaining</h2>
@@ -157,6 +153,11 @@
 <TimeUnit value={seconds} label={seconds === 1 ? 'Second' : 'Seconds'} /> -->
 				</div>
 			</div>
+			{#if !canWin && !alreadyClaimed}
+				<p class="cta-bubble text-lg text-black">
+					Wait for the timer to finish and press the win button to claim the freebee today 🙃
+				</p>
+			{/if}
 			{#if !alreadyClaimed}
 				<!-- <h1 class="p-4 text-2xl font-bold">PRESS THIS BUTTON TO WIN</h1> -->
 				<button onclick={onWin} class="win-button" class:pulse={canWin} class:faded={!canWin}
