@@ -54,6 +54,19 @@ const dbSharebees = (db) => {
 		},
 
 		/**
+		 * Retrieves a sharebee entry based on the winner's phone number and project name.
+		 * @param {string} phoneNumber - The phone number of the winner.
+		 * @param {string} projectName - The name of the project.
+		 * @returns {Promise<SharebeeEntry | null>} A promise that resolves to the sharebee entry if found, otherwise null.
+		 */
+
+		async getSharebeeByPhoneNumberAndProjectName(phoneNumber, projectName) {
+			return db
+				.prepare(`SELECT * FROM ${tableName} WHERE winner = ? AND project_name = ?`)
+				.bind(phoneNumber, projectName)
+				.first();
+		},
+		/**
 		 * Get all unclaimed sharebees
 		 * @returns {Promise<SharebeeEntry[] | Record<string, unknown>[]>}
 		 */
@@ -70,8 +83,10 @@ const dbSharebees = (db) => {
 
 		async resetSharebees() {
 			try {
-				await db.prepare(`DELETE FROM ${tableName}`).run()
-				await db.prepare(`INSERT INTO sharebees (id, project_name) VALUES ('TEST', 'raptor-faight-2');`).run();
+				await db.prepare(`DELETE FROM ${tableName}`).run();
+				await db
+					.prepare(`INSERT INTO sharebees (id, project_name) VALUES ('TEST', 'raptor-faight-2');`)
+					.run();
 			} catch (e) {
 				console.error(`Failed to reset sharebees:`, e);
 				return false;
