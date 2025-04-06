@@ -1,9 +1,14 @@
 import dbOrders from '$lib/db/orders';
 import dbFreebees from '$lib/db/freebees';
 import dbSharebees from '$lib/db/sharebees';
+import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ platform }) {
+export async function load({ platform, url }) {
+    const teemo = url.searchParams.get('teemo')
+    if (teemo !== 'meepo') {
+        throw error(404, 'whart?')
+    }
 	if (!platform?.env?.DB) {
 		console.error('Database binding DB not found.');
 		return {

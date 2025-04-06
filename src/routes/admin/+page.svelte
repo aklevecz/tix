@@ -35,7 +35,19 @@
 		}
 		// If not a string, stringify directly
 		return JSON.stringify(value, null, 2);
-	}
+		}
+	
+		/**
+		 * Truncates a string to a maximum length.
+		 * @param {string} str The string to truncate.
+		 * @param {number} maxLength The maximum length.
+		 */
+		function truncateString(str, maxLength) {
+			if (typeof str !== 'string' || str.length <= maxLength) {
+				return str;
+			}
+			return str.substring(0, maxLength) + '...';
+		}
 </script>
 
 <svelte:head>
@@ -83,7 +95,7 @@
 							<td>{order.discount || 'N/A'}</td>
 							<td>{order.project_name || 'N/A'}</td>
 							<td>{order.origin || 'N/A'}</td>
-							<td><pre>{safeStringify(order.items)}</pre></td>
+							<td><pre>{truncateString(safeStringify(order.items), 100)}</pre></td>
 							<!-- Render other relevant data -->
 						</tr>
 					{/each}
