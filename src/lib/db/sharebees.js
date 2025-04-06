@@ -92,17 +92,27 @@ const dbSharebees = (db) => {
 				return false;
 			}
 			return true;
+		},
+		/**
+			* Get all sharebees
+			* @returns {Promise<Record<string, unknown>[]>}
+			*/
+		async getAllSharebees() {
+			return db
+				.prepare(`SELECT * FROM ${tableName} ORDER BY created_at DESC`)
+				.all()
+				.then((result) => result.results || []);
 		}
 	};
 };
 
 /**
- * @typedef {Object} SharebeeEntry
- * @property {string} id
- * @property {string} winner
- * @property {string} project_name
- * @property {string} created_at
- * @property {string | null} claimed_at
- */
+	* @typedef {Object} SharebeeEntry
+	* @property {string} id
+	* @property {string} winner
+	* @property {string} project_name
+	* @property {string} created_at
+	* @property {string | null} claimed_at
+	*/
 
 export default dbSharebees;

@@ -68,6 +68,13 @@ const dbOrders = (db) => {
 				console.log(e);
 				console.error(`Failed to update ${pi_id} with values ${JSON.stringify(newValues)}`);
 			}
+		},
+		/**
+		 * @returns {Promise<Record<string, unknown>[]>}
+			*/
+		async getAllOrders() {
+			const { results } = await db.prepare(`SELECT * FROM ${tableName} ORDER BY rowid DESC`).all();
+			return results || [];
 		}
 	};
 };

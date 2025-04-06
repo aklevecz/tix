@@ -178,13 +178,14 @@ export async function POST({ cookies, platform, request }) {
 		});
 	}
 
-	if (!freebeeEntry.winner) {
-		await dbFreebees(platform?.env.DB).updateFreebee(today, [
-			{
-				key: 'winner',
-				value: phoneNumberToUid(decodedToken.phoneNumber)
-			}
-		]);
+	// Use the new atomic update function to prevent race conditions
+	const claimResult = await dbFreebees(platform?.env.DB).claimFreebeeAtomic(
+		today, 
+		phoneNumberToUid(decodedToken.phoneNumber)
+	);
+	
+	if (claimResult.success) {
+		// Only proceed with these actions if we successfully claimed the freebee
 		const r2Path = `order-qrs/${EVENT_ID}/${today}.png`;
 
 		await platform?.env.R2.put(r2Path, qr, {
@@ -198,11 +199,7 @@ export async function POST({ cookies, platform, request }) {
 		});
 
 		cookies.set('winner', phoneNumberToUid(decodedToken.phoneNumber), cookieOptions);
-		return json({ success: true, message: 'You won the freebee!' });
-	} else {
-		return json({
-			success: false,
-			message: 'This Freebee is already claimed, wait for the next one!'
-		});
 	}
+	
+	return json(claimResult);
 }

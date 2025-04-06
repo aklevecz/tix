@@ -44,6 +44,42 @@ const dbFreebees = (db) => {
 				.prepare(`SELECT * FROM ${tableName} WHERE winner = ? AND project_name = ?`)
 				.bind(phoneNumber, project_name)
 				.first();
+		},
+		/**
+		 * Atomically update the winner if and only if no winner exists yet
+		 * @param {string} id - The freebee ID
+		 * @param {string} winner - The winner's phone number UID
+		 * @returns {Promise<{success: boolean, message: string}>}
+		 */
+		async claimFreebeeAtomic(id, winner) {
+			// Use UPDATE with a WHERE clause that ensures winner is still empty
+			const result = await db
+				.prepare(
+					`UPDATE ${tableName} SET winner = ? WHERE id = ? AND (winner IS NULL OR winner = '')`
+				)
+				.bind(winner, id)
+				.run();
+
+			// Check if any rows were affected
+			if (result.meta.changes === 0) {
+				// No rows were updated, which means there's already a winner
+				return {
+					success: false,
+					message: 'This Freebee is already claimed, wait for the next one!'
+				};
+			}
+
+			return {
+				success: true,
+				message: 'You won the freebee!'
+			};
+		},
+		/**
+			* @returns {Promise<Record<string, unknown>[]>}
+			*/
+		async getAllFreebees() {
+			const { results } = await db.prepare(`SELECT * FROM ${tableName} ORDER BY rowid DESC`).all();
+			return results || [];
 		}
 	};
 };

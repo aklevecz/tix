@@ -49,9 +49,34 @@ npx wrangler d1 execute DB --local --command "CREATE TABLE IF NOT EXISTS sharebe
 );"
 
 npx wrangler d1 execute DB --local --command "DELETE FROM sharebees;"
-npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
-npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('tritopia', 'raptor-faight-2');"
-npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('brontopia', 'raptor-faight-2');"
+
 npx wrangler d1 execute DB --local --command "SELECT id from sharebees;"
 npx wrangler d1 execute DB --local --command "SELECT * from sharebees;"
 npx wrangler d1 execute DB --local --command "UPDATE sharebees set winner=null AND claimed_at=null;"
+
+
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('raptortopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('tritopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('brontopia', 'raptor-faight-2');"
+
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('stegotopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('velotopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('tyrannopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('pteroopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('parasaurtopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('allotopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('ankylopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('pachytopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('diplodotopia', 'raptor-faight-2');"
+npx wrangler d1 execute DB --local --command "INSERT INTO sharebees (id, project_name) VALUES ('compsopia', 'raptor-faight-2');"
+
+qrencode -o stegotopia.png -s 8 "https://tix.concertraptors.com/sharebee/stegotopia"
+qrencode -o velotopia.png -s 8 "https://tix.concertraptors.com/sharebee/velotopia"
+qrencode -o tyrannopia.png -s 8 "https://tix.concertraptors.com/sharebee/tyrannopia"
+qrencode -o pteroopia.png -s 8 "https://tix.concertraptors.com/sharebee/pteroopia"
+qrencode -o parasaurtopia.png -s 8 "https://tix.concertraptors.com/sharebee/parasaurtopia"
+qrencode -o allotopia.png -s 8 "https://tix.concertraptors.com/sharebee/allotopia"
+qrencode -o ankylopia.png -s 8 "https://tix.concertraptors.com/sharebee/ankylopia"
+qrencode -o pachytopia.png -s 8 "https://tix.concertraptors.com/sharebee/pachytopia"
+qrencode -o diplodotopia.png -s 8 "https://tix.concertraptors.com/sharebee/diplodotopia"
+qrencode -o compsopia.png -s 8 "https://tix.concertraptors.com/sharebee/compsopia"
