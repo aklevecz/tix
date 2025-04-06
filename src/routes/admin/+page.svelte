@@ -1,0 +1,216 @@
+<script>
+	/** @type {import('./$types').PageData} */
+	export let data;
+
+	$: ({ orders, freebees, sharebees, error } = data);
+
+	/**
+	 * Helper to format date/time strings
+	 * @param {string | number | Date | null | undefined} dateTimeString
+	 */
+	function formatDateTime(dateTimeString) {
+		if (!dateTimeString) return 'N/A';
+		try {
+			return new Date(dateTimeString).toLocaleString();
+		} catch (e) {
+			return dateTimeString; // Return original if parsing fails
+		}
+	}
+
+	/**
+	 * Helper to safely stringify JSON potentially stored as strings
+	 * @param {any} value
+	 */
+	function safeStringify(value) {
+		if (typeof value === 'string') {
+			try {
+				// Attempt to parse if it looks like JSON, then stringify nicely
+				if ((value.startsWith('{') && value.endsWith('}')) || (value.startsWith('[') && value.endsWith(']'))) {
+					return JSON.stringify(JSON.parse(value), null, 2);
+				}
+			} catch (e) {
+				// If parsing fails, return the original string
+				return value;
+			}
+		}
+		// If not a string, stringify directly
+		return JSON.stringify(value, null, 2);
+	}
+</script>
+
+<svelte:head>
+	<title>Admin Dashboard</title>
+</svelte:head>
+
+<div class="admin-dashboard">
+	<h1>Admin Dashboard</h1>
+
+	{#if error}
+		<p class="error">Error loading data: {error}</p>
+	{/if}
+
+	<!-- Orders Table -->
+	<section>
+		<h2>Orders (tix_orders)</h2>
+		{#if orders && orders.length > 0}
+			<table>
+				<thead>
+					<tr>
+						<th>pi_id</th>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Email</th>
+						<th>Status</th>
+						<th>Amount</th>
+						<th>Subtotal</th>
+						<th>Discount</th>
+						<th>Project Name</th>
+						<th>Origin</th>
+						<th>Items</th>
+						<!-- Add other relevant headers -->
+					</tr>
+				</thead>
+				<tbody>
+					{#each orders as order (order.pi_id)}
+						<tr>
+							<td>{order.pi_id}</td>
+							<td>{order.name || 'N/A'}</td>
+							<td>{order.phone || 'N/A'}</td>
+							<td>{order.email || 'N/A'}</td>
+							<td>{order.status || 'N/A'}</td>
+							<td>{order.amount || 'N/A'}</td>
+							<td>{order.subtotal || 'N/A'}</td>
+							<td>{order.discount || 'N/A'}</td>
+							<td>{order.project_name || 'N/A'}</td>
+							<td>{order.origin || 'N/A'}</td>
+							<td><pre>{safeStringify(order.items)}</pre></td>
+							<!-- Render other relevant data -->
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:else if !error}
+			<p>No orders found.</p>
+		{/if}
+	</section>
+
+	<!-- Freebees Table -->
+	<section>
+		<h2>Freebees</h2>
+		{#if freebees && freebees.length > 0}
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Winner</th>
+						<th>Project Name</th>
+						<th>Date</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each freebees as freebee (freebee.id)}
+						<tr>
+							<td>{freebee.id}</td>
+							<td>{freebee.winner || 'N/A'}</td>
+							<td>{freebee.project_name || 'N/A'}</td>
+							<td>{freebee.date || 'N/A'}</td>
+							<td>{freebee.time || 'N/A'}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:else if !error}
+			<p>No freebees found.</p>
+		{/if}
+	</section>
+
+	<!-- Sharebees Table -->
+	<section>
+		<h2>Sharebees</h2>
+		{#if sharebees && sharebees.length > 0}
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Winner</th>
+						<th>Project Name</th>
+						<th>Created At</th>
+						<th>Claimed At</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each sharebees as sharebee (sharebee.id)}
+						<tr>
+							<td>{sharebee.id}</td>
+							<td>{sharebee.winner || 'N/A'}</td>
+							<td>{sharebee.project_name || 'N/A'}</td>
+							<td>{formatDateTime(/** @type {string} */ (sharebee.created_at))}</td>
+							<td>{sharebee.claimed_at ? formatDateTime(/** @type {string} */ (sharebee.claimed_at)) : 'Not Claimed'}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		{:else if !error}
+			<p>No sharebees found.</p>
+		{/if}
+	</section>
+</div>
+
+<style>
+	.admin-dashboard {
+		font-family: sans-serif;
+		padding: 20px;
+		max-width: 1400px;
+		margin: 0 auto;
+	}
+	h1, h2 {
+		color: #333;
+		border-bottom: 1px solid #eee;
+		padding-bottom: 5px;
+		margin-top: 30px;
+	}
+	h1 {
+		margin-top: 0;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		margin-top: 15px;
+		font-size: 0.9em;
+		box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+	}
+	th, td {
+		border: 1px solid #ddd;
+		padding: 8px 12px;
+		text-align: left;
+		vertical-align: top; /* Align content top for pre tags */
+	}
+	th {
+		background-color: #f4f4f4;
+		font-weight: bold;
+	}
+	tbody tr:nth-child(even) {
+		background-color: #f9f9f9;
+	}
+	tbody tr:hover {
+		background-color: #f1f1f1;
+	}
+	pre {
+		white-space: pre-wrap; /* Wrap long JSON strings */
+		word-wrap: break-word;
+		margin: 0;
+		font-size: 0.85em;
+		background-color: #eee;
+		padding: 5px;
+		border-radius: 3px;
+	}
+	.error {
+		color: red;
+		font-weight: bold;
+	}
+	section {
+		margin-bottom: 40px;
+		overflow-x: auto; /* Allow horizontal scrolling for wide tables */
+	}
+</style>
