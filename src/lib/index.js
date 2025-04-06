@@ -60,6 +60,7 @@ export const colors = {
 	faightYellow: '#ffda4e'
 };
 
+// Should rename this
 /** @type {Product[]} */
 export const mockProducts = [
 	{
@@ -123,6 +124,8 @@ export const mockProducts = [
 		}
 	}
 ];
+
+export const validEventNames = Object.keys(mockProducts)
 
 export const responses = {
 	CODE_SENT: 'Code sent',

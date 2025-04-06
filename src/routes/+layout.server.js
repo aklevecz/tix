@@ -1,4 +1,4 @@
-import { EVENT_ID, getOrCreateCart, mockProducts } from '$lib';
+import { EVENT_ID, getOrCreateCart, mockProducts, validEventNames } from '$lib';
 import { defaultCart } from '$lib/stores/cart.svelte';
 
 /** @type {import('./$types').LayoutServerLoad} */
@@ -8,6 +8,9 @@ export async function load({ cookies, url, locals, params }) {
 	const token = cookies.get('token') || '';
 
 	let currentEvent = cookies.get('event') || EVENT_ID;
+	if (validEventNames.includes(currentEvent) === false) {
+		currentEvent = EVENT_ID
+	}
 	if (params.eventName) {
 		currentEvent = params.eventName;
 		cookies.set('event', currentEvent, {
