@@ -81,8 +81,15 @@
 		}
 		isLoading = false;
 	}
-</script>
 
+	let seo = {
+		image: '/raptor/faight-2/og-image.jpg',
+	};
+</script>
+<svelte:head>
+	<meta property="og:image" content={seo.image} />
+	<meta name="twitter:image" content={seo.image} />
+</svelte:head>
 <div class="mx-auto mb-10 flex min-h-[80vh] max-w-[600px] flex-col md:min-h-[90vh]">
 	{#if !user.token}
 		<div class="m-4 mb-10 rounded-md border p-1">
