@@ -91,7 +91,7 @@
 			<div class="hero">Free ticket</div>
 			{@render raptorImg()}
 			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
-				Someone sharebeed a free ticket with you to the party at on may 2nd
+				Someone sharebeed a free ticket with you to the party on may 2nd
 			</div>
 			<button onclick={onClaim} class="btn-claim"
 				>{#if isClaiming}
