@@ -4,7 +4,7 @@
 	import { generateQR } from '$lib/qr';
 	import freebee from '$lib/stores/freebee.svelte';
 	import user from '$lib/stores/user.svelte';
-	import { concatDateTime, delay } from '$lib/utils';
+	import { concatDateTime } from '$lib/utils';
 	import { onMount } from 'svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */

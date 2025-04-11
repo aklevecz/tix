@@ -102,6 +102,16 @@ const dbSharebees = (db) => {
 				.prepare(`SELECT * FROM ${tableName} ORDER BY created_at DESC`)
 				.all()
 				.then((result) => result.results || []);
+		},
+		/** @param {string} id */
+		async deleteSharebee(id) {
+			try {
+				await db.prepare(`DELETE FROM ${tableName} WHERE id = ?`).bind(id).run();
+			} catch (e) {
+				console.error(`Failed to delete sharebee ${id}:`, e);
+				return false;
+			}
+			return true;
 		}
 	};
 };

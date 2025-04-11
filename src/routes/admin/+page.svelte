@@ -48,8 +48,61 @@
 			}
 			return str.substring(0, maxLength) + '...';
 		}
-</script>
 
+		
+				/** @param {*} event */
+				async function createSharebee(event) {
+			event.preventDefault();
+			const formData = new FormData(/** @type {HTMLFormElement} */ (event.target));
+			const sharebeeId = formData.get('sharebeeId');
+			const projectName = formData.get('projectName');
+
+			try {
+				const response = await fetch('/api/sharebee/create/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ sharebeeId, projectName })
+				});
+
+				if (response.ok) {
+					// Reload the page to show the new sharebee
+					window.location.reload();
+				} else {
+					const error = await response.json();
+					alert(error.message || 'Failed to create sharebee');
+				}
+			} catch (error) {
+				console.error('Error creating sharebee:', error);
+				alert('Failed to create sharebee');
+			}
+		}
+
+		/** @param {string} id */
+		async function deleteSharebee(id) {
+			try {
+				const response = await fetch('/api/sharebee/delete/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ id })
+				});
+
+				if (response.ok) {
+					// Reload the page to show the new sharebee
+					window.location.reload();
+				} else {
+					const error = await response.json();
+					alert(error.message || 'Failed to delete sharebee');
+				}
+			} catch (error) {
+				console.error('Error deleting sharebee:', error);
+				alert('Failed to delete sharebee');
+			}
+		}
+</script>
 <svelte:head>
 	<title>Admin Dashboard</title>
 </svelte:head>
@@ -62,7 +115,7 @@
 	{/if}
 
 	<!-- Orders Table -->
-	<section>
+	<!-- <section>
 		<h2>Orders (tix_orders)</h2>
 		{#if orders && orders.length > 0}
 			<table>
@@ -79,7 +132,6 @@
 						<th>Project Name</th>
 						<th>Origin</th>
 						<th>Items</th>
-						<!-- Add other relevant headers -->
 					</tr>
 				</thead>
 				<tbody>
@@ -96,7 +148,6 @@
 							<td>{order.project_name || 'N/A'}</td>
 							<td>{order.origin || 'N/A'}</td>
 							<td><pre>{truncateString(safeStringify(order.items), 100)}</pre></td>
-							<!-- Render other relevant data -->
 						</tr>
 					{/each}
 				</tbody>
@@ -104,7 +155,7 @@
 		{:else if !error}
 			<p>No orders found.</p>
 		{/if}
-	</section>
+	</section> -->
 
 	<!-- Freebees Table -->
 	<section>
@@ -159,6 +210,7 @@
 							<td>{sharebee.project_name || 'N/A'}</td>
 							<td>{formatDateTime(/** @type {string} */ (sharebee.created_at))}</td>
 							<td>{sharebee.claimed_at ? formatDateTime(/** @type {string} */ (sharebee.claimed_at)) : 'Not Claimed'}</td>
+							<td><button on:click={() => deleteSharebee(String(sharebee.id))}>Delete</button></td>
 						</tr>
 					{/each}
 				</tbody>
@@ -166,6 +218,20 @@
 		{:else if !error}
 			<p>No sharebees found.</p>
 		{/if}
+	</section>
+
+	<!-- Create Sharebee Form -->
+	<section>
+		<h2>Create Sharebee</h2>
+		<form on:submit={createSharebee}>
+			<label for="sharebeeId">Sharebee ID:</label>
+			<input type="text" id="sharebeeId" name="sharebeeId" required>
+
+			<label for="projectName">Project Name:</label>
+			<input type="text" id="projectName" name="projectName" required>
+
+			<button class="btn-bauhaus mt-2" type="submit">Create Sharebee</button>
+		</form>
 	</section>
 </div>
 
@@ -224,5 +290,8 @@
 	section {
 		margin-bottom: 40px;
 		overflow-x: auto; /* Allow horizontal scrolling for wide tables */
+	}
+	button {
+		color: white;
 	}
 </style>
