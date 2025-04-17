@@ -40,6 +40,7 @@
 /**
  * @typedef Product
  * @property {string} id
+ * @property {string} cartTitle
  * @property {string} projectId
  * @property {'ticket'} productType
  * @property {string} name

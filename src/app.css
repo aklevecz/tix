@@ -93,3 +93,7 @@ label {
 input[type='text'] {
 	@apply w-full border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 }
+
+.desc p {
+	@apply text-sm my-4 px-2 w-[95%];
+}

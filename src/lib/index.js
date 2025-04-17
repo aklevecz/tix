@@ -66,12 +66,13 @@ const raptorFaight2 = {
 	projectId: 'raptor-faight-2',
 	productType: 'ticket',
 	name: 'ticket',
-	title: 'BAZAAR ~ May 2nd',
-	description: `DJs / Interactive art / Vinyl Swap  <p style="font-size:.75rem;margin-top:.25rem;">Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there. 
-A place that connects those who love sharing the gift of music. 
-A place where you come as you are and find others who reflect your vibrancy. 
-A place to give into curiosity and let go of expectations
-A place to enter with an open heart and mind to meet new people</p>`,
+	cartTitle : 'Bazaar ~ May 2nd',
+	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px]">May 2nd</div> `,
+	description: /*html*/ `<div class="text-lg">DJs / Interactive art / Vinyl Swap</div>  <p>Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there 🫂</p> 
+<p>A place that connects those who love sharing the gift of music 🎶</p>
+<p>A place where you come as you are and find others who reflect your vibrancy 🌸</p>
+<p>A place to give into curiosity and let go of expectations ✨</p>
+<p>A place to enter with an open heart and mind to meet new people 💕</p>`,
 	place: locations.faight,
 	price: 1000,
 	priceConfig: {
@@ -83,16 +84,16 @@ A place to enter with an open heart and mind to meet new people</p>`,
 	},
 	date: '2025-05-02',
 	dates: ['2025-05-02'],
-	img: '/raptor/bazaar/bazaar_promo_square.jpg',
+	img: '/raptor/bazaar/bazaar_promo_square_brighter.jpg',
 	theme: {
 		primaryColor: '#afdf33',
 		secondaryColor: 'black',
 		thirdColor: '#f65858'
 	},
 	seo: {
-		title: 'concert raptors - may 2nd',
-		description: 'BAZAAR',
-		image: '/raptor/faight-2/og-image.jpg'
+		title: 'BAZAAR - may 2nd',
+		description: 'BAZAAR - DJs / Interactive art / Vinyl Swap',
+		image: '/raptor/bazaar/bazaar_promo_square_brighter.jpg'
 	}
 };
 
@@ -110,7 +111,7 @@ const raptorFaight2Cheaper = {
 	id: 'r4pt0rz',
 	price: cheaperRaptorPrice,
 	priceConfig: cheaperRaptorPriceConfig
-}
+};
 // Should rename this
 /** @type {Product[]} */
 export const mockProducts = [
@@ -120,6 +121,7 @@ export const mockProducts = [
 		productType: 'ticket',
 		name: 'ticket',
 		title: 'Literally Underground',
+		cartTitle: 'Literally Underground',
 		description: `San Francisco's underground music discovery night - Sun Casino, Honey Bucket, Loon`,
 		place: locations.faight,
 		price: 1500,
@@ -147,7 +149,6 @@ export const mockProducts = [
 	raptorFaight2,
 	raptorFaight2Cheaper
 ];
-
 
 export const validEventNames = mockProducts.map((p) => p.id);
 

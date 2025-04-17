@@ -7,13 +7,14 @@
 
 	let hasItems = $derived(Object.entries(cart.state.items).length);
 
-	const pushHeight = 150;
+	const pushHeight = 100;
 
 	$effect(() => {
 		if (hasItems) {
 			setTimeout(() => {
 				window.scrollTo({
-					top: pushHeight,
+					// top: pushHeight,
+					top: window.innerHeight + pushHeight,
 					left: 0,
 					behavior: 'smooth'
 				});
