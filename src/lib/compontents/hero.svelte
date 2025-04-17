@@ -39,14 +39,14 @@
 	})
 </script>
 
-<div class="md:flex- mx-auto mb-10 flex min-h-[50vh] max-w-[700px] flex-col gap-4 px-3">
+<div class="md:flex mx-auto mb-10 flex min-h-[50vh] max-w-[900px] flex-col gap-4 px-3">
 	<button bind:this={floatingButton} style="transform: translateY({spring.current}px)" onclick={() => cart.add(featured)} class="btn-bauhaus fixed bottom-4 right-4">
 		Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 		{featured.productType}
 	</button>
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
-		<div class="flex-[1_0_auto]">
+		<div class="md:flex md:gap-4 flex-[1_0_auto]">
 			<!-- <img class="hero-img" src={featured?.img} alt="literally underground" /> -->
 			<!-- <img src="raptor/raptor-red-svg.svg" alt="raptor" class="hero-img" /> -->
 			<img class="hero-img" src={featured?.img} alt="bazaar scene" />
@@ -98,7 +98,7 @@
 	}
 	img.hero-img {
 		animation: pulse 4s ease-in-out infinite;
-		@apply mx-auto w-[90%] my-4 rounded-lg;
+		@apply mx-auto w-[90%] md:w-[400px] md:h-[400px] my-4 rounded-lg;
 	}
 	.btn-bauhaus {
 		@apply mx-auto w-[250px];
@@ -110,7 +110,7 @@
 			filter: hue-rotate(0deg);
 		}
 		50% {
-			transform: scale(1.05);
+			transform: scale(1.01);
 			opacity: 0.9;
 			filter: hue-rotate(90deg);
 		}

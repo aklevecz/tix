@@ -46,7 +46,7 @@
 
 	.cart-container {
 		/* margin-left: -10px; */
-		@apply fixed bottom-0 mt-4 mb-0 grid w-full gap-2 bg-[var(--primary-color)] p-2 px-3 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
+		@apply fixed bottom-0 md:bottom-20 md:left-10 mt-4 mb-0 grid w-full gap-2 bg-[var(--primary-color)] p-2 px-3 md:mb-0 md:w-[500px] md:rounded-md md:border md:p-4;
 		/* @apply border border-[var(--secondary-color)]; */
 	}
 

@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 
-export const isDev = true;
+export const isDev = dev;
 
 export const checkoutActions = {
 	CREATE_INTENT: 'CREATE_INTENT',
@@ -67,12 +67,13 @@ const raptorFaight2 = {
 	productType: 'ticket',
 	name: 'ticket',
 	cartTitle : 'Bazaar ~ May 2nd',
-	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px]">May 2nd</div> `,
+	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px] md:mt-0">May 2nd</div> `,
 	description: /*html*/ `<div class="text-lg">DJs / Interactive art / Vinyl Swap</div>  <p>Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there 🫂</p> 
-<p>A place that connects those who love sharing the gift of music 🎶</p>
+<p>A place to connect with those who love sharing the gift of music & dancing 🎶</p>
 <p>A place where you come as you are and find others who reflect your vibrancy 🌸</p>
 <p>A place to give into curiosity and let go of expectations ✨</p>
-<p>A place to enter with an open heart and mind to meet new people 💕</p>`,
+<p>A place to enter with an open heart and mind to meet new people 💕</p>
+<p>Music by <a target="_blank" class="text-[var(--third-color)]" href="https://soundcloud.com/krgmp3">krg</a> and <a class="text-[var(--third-color)]" href="https://soundcloud.com/3kelves" target="_blank">3kelves</a>. More TBA</p>`,
 	place: locations.faight,
 	price: 1000,
 	priceConfig: {
