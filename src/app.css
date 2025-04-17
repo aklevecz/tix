@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 /* SF Pro Display variants */
-@font-face {
+/* @font-face {
 	font-family: 'SF Pro Rounded';
 	src: url('/fonts/SF-Pro-Rounded-Semibold.otf') format('opentype');
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
-}
+} */
 
 :root {
 	--yellow: #ffc73a;
@@ -29,7 +29,7 @@
 html,
 body {
 	/* background-color: var(--primary-color); */
-	font-family: 'SF Pro Rounded', sans-serif;
+	/* font-family: 'SF Pro Rounded', sans-serif; */
 	color: var(--secondary-color);
 	/* text-transform: uppercase; */
 	display: flex;
@@ -51,7 +51,7 @@ button,
 }
 
 .btn-bauhaus {
-	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--color-2)] px-4 py-2 font-bold tracking-wide text-black uppercase transition-colors duration-200;
+	@apply rounded-md border-0 border-[var(--color-1)] bg-[var(--third-color)] px-4 py-2 font-bold tracking-wide text-black uppercase transition-colors duration-200;
 }
 
 .btn-bauhaus.sm {

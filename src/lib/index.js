@@ -60,6 +60,57 @@ export const colors = {
 	faightYellow: '#ffda4e'
 };
 
+/** @type {Product} */
+const raptorFaight2 = {
+	id: 'raptor-faight-2',
+	projectId: 'raptor-faight-2',
+	productType: 'ticket',
+	name: 'ticket',
+	title: 'BAZAAR ~ May 2nd',
+	description: `DJs / Interactive art / Vinyl Swap  <p style="font-size:.75rem;margin-top:.25rem;">Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there. 
+A place that connects those who love sharing the gift of music. 
+A place where you come as you are and find others who reflect your vibrancy. 
+A place to give into curiosity and let go of expectations
+A place to enter with an open heart and mind to meet new people</p>`,
+	place: locations.faight,
+	price: 1000,
+	priceConfig: {
+		base: 1000,
+		slidingScale: true,
+		min: 1000,
+		max: 5000,
+		step: 500
+	},
+	date: '2025-05-02',
+	dates: ['2025-05-02'],
+	img: '/raptor/bazaar/bazaar_promo_square.jpg',
+	theme: {
+		primaryColor: '#afdf33',
+		secondaryColor: 'black',
+		thirdColor: '#f65858'
+	},
+	seo: {
+		title: 'concert raptors - may 2nd',
+		description: 'BAZAAR',
+		image: '/raptor/faight-2/og-image.jpg'
+	}
+};
+
+const cheaperRaptorPrice = 500;
+const cheaperRaptorPriceConfig = {
+	base: cheaperRaptorPrice,
+	slidingScale: true,
+	min: cheaperRaptorPrice,
+	max: 2000,
+	step: 250
+};
+
+const raptorFaight2Cheaper = {
+	...raptorFaight2,
+	id: 'r4pt0rz',
+	price: cheaperRaptorPrice,
+	priceConfig: cheaperRaptorPriceConfig
+}
 // Should rename this
 /** @type {Product[]} */
 export const mockProducts = [
@@ -93,39 +144,12 @@ export const mockProducts = [
 			image: '/images/literally-underground/1/image.png'
 		}
 	},
-	{
-		id: 'raptor-faight-2',
-		projectId: 'raptor-faight-2',
-		productType: 'ticket',
-		name: 'ticket',
-		title: 'May 2nd',
-		description: 'Join us for some dino magic ✨',
-		place: locations.faight,
-		price: 1500,
-		priceConfig: {
-			base: 1500,
-			slidingScale: true,
-			min: 100,
-			max: 5000,
-			step: 500
-		},
-		date: '2025-05-02',
-		dates: ['2025-05-02'],
-		img: '/raptor/faight-2/og-image.jpg',
-		theme: {
-			primaryColor: '#9eac7a',
-			secondaryColor: '#f0502b',
-			thirdColor: '#e2f0f0'
-		},
-		seo: {
-			title: 'concert raptors - may 2nd',
-			description: 'dino magic on may 2nd',
-			image: '/raptor/faight-2/og-image.jpg'
-		}
-	}
+	raptorFaight2,
+	raptorFaight2Cheaper
 ];
 
-export const validEventNames = Object.keys(mockProducts)
+
+export const validEventNames = mockProducts.map((p) => p.id);
 
 export const responses = {
 	CODE_SENT: 'Code sent',

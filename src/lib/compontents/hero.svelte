@@ -1,6 +1,8 @@
 <script>
 	import cart from '$lib/stores/cart.svelte';
-	
+	import { formatPrice } from '$lib/utils';
+	import { slide } from 'svelte/transition';
+
 	let { featured } = $props();
 
 	let quantityInCart = $derived(featured ? cart.getQuantity(featured.id) : 0);
@@ -24,14 +26,14 @@
 	});
 </script>
 
-<div class="mx-auto flex min-h-[50vh] max-w-[700px] flex-col gap-4 px-3 md:flex- mb-20">
+<div class="md:flex- mx-auto mb-0 flex min-h-[50vh] max-w-[700px] flex-col gap-4 px-3">
 	<!-- <h1>{featured?.title}</h1> -->
 	{#if featured}
 		<div class="flex-[1_0_auto]">
 			<!-- <img class="hero-img" src={featured?.img} alt="literally underground" /> -->
 			<!-- <img src="raptor/raptor-red-svg.svg" alt="raptor" class="hero-img" /> -->
-			 <img class="hero-img" src="/raptor/dinotopia/bazaar-scene.jpeg" alt="bazaar scene">
-			<div class="p-4">
+			<img class="hero-img" src={featured?.img} alt="bazaar scene" />
+			<div class="mt-4">
 				<div class="flex items-center gap-4">
 					<!-- <img class="w-[80px]" src="/images/faight/faight-logo.png" alt="faight logo" /> -->
 					<div class="text-2xl font-semibold tracking-wide capitalize">
@@ -39,24 +41,23 @@
 					</div>
 				</div>
 				<div class="desc">
-					{featured?.description}
+					{@html featured?.description}
 				</div>
 			</div>
 		</div>
 		<!-- <div class="quantity-message">
 			{quantityMessage}
 		</div> -->
-		<div class="md:mt-0 flex h-full flex-col justify-center gap-4">
-			<div class="text-3xl text-center lower mb-4 px-4 text-[var(--third-color)]">
+		<div class="flex h-full flex-col justify-center gap-4 md:mt-0">
+			<!-- <div class="lower mb-4 px-4 text-center text-3xl text-[var(--third-color)]">
 				There is a free ticket every day at a random time in the afternoon
-			</div>
-			<a class="btn-bauhaus text-center" href="/freebee">Win a ticket</a>
+			</div> -->
 
-			<!-- <button onclick={() => cart.add(featured)} class="btn-bauhaus">
+			<button onclick={() => cart.add(featured)} class="btn-bauhaus">
 				Add {quantityInCart ? 'More' : formatPrice(featured.price)}
 				{featured.productType}
 			</button>
-			{#if quantityInCart}
+			<!-- {#if quantityInCart}
 				<button transition:slide onclick={() => cart.remove(featured)} class="btn-bauhaus">
 					REMOVE
 					{featured.productType}
@@ -79,7 +80,7 @@
 	}
 	img.hero-img {
 		animation: pulse 2s ease-in-out infinite;
-		@apply mx-auto  w-full;
+		@apply mx-auto w-full;
 	}
 	.btn-bauhaus {
 		@apply mx-auto w-[250px];

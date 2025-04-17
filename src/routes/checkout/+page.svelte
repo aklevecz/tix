@@ -3,14 +3,13 @@
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
-	console.log(data.featured?.id);
 	if (data.featured?.priceConfig.slidingScale === false) {
 		// goto('/checkout/info');
 	}
 </script>
 
 {#if data.featured?.priceConfig.slidingScale === true}
-	<SliderPage />
+	<SliderPage priceConfig={data.featured.priceConfig} />
 {:else}
 	<p class="m-2 text-center text-2xl font-bold">Looks good?</p>
 	<a

@@ -6,12 +6,12 @@
 <header class="flex items-center gap-4 p-2 font-bold">
 	<a href="/">
 		<!-- <h1 class="text-2xl">Tix</h1> -->
-		<img class="w-10 h-10" src="/raptor/faight-2/dinotopia-raptor.svg" alt="raptor logo">
+		<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" />
 	</a>
-	<nav class="flex items-center gap-4 w-full bg-yellow-">
+	<nav class="bg-yellow- flex w-full items-center gap-4">
 		<!-- <a class:active={page.url.pathname === '/'} href="/">Home</a> -->
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">Checkout</a> -->
-		<a class:active={page.url.pathname === '/freebee'} href="/freebee">freebee</a>
+		<a class="btn-bauhaus text-center" href="/freebee">Win a ticket</a>
 		<a class:active={page.url.pathname === '/profile'} href="/profile">profile</a>
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">checkout</a> -->
 		<div class="flex-[1_0_auto]"></div>
@@ -33,6 +33,6 @@
 		@apply ml-3 w-1/2 border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 	}
 	button.logout {
-		@apply text-[8px] px-[6px] py-[3px];
+		@apply px-[6px] py-[3px] text-[8px];
 	}
 </style>

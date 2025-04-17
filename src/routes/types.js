@@ -23,14 +23,14 @@
  * @property {number} step
  */
 
-/** 
- * @typedef Seo  
+/**
+ * @typedef Seo
  * @property {string} title
  * @property {string} description
  * @property {string} image
  * */
 
-/** 
+/**
  * @typedef Theme
  * @property {string} primaryColor
  * @property {string} secondaryColor
@@ -92,7 +92,7 @@
  * @property {string} origin
  */
 
-/** 
+/**
  * @typedef PhoneNumber
  * @property {string} countryCode
  * @property {string} number
@@ -105,7 +105,7 @@
  * @property {string} email
  */
 
-/** 
+/**
  * @typedef Freebee
  * @property {string} id
  * @property {string} project_name
@@ -114,7 +114,7 @@
  * @property {string | null} time
  */
 
-/** 
+/**
  * @typedef FreebeeEntry
  * @property {string} id
  * @property {string} project_name
@@ -124,7 +124,16 @@
  * @property {string} createdAt
  */
 
-/** 
+/**
+ * @typedef {Object} SharebeeEntry
+ * @property {string} id
+ * @property {string} winner
+ * @property {string} project_name
+ * @property {string} created_at
+ * @property {string | null} claimed_at
+ */
+
+/**
  * @typedef {Object} Locale
  * @property {string} name
  * @property {string} address
@@ -184,7 +193,7 @@
  * @typedef {PaymentMethod} ApplePayMethod
  */
 
-/** 
+/**
  * @typedef {PaymentMethod} GooglePayMethod
  */
 
