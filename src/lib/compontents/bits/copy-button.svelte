@@ -13,10 +13,10 @@
 </script>
 
 <div class="w-20">
-	<div class="text-center text-[var(--third-color)]">copy link</div>
-	<button class="copy-btn mt-2" onclick={() => copyLinkToClipboard(link)}>
+	<div class="text-center text-[var(--secondary-color)]">copy link</div>
+	<button class="copy-btn mt-2 " onclick={() => copyLinkToClipboard(link)}>
 		{#if copySuccess}
-			✓
+			<span class="text-[var(--primary-color)]">✓</span>
 		{:else}
 			<img class="mx-auto h-10 w-10 invert" src="/icons/copy.svg" alt="Copy" />
 		{/if}

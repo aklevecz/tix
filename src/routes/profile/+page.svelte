@@ -185,7 +185,6 @@
 		</div>
 	</div>
 {/if}
-
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	h1 {
