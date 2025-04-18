@@ -26,19 +26,21 @@
 	function validatePhone() {
 		if (!phone.trim()) {
 			error = '';
-			return { phoneNumberNoCountryCode: '' };
+			return { phoneNumberNoCountryCode: '', countryCode: '' };
 		}
 		try {
 			const parsed = parsePhoneNumberFromString(phone, selectedCountry);
+			console.log(parsed)
+			console.log(user.state.phoneNumber)
 			if (parsed && parsed.isValid()) {
 				error = '';
-				return { phoneNumberNoCountryCode: parsed.nationalNumber };
+				return { phoneNumberNoCountryCode: parsed.nationalNumber, countryCode: '+' + parsed.countryCallingCode };
 			} else {
-				error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
+				error = hasSubmittedCode ? 'Invalid phone number' : 'Phone number appears to be incomplete...';
 			}
 		} catch (err) {
 			console.log(err);
-			error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
+			error = hasSubmittedCode ? 'Invalid phone number' : 'Phone number appears to be incomplete...';
 		}
 		return { phoneNumberNoCountryCode: '' };
 	}
@@ -57,13 +59,16 @@
 	function handleInput(e) {
 		hasSubmittedCode = false;
 		phone = e.target.value;
-		const { phoneNumberNoCountryCode } = validatePhone();
-		user.updateUser({
-			phoneNumber: {
-				number: phoneNumberNoCountryCode,
-				countryCode: getCountryPrefix()
-			}
-		});
+		const { phoneNumberNoCountryCode, countryCode } = validatePhone();
+		console.log(`phoneNumberNoCountryCode: ${phoneNumberNoCountryCode}, countryCode: ${countryCode}`);
+		if (phoneNumberNoCountryCode) {
+			user.updateUser({
+				phoneNumber: {
+					number: phoneNumberNoCountryCode,
+					countryCode: getCountryPrefix()
+				}
+			});
+		}
 	}
 
 	/** @param {*} e*/
