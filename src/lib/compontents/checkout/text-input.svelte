@@ -1,7 +1,7 @@
 <script>
 	import user from '$lib/stores/user.svelte';
 
-	let { name, placeholder, value } = $props();
+	let { name, placeholder, value, autocomplete, type } = $props();
 
 	/** @param {*} e */
 	function onChange(e) {
@@ -9,7 +9,7 @@
 	}
 </script>
 
-<input {name} oninput={onChange} type="text" {placeholder} bind:value required class="" />
+<input {name} {autocomplete} {type} oninput={onChange} {placeholder} bind:value required class="" />
 
 <style lang="postcss">
 	@reference "tailwindcss/theme";

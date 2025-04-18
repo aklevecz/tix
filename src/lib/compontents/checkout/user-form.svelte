@@ -38,14 +38,14 @@
 	<!-- <div class="flex gap-1"> -->
 		<div class="flex-[0_0_40%]">
 			<label for="name">Name</label>
-			<TextInput name="fullName" placeholder="Your Name" value={fullName} />
+			<TextInput name="fullName" placeholder="Your Name" type="text" autocomplete="name" value={fullName} />
 		</div>
 		<div class="space-y-0 flex-1">
 			<label for="email">Email</label>
-			<TextInput name="email" placeholder="Your Email" value={email} />
+			<TextInput name="email" type="email" autocomplete="email"  placeholder="Your Email" value={email} />
 		</div>
 	<!-- </div> -->
-	<PhoneInput />
+	<PhoneInput onSubmit={() => {}}/>
 
 </form>
 <button onclick={goToPayment} class="btn-bauhaus mx-auto mt- block w-[175px]"> Continue </button>
