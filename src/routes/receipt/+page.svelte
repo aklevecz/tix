@@ -64,7 +64,7 @@
 			<!-- List items -->
 			{#each Object.entries(JSON.parse(order.items)) as [key, object]}
 				<div class="receipt-grid-line py-1">
-					<div class="item-title">{object.item.title}</div>
+					<div class="item-title">{object.item.cartTitle}</div>
 					<div>{formatPrice(object.item.price)}</div>
 					<div class="item-quantity">{object.quantity}</div>
 				</div>

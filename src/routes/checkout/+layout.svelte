@@ -10,7 +10,6 @@
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
 	let { data, children } = $props();
-	console.log(data);
 	$effect(() => {
 		if (cart.state.id && Object.entries(cart.state.items).length === 0) {
 			alert('Your cart is empty, moving you back to the home page');

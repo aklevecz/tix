@@ -25,6 +25,7 @@
 		if (!cart.state.id) {
 			return;
 		}
+		try {
 		const { clientSecret, error, paymentIntentId } = await checkoutApi.createPaymentIntent({ cart, user });
 		// @ts-ignore
 		stripe = Stripe(clientId);
@@ -44,6 +45,10 @@
 				}
 			}, 100);
 		});
+	} catch (/** @type {*} */ e) {
+		console.error(e);
+		alert(`Failed to create payment intent: ${e.message}`);
+	}
 		// paymentElement.on('change', (event) => {
 		// 	paymentIsValid = event.complete;
 		// });

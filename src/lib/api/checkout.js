@@ -18,9 +18,7 @@ const checkoutApi = () => {
 				metadata: {
 					fullName: user.fullName,
 					email: user.email,
-					phoneNumber: phoneNumberToUid(
-						`${user.phoneNumber.countryCode}${user.phoneNumber.number}`
-					)
+					phoneNumber: phoneNumberToUid(`${user.phoneNumber.countryCode}${user.phoneNumber.number}`)
 				}
 			});
 			const paymentResponse = await fetch(endpoints.checkoutSquare, {
@@ -30,7 +28,7 @@ const checkoutApi = () => {
 				},
 				body
 			});
-			return paymentResponse
+			return paymentResponse;
 		},
 		/** @param {{cart:*, user:*}} props */
 		createPaymentIntent: async ({ cart, user }) => {
@@ -56,9 +54,14 @@ const checkoutApi = () => {
 					}
 				})
 			});
-			const { clientSecret, error, paymentIntentId } = await response.json();
+			if (response.ok) {
+				const { clientSecret, error, paymentIntentId } = await response.json();
 
-			return { clientSecret, error, paymentIntentId };
+				return { clientSecret, error, paymentIntentId };
+			} else {
+				const text = await response.text();
+				throw new Error(text);
+			}
 		},
 		/** @param {Cart} cart @param {string} orderId */
 		orderConfirmed: async (cart, orderId) => {
