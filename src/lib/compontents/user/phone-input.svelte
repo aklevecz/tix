@@ -22,22 +22,25 @@
 	let error = $state('');
 
 	let phoneValue = $derived(user.state.phoneNumber.number);
+
 	function validatePhone() {
 		if (!phone.trim()) {
 			error = '';
-			return;
+			return { phoneNumberNoCountryCode: '' };
 		}
 		try {
 			const parsed = parsePhoneNumberFromString(phone, selectedCountry);
 			if (parsed && parsed.isValid()) {
 				error = '';
+				return { phoneNumberNoCountryCode: parsed.nationalNumber };
 			} else {
 				error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
 			}
 		} catch (err) {
-			console.log(err)
+			console.log(err);
 			error = hasSubmittedCode ? 'Invalid phone number' : 'Almost there...';
 		}
+		return { phoneNumberNoCountryCode: '' };
 	}
 
 	$effect(() => {
@@ -52,12 +55,12 @@
 
 	/** @param {*} e*/
 	function handleInput(e) {
-		hasSubmittedCode = false
+		hasSubmittedCode = false;
 		phone = e.target.value;
-		validatePhone();
+		const { phoneNumberNoCountryCode } = validatePhone();
 		user.updateUser({
 			phoneNumber: {
-				number: phone,
+				number: phoneNumberNoCountryCode,
 				countryCode: getCountryPrefix()
 			}
 		});

@@ -95,13 +95,12 @@
 		fetching = false;
 	}
 </script>
-
 <div class="mb-10">
 	<div class="px-5">
 		<div class="max-w-[600px] p-0 text-xs">
 			<div class="flex gap-4">
 				<div>{user.state.fullName}</div>
-				<div>{user.state.phoneNumber.number}</div>
+				<div>{user.state.phoneNumber.countryCode}{user.state.phoneNumber.number}</div>
 			</div>
 			<div class="mt-2 flex items-center gap-4">
 				<div>{user.state.email}</div>

@@ -68,7 +68,7 @@ export async function POST({ platform, request }) {
 				amount: cart.total,
 				status: 'intent_created',
 				project_name: project_name || 'missing_project_name',
-				origin: 'test_origin'
+				origin: request.url
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
 		} else {

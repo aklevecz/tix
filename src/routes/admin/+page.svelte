@@ -115,7 +115,7 @@
 	{/if}
 
 	<!-- Orders Table -->
-	<!-- <section>
+	<section>
 		<h2>Orders (tix_orders)</h2>
 		{#if orders && orders.length > 0}
 			<table>
@@ -155,7 +155,7 @@
 		{:else if !error}
 			<p>No orders found.</p>
 		{/if}
-	</section> -->
+	</section>
 
 	<!-- Freebees Table -->
 	<section>
