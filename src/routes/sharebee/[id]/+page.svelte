@@ -90,7 +90,7 @@
 		{#if !claimed_at && !newSharebeeUrl && !isShareer}
 			<div class="hero">Free ticket</div>
 			{@render raptorImg()}
-			<div class="mt-8 px-8 text-2xl text-[var(--yellow)]">
+			<div class="mt-8 px-8 text-2xl">
 				Someone sharebeed a free ticket with you to the party on may 2nd
 			</div>
 			<button onclick={onClaim} class="btn-claim"
@@ -172,7 +172,7 @@
 		margin-bottom: 0.5rem;
 		font-size: 1.5rem;
 		line-height: 2rem;
-		color: var(--yellow);
+		/* color: var(--yellow); */
 	}
 
 	.status {
@@ -190,7 +190,7 @@
 		margin-top: 1rem;
 		font-size: 1.5rem;
 		line-height: 2rem;
-		color: var(--third-color);
+		/* color: var(--third-color); */
 	}
 
 	.raptor-img-container {
@@ -211,7 +211,7 @@
 	.link {
 		width: 90%;
 		word-break: break-word;
-		color: var(--yellow);
+		/* color: var(--yellow); */
 	}
 
 	.copy-wrapper {
@@ -243,11 +243,11 @@
 		height: 5rem;
 		width: 5rem;
 		border-radius: 9999px;
-		background-color: var(--yellow);
+		/* background-color: var(--yellow); */
 		padding: 0.5rem;
 		font-size: 1.25rem;
 		line-height: 1.75rem;
-		color: var(--third-color);
+		/* color: var(--third-color); */
 		animation: none;
 	}
 
