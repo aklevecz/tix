@@ -41,33 +41,38 @@ export async function POST({ platform, request }) {
 					return new Response('wrong store', { status: 200 });
 				}
 				if (paymentIntentId) {
+					const order = await dbOrders(env.DB).getOrder(paymentIntentId);
+					if (!order) {
+						return new Response('Order does not exist', { status: 404 });
+					}
 					context.waitUntil(
 						dbOrders(env.DB).updateOrder(paymentIntentId, [{ key: 'status', value: 'success' }])
 					);
 					let mediaUrls = [];
 					// TODO: DONT BE RAPTOR-FAIGHT-2 SPECIFIC
-					const CURRENT_EVENT = 'raptor-faight-2';
+					// const CURRENT_EVENT = 'raptor-faight-2	';
+					const project_name = order.project_name;
 					try {
 						const parsedItems = JSON.parse(metadata.items);
-						const raptorFaight2 = parsedItems.find(
-							(/** @type {{id:String, quantity: number}} */ item) => item.id === CURRENT_EVENT
+						const metadataObject = parsedItems.find(
+							(/** @type {{id:String, quantity: number}} */ item) => item.id === project_name
 						);
-						if (raptorFaight2) {
-							const {quantity, id} = raptorFaight2;
-							const baseUrl = `https://r2-tix.yaytso.art/orders-qrs/${id}/${paymentIntentId}`;
+						if (metadataObject) {
+							const {quantity} = metadataObject;
+							const baseUrl = `https://r2-tix.yaytso.art/orders-qrs/${project_name}/${paymentIntentId}`;
 							for (let i = 0; i < parseInt(quantity); i++) {
 								const encoder = new Encoder({
 									level: 'H'
 								});
 
-								const qrcode = encoder.encode(new Byte(`${id}:${i + 1}`));
+								const qrcode = encoder.encode(new Byte(`${paymentIntentId}:${i + 1}`));
 
 								const qrCodeUrl = qrcode.toDataURL(5, {
 									// First arg: moduleSize is now 20
 									margin: 4 // Optional margin
 								});
 								const blob = await fetch(qrCodeUrl).then((res) => res.blob());
-								await platform?.env.R2.put(`orders-qrs/${id}/${paymentIntentId}/${i + 1}.png`, blob);
+								await platform?.env.R2.put(`orders-qrs/${project_name}/${paymentIntentId}/${i + 1}.png`, blob);
 								mediaUrls.push(`${baseUrl}/${i + 1}.png`);
 							}
 							context.waitUntil(
