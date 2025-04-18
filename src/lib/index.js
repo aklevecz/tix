@@ -1,6 +1,6 @@
 import { dev } from '$app/environment';
 
-export const isDev = dev;
+export const isDev = true;
 
 export const checkoutActions = {
 	CREATE_INTENT: 'CREATE_INTENT',

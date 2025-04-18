@@ -41,7 +41,7 @@
 		async function initializeCard(payments) {
 			const darkModeCardStyle = {
 				'.input-container': {
-					borderColor: 'white',
+					borderColor: 'black',
 					borderRadius: '12px'
 				},
 				'.input-container.is-focus': {
@@ -51,7 +51,7 @@
 					borderColor: '#ff1600'
 				},
 				'.message-text': {
-					color: '#999999'
+					color: theme.secondaryColor
 				},
 				'.message-icon': {
 					color: '#999999'
@@ -69,7 +69,7 @@
 					fontFamily: 'helvetica neue, sans-serif'
 				},
 				'input::placeholder': {
-					color: '#fff'
+					color: theme.secondaryColor
 				},
 				'input.is-error': {
 					color: '#ff1600'
@@ -250,6 +250,9 @@
 		}
 		fetching = false;
 	}
+	$effect(() => {
+		console.log(cart.state)
+	})
 </script>
 
 <div class="relative">

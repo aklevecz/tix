@@ -47,6 +47,13 @@ export async function POST({ platform, request }) {
 				}
 			: null;
 
+		// TODO: Make smarter when there can be multiple projects
+		const project_name = Object.keys(payload.cart.items)[0];
+		const project_object = payload.cart.items[project_name];
+		const quantity = project_object.quantity;
+		// TODO: Make message not hardcoded and part of project spec
+		const message = `You're all set for ${quantity} ticket(s) to BAZAAR on May 2nd @ The Faight Collective! Here is your QR code, which you will also be able to see on the site and the raptor app :)`;
+
 		if (platform && orderId) {
 			const { context, env } = platform;
 			const tixOrder = {
@@ -60,15 +67,13 @@ export async function POST({ platform, request }) {
 				amount: payload.cart.total,
 				// status: 'intent_created',
 				status: status || 'unknown',
-				project_name: 'test_project_name',
-				origin: 'test_origin'
+				project_name: project_name || 'no_project',
+				origin: 'tix'
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
-			const literallyUndergroundQuantity = payload.cart.items['literally-underground-1'].quantity;
-			const literallyUndergroundMessage = `You have completed your order for ${literallyUndergroundQuantity} tickets to Literally Underground`;
 			context.waitUntil(
 				env.MESSENGER_QUEUE.send({
-					defaultMessage: literallyUndergroundMessage,
+					defaultMessage: message,
 					phoneNumber: payload.metadata.phoneNumber
 				})
 			);
