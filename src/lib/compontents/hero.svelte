@@ -64,7 +64,7 @@
 		</div>
 		
 		<!-- <div class="quantity-message">
-			{quantityMessage}
+			{quantityMessage} p
 		</div> -->
 		<div class="flex h-full flex-col justify-center gap-4 md:mt-0">
 			<!-- <div class="lower mb-4 px-4 text-center text-3xl text-[var(--third-color)]">
@@ -105,12 +105,12 @@
 	}
 	@keyframes pulse {
 		0% {
-			transform: scale(1);
+			/* transform: scale(1); */
 			opacity: 1;
 			filter: hue-rotate(0deg);
 		}
 		50% {
-			transform: scale(1.01);
+			/* transform: scale(1.01); */
 			opacity: 0.9;
 			filter: hue-rotate(90deg);
 		}

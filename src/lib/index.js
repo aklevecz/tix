@@ -67,7 +67,7 @@ const raptorFaight2 = {
 	productType: 'ticket',
 	name: 'ticket',
 	cartTitle : 'Bazaar ~ May 2nd',
-	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px] md:mt-0">May 2nd</div> `,
+	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px] md:mt-0">May 2nd ~ 7pm - Midnight</div> `,
 	description: /*html*/ `<div class="text-lg">DJs / Interactive art / Vinyl Swap</div>  <p>Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there 🫂</p> 
 <p>A place to connect with those who love sharing the gift of music & dancing 🎶</p>
 <p>A place where you come as you are and find others who reflect your vibrancy 🌸</p>
