@@ -55,7 +55,7 @@ button,
 }
 
 .btn-bauhaus.sm {
-	@apply text-xs text-[var(--third-color)];
+	@apply text-xs;
 }
 
 .btn-bauhaus:hover {

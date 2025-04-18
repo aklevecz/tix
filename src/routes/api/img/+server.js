@@ -1,5 +1,6 @@
 import { EVENT_ID } from '$lib';
 
+// SHOULD JUST PROXY IMAGES FROM R2 OR SOMETHING
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ cookies, platform, url }) {
   const id = url.searchParams.get("id");

@@ -1,4 +1,5 @@
 <script>
+	import { EVENT_ID } from '$lib';
 	import meApi from '$lib/api/me';
 	import AuthContainer from '$lib/compontents/auth/auth-container.svelte';
 	import CopyButton from '$lib/compontents/bits/copy-button.svelte';
@@ -27,6 +28,9 @@
 	 * @property {string} winner
 	 */
 
+	 /** @type {(paymentIntentId:string) => string} */
+	 const orderUrl = (paymentIntentId) => `https://r2-tix.yaytso.art/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
+
 	/** @type {Sharebee | null} */
 	let sharebee = $state(null);
 
@@ -40,6 +44,7 @@
 
 	onMount(() => {
 		meApi.getMe().then((data) => {
+			console.log(data.orders)
 			phoneNumber = data.phoneNumber;
 			orders = data.orders;
 			freebee = data.freebee;
@@ -85,6 +90,7 @@
 			{/if}
 			{#each orders as order}
 				<div>{order.project_name}</div>
+				<img src={orderUrl(order.pi_id)} alt="order qr code" class="h-30 w-30 bg-amber-300" />
 			{/each}
 			{#each oldOrders as order}
 				<div>{order.event_name.replace(/-/g, ' ')}</div>
@@ -106,7 +112,7 @@
 				{#if !followingSharebeeIsClaimed}
 					<div class="mt-10">
 						<div class="lowercase">You also have a sharebee to share with someone else</div>
-						<div class="text-[var(--yellow)]">
+						<div>
 							{createSharebeeUrlBrowser(createSharebeeHash(sharebee.id, phoneNumber))}
 						</div>
 						<!-- <div>

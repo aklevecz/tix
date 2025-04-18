@@ -85,7 +85,7 @@ const raptorFaight2 = {
 	},
 	date: '2025-05-02',
 	dates: ['2025-05-02'],
-	img: '/raptor/bazaar/bazaar_promo_square_brighter.jpg',
+	img: '/raptor/bazaar/bazaar_laazers.jpg',
 	theme: {
 		primaryColor: '#afdf33',
 		secondaryColor: 'black',

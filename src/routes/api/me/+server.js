@@ -39,7 +39,6 @@ export async function GET({ cookies, platform, url }) {
 		if (followingSharebeeEntry) {
 			followingSharebeeUrl = `${url.origin}/sharebee/${followingSharebeeHash}`;
 			followingSharebeeIsClaimed = followingSharebeeEntry.claimed_at
-			console.log(followingSharebeeIsClaimed)
 		}
 	}
 

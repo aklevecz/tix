@@ -18,7 +18,7 @@
 		{#if copySuccess}
 			✓
 		{:else}
-			<img class="mx-auto h-10 w-10" src="/icons/copy.svg" alt="Copy" />
+			<img class="mx-auto h-10 w-10 invert" src="/icons/copy.svg" alt="Copy" />
 		{/if}
 	</button>
 </div>

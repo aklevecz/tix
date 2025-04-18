@@ -16,8 +16,13 @@ export async function POST({ platform, request }) {
 	if (!sig) {
 		return new Response('Missing Stripe signature', { status: 400 });
 	}
-	const endpointSecret = isDev ? YAYTSO_STRIPE_WEBHOOK_SECRET_TEST : YAYTSO_STRIPE_WEBHOOK_SECRET;
+	let endpointSecret = isDev ? YAYTSO_STRIPE_WEBHOOK_SECRET_TEST : YAYTSO_STRIPE_WEBHOOK_SECRET;
 	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
+
+	// OVERRIDE FOR LOCAL TESTING
+	// if (isDev) {
+	// 	endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
+	// }
 
 	const stripe = new Stripe(STRIPE_SECRET);
 	const rawBody = await request.text();
@@ -40,10 +45,12 @@ export async function POST({ platform, request }) {
 						dbOrders(env.DB).updateOrder(paymentIntentId, [{ key: 'status', value: 'success' }])
 					);
 					let mediaUrls = [];
+					// TODO: DONT BE RAPTOR-FAIGHT-2 SPECIFIC
+					const CURRENT_EVENT = 'raptor-faight-2';
 					try {
 						const parsedItems = JSON.parse(metadata.items);
 						const raptorFaight2 = parsedItems.find(
-							(/** @type {{id:String, quantity: number}} */ item) => item.id === 'raptor-faight-2'
+							(/** @type {{id:String, quantity: number}} */ item) => item.id === CURRENT_EVENT
 						);
 						if (raptorFaight2) {
 							const {quantity, id} = raptorFaight2;
@@ -63,6 +70,13 @@ export async function POST({ platform, request }) {
 								await platform?.env.R2.put(`orders-qrs/${id}/${paymentIntentId}/${i + 1}.png`, blob);
 								mediaUrls.push(`${baseUrl}/${i + 1}.png`);
 							}
+							context.waitUntil(
+								env.MESSENGER_QUEUE.send({
+								  defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,
+								  phoneNumber: metadata.phoneNumber,
+								  mediaUrls
+								})
+							  );
 						}
 					} catch (error) {
 						await env.tixKV.put(
@@ -70,13 +84,7 @@ export async function POST({ platform, request }) {
 							JSON.stringify(error)
 						);
 					}
-					context.waitUntil(
-						env.MESSENGER_QUEUE.send({
-						  defaultMessage: `Your order is complete! Thanks for your support!`,
-						  phoneNumber: metadata.phoneNumber,
-						  mediaUrls
-						})
-					  );
+
 				}
 			}
 		}

@@ -52,6 +52,9 @@ export async function POST({ platform, request }) {
 			}
 		});
 
+		// TODO: make more dynamic
+		const project_name = Object.keys(cart.items)[0]
+
 		if (platform) {
 			const { context, env } = platform;
 			const tixOrder = {
@@ -64,7 +67,7 @@ export async function POST({ platform, request }) {
                 subtotal: cart.subtotal,
 				amount: cart.total,
 				status: 'intent_created',
-				project_name: 'test_project_name',
+				project_name: project_name || 'missing_project_name',
 				origin: 'test_origin'
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));

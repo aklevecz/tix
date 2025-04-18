@@ -63,7 +63,7 @@ export async function POST({ cookies, platform, request }) {
 	// if (!phoneNumber) {
 	// 	throw new Error('Invalid authentication payload');
 	// }
-	console.log(`phoneNumber: ${phoneNumber}`);
+	// console.log(`phoneNumber: ${phoneNumber}`);
 	const configuration = configurations[model];
 	const data = await makeReplicateRequestPublic(prompt, configuration);
 
@@ -77,9 +77,9 @@ export async function POST({ cookies, platform, request }) {
 
 export async function GET({ url }) {
 	const id = url.searchParams.get('id');
-	console.log(`Polling id ${id}`);
+	// console.log(`Polling id ${id}`);
 	const res = await fetch(`https://api.replicate.com/v1/predictions/${id}`, { headers });
 	const data = await res.json();
-	console.log(data);
+	// console.log(data);
 	return json(data);
 }
