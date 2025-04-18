@@ -88,9 +88,9 @@
 			{#if orders.length === 0 && oldOrders.length === 0}
 				<div class="lowercase">You haven't ordered any tickets yet</div>
 			{/if}
-			{#each orders as order}
+			{#each orders as order, i}
 				<div>{order.project_name}</div>
-				<img src={orderUrl(order.pi_id)} alt="order qr code" class="h-30 w-30 bg-amber-300" />
+				<img src={orderUrl(`${order.pi_id}/${i}.png`)} alt="order qr code" class="h-30 w-30 bg-amber-300" />
 			{/each}
 			{#each oldOrders as order}
 				<div>{order.event_name.replace(/-/g, ' ')}</div>
