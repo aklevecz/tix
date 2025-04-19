@@ -14,8 +14,9 @@
 	import countries from './countries';
 	import user from '$lib/stores/user.svelte';
 	import { parse } from 'svelte/compiler';
+	import { onMount } from 'svelte';
 
-	let { onSubmit, hasSubmittedCode = $bindable() } = $props();
+	let { onSubmit, hasSubmittedCode = $bindable(), phoneNumberIsValid = $bindable() } = $props();
 	/** @param {string} dialCode  */
 	const dialCodeToCode = (dialCode) => {
 		return countries.find((c) => c.dialCode === `${dialCode}`)?.code || 'US';
@@ -31,6 +32,7 @@
 	let phoneValue = $derived(user.state.phoneNumber.number);
 
 	function validatePhone() {
+		phoneNumberIsValid = false;
 		if (!phone.trim()) {
 			error = '';
 			return { phoneNumberNoCountryCode: '', countryCode: '', overrideCountryCode: false };
@@ -38,7 +40,7 @@
 		try {
 			const parsed = parsePhoneNumberFromString(phone, selectedCountry);
 			if (parsed && parsed.isValid()) {
-
+				phoneNumberIsValid = true;
 				// not sure about this over complicated changing of country code
 				let countryCode = '';
 				let overrideCountryCode = false;
@@ -73,6 +75,12 @@
 			validatePhone();
 		}
 	});
+
+	onMount(() => {
+		if (phone) {
+			validatePhone();
+		}
+	})
 
 	const getCountryPrefix = () => {
 		return countries.find((c) => c.code === selectedCountry)?.dialCode || '+1';

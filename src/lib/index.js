@@ -92,7 +92,7 @@ const raptorFaight2 = {
 		thirdColor: '#f65858'
 	},
 	seo: {
-		title: 'BAZAAR - may 2nd',
+		title: 'BAZAAR - May 2nd - DJs / Interactive art / Vinyl Swap',
 		description: 'BAZAAR - DJs / Interactive art / Vinyl Swap',
 		image: '/raptor/bazaar/bazaar_laazers-sm.jpeg'
 	}

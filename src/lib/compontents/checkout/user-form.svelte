@@ -10,6 +10,8 @@
 
 	let { fullName, email, phoneNumber } = $derived(user.state);
 
+	let phoneNumberIsValid = $state(false);
+
 	onMount(() => {
 		if (browser && window.innerWidth < 768) {
 			//scroll to form
@@ -22,6 +24,11 @@
 	function goToPayment() {
 		if (!fullName || !email || !phoneNumber.number) {
 			alert('Please fill out all fields');
+			return;
+		}
+
+		if (!phoneNumberIsValid) {
+			alert('Please enter a valid phone number');
 			return;
 		}
 		// const countryCodePattern = /^\d{1,4}\s/;
@@ -45,7 +52,7 @@
 			<TextInput name="email" type="email" autocomplete="email"  placeholder="Your Email" value={email} />
 		</div>
 	<!-- </div> -->
-	<PhoneInput onSubmit={() => {}}/>
+	<PhoneInput bind:phoneNumberIsValid={phoneNumberIsValid} onSubmit={() => {}}/>
 
 </form>
 <button onclick={goToPayment} class="btn-bauhaus mx-auto mt- block w-[175px]"> Continue </button>

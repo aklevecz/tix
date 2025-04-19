@@ -14,7 +14,7 @@
 
 <div class="w-20">
 	<div class="text-center text-[var(--secondary-color)]">copy link</div>
-	<button class="copy-btn mt-2 " onclick={() => copyLinkToClipboard(link)}>
+	<button class="copy-btn mt-2" onclick={() => copyLinkToClipboard(link)}>
 		{#if copySuccess}
 			<span class="text-[var(--primary-color)]">✓</span>
 		{:else}

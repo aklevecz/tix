@@ -11,8 +11,8 @@
 	<nav class="bg-yellow- flex w-full items-center gap-4">
 		<!-- <a class:active={page.url.pathname === '/'} href="/">Home</a> -->
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">Checkout</a> -->
-		<a class="btn-bauhaus text-center" style="font-size:.65rem;" href="/freebee">Win a ticket</a>
-		<a class:active={page.url.pathname === '/profile'} class="h-10 w-20 bg-[var(--third-color)] p-2 rounded-md flex justify-center items-center" href="/profile">
+		<a class="btn-bauhaus text-center" href="/freebee">Win a ticket</a>
+		<a class:active={page.url.pathname === '/profile'} class="btn-bauhaus" href="/profile">
 			<!-- <img src="/icons/raptor-head.svg" class="h-6" alt="profile"  /> -->
 			 Account
 		</a>
@@ -36,6 +36,6 @@
 		@apply ml-3 w-1/2 border border-[var(--secondary-color)] bg-transparent p-2 text-[var(--secondary-color)] focus:border-[var(--color-1)] focus:outline-none;
 	}
 	button.logout {
-		@apply px-[8px] py-[6px] text-[8px];
+		@apply text-xs;
 	}
 </style>
