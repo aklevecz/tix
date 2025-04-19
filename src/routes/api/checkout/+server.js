@@ -1,6 +1,7 @@
 import { YAYTSO_STRIPE_SECRET, YAYTSO_STRIPE_SECRET_TEST } from '$env/static/private';
 import { checkoutActions, isDev } from '$lib';
 import dbOrders from '$lib/db/orders';
+import logger from '$lib/logging';
 import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
 
@@ -53,9 +54,9 @@ export async function POST({ platform, request }) {
 		});
 
 		// TODO: make more dynamic
-		let project_name = Object.keys(cart.items)[0]
+		let project_name = Object.keys(cart.items)[0];
 		if (project_name === 'r4pt0rz') {
-			project_name = 'raptor-faight-2'
+			project_name = 'raptor-faight-2';
 		}
 
 		if (platform) {
@@ -64,16 +65,18 @@ export async function POST({ platform, request }) {
 				pi_id: paymentIntent.id,
 				items: JSON.stringify(cart.items),
 				name: metadata.fullName,
-                phone: metadata.phoneNumber,
-                email: metadata.email,
-                discount: cart.discount,
-                subtotal: cart.subtotal,
+				phone: metadata.phoneNumber,
+				email: metadata.email,
+				discount: cart.discount,
+				subtotal: cart.subtotal,
 				amount: cart.total,
 				status: 'intent_created',
 				project_name: project_name || 'missing_project_name',
 				origin: request.url
 			};
 			context.waitUntil(dbOrders(env.DB).saveOrder(tixOrder));
+			// @ts-ignore
+			logger(context).info(`Order ${tixOrder.pi_id} created`);
 		} else {
 			console.log('Platform not found');
 			//LOG ERROR

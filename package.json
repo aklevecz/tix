@@ -32,7 +32,9 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
+		"@logtail/edge": "^0.5.4",
 		"@nuintun/qrcode": "^4.1.17",
+		"@sentry/sveltekit": "^9.13.0",
 		"@stripe/stripe-js": "^5.6.0",
 		"libphonenumber-js": "^1.11.19",
 		"square": "^41.0.0",

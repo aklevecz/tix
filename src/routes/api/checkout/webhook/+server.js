@@ -8,7 +8,7 @@ import dbOrders from '$lib/db/orders';
 import Stripe from 'stripe';
 
 import { isDev } from '$lib';
-import { Byte, Encoder } from '@nuintun/qrcode';
+import logger from '$lib/logging';
 import { generateQR } from '$lib/qr';
 
 /** @type {import('./$types').RequestHandler} */
@@ -21,9 +21,9 @@ export async function POST({ platform, request }) {
 	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 
 	// OVERRIDE FOR LOCAL TESTING
-	// if (isDev) {
-	// 	endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
-	// }
+	if (isDev) {
+		endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
+	}
 
 	const stripe = new Stripe(STRIPE_SECRET);
 	const rawBody = await request.text();
@@ -61,13 +61,20 @@ export async function POST({ platform, request }) {
 						if (metadataObject) {
 							const { quantity } = metadataObject;
 							const baseUrl = `https://r2-tix.yaytso.art/orders-qrs/${project_name}/${paymentIntentId}`;
-							for (let i = 0; i < parseInt(quantity); i++) {
-								const { blob } = await generateQR(`${paymentIntentId}:${i + 1}`);
-								await platform?.env.R2.put(
-									`orders-qrs/${project_name}/${paymentIntentId}/${i + 1}.png`,
-									blob
+							try {
+								for (let i = 0; i < parseInt(quantity); i++) {
+									const { blob } = await generateQR(`${paymentIntentId}:${i + 1}`);
+									await platform?.env.R2.put(
+										`orders-qrs/${project_name}/${paymentIntentId}/${i + 1}.png`,
+										blob
+									);
+									mediaUrls.push(`${baseUrl}/${i + 1}.png`);
+								}
+							} catch (error) {
+								// @ts-ignore
+								logger(context).error(
+									`Error generating QRs for ${paymentIntentId} ${JSON.stringify(error)}`
 								);
-								mediaUrls.push(`${baseUrl}/${i + 1}.png`);
 							}
 							context.waitUntil(
 								env.MESSENGER_QUEUE.send({
@@ -76,6 +83,8 @@ export async function POST({ platform, request }) {
 									mediaUrls
 								})
 							);
+							// @ts-ignore
+							logger(context).info(`Order completed for ${paymentIntentId}`);
 						}
 					} catch (error) {
 						await env.tixKV.put(
