@@ -223,6 +223,6 @@
 		@apply text-xl font-semibold text-[var(--third-color)];
 	}
 	.section {
-		@apply mb-6 rounded-lg border border-gray-200 p-4 shadow-sm;
+		@apply my-6 rounded-lg border border-gray-200 px-4 pb-4 shadow-sm;
 	}
 </style>
