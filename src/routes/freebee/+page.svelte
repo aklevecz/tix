@@ -161,7 +161,7 @@
 				</div>
 			</div>
 			{#if !canWin && !alreadyClaimed}
-				<p class="cta-bubble text-lg text-black">
+				<p class="cta-bubble text-lg ">
 					Wait for the timer to finish and press the win button to claim the freebee today 🙃
 				</p>
 			{/if}
@@ -184,7 +184,7 @@
 		animation: flashing 1s ease-in-out infinite;
 	}
 	.cta-bubble {
-		@apply w-3/4 m-[2rem_auto] p-6 bg-[var(--secondary-color)] rounded-md text-center font-bold;
+		@apply w-3/4 m-[2rem_auto] p-6 rounded-md text-center font-bold;
 	}
 	.faded {
 		opacity: 0.5;
