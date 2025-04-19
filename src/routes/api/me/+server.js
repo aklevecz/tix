@@ -3,6 +3,8 @@ import dbOrders from '$lib/db/orders';
 import { createSharebeeHash } from '$lib/utils';
 import { json } from '@sveltejs/kit';
 
+
+// MAYBE USE THIS LATER
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ cookies, platform, url }) {
 	const token = cookies.get('token');
@@ -30,6 +32,8 @@ export async function GET({ cookies, platform, url }) {
 	if (sharebee) {
 		const r2Path = `order-qrs/${EVENT_ID}/${sharebee.id}.png`;
 		sharebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		sharebeeQRUrl = `/api/img?path=${encodeURIComponent(r2Path)}`
+
 		const followingSharebeeHash = createSharebeeHash(sharebee.id, phoneNumber);
 		const followingSharebeeEntry = await platform?.env.DB.prepare(
 			`SELECT * FROM sharebees WHERE id = ?`
@@ -46,6 +50,7 @@ export async function GET({ cookies, platform, url }) {
 	if (freebee) {
 		const r2Path = `order-qrs/${EVENT_ID}/${freebee.id}.png`;
 		freebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		freebeeQRUrl = `/api/img?path=${encodeURIComponent(r2Path)}`
 	}
 
 	const { results: oldOrders } = await platform?.env.DB.prepare(

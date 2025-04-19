@@ -13,36 +13,59 @@
 
 	import countries from './countries';
 	import user from '$lib/stores/user.svelte';
+	import { parse } from 'svelte/compiler';
 
 	let { onSubmit, hasSubmittedCode = $bindable() } = $props();
-
+	/** @param {string} dialCode  */
+	const dialCodeToCode = (dialCode) => {
+		return countries.find((c) => c.dialCode === `${dialCode}`)?.code || 'US';
+	};
+	console.log(user.state.phoneNumber)
+	// let selectedCountry = $derived(dialCodeToCode(user.state.phoneNumber.countryCode));
 	/** @type {import('libphonenumber-js').CountryCode }*/
 	let selectedCountry = $state('US');
-	let phone = $state('');
+	let phone = $state(user.state.phoneNumber.number || '');
 	let error = $state('');
 
+	// This needs to be simplified there are too many variables manipulating the phone number
 	let phoneValue = $derived(user.state.phoneNumber.number);
 
 	function validatePhone() {
 		if (!phone.trim()) {
 			error = '';
-			return { phoneNumberNoCountryCode: '', countryCode: '' };
+			return { phoneNumberNoCountryCode: '', countryCode: '', overrideCountryCode: false };
 		}
 		try {
 			const parsed = parsePhoneNumberFromString(phone, selectedCountry);
-			console.log(parsed)
-			console.log(user.state.phoneNumber)
 			if (parsed && parsed.isValid()) {
+
+				// not sure about this over complicated changing of country code
+				let countryCode = '';
+				let overrideCountryCode = false;
+				if (getCountryPrefix() !== `+${parsed.countryCallingCode}`) {
+					if (phone.startsWith(parsed.countryCallingCode)) {
+						countryCode = `+${parsed.countryCallingCode}`;
+						overrideCountryCode = true;
+					}
+				}
 				error = '';
-				return { phoneNumberNoCountryCode: parsed.nationalNumber, countryCode: '+' + parsed.countryCallingCode };
+				return {
+					phoneNumberNoCountryCode: parsed.nationalNumber,
+					countryCode,
+					overrideCountryCode
+				};
 			} else {
-				error = hasSubmittedCode ? 'Invalid phone number' : 'Phone number appears to be incomplete...';
+				error = hasSubmittedCode
+					? 'Invalid phone number'
+					: 'Phone number appears to be incomplete...';
 			}
 		} catch (err) {
 			console.log(err);
-			error = hasSubmittedCode ? 'Invalid phone number' : 'Phone number appears to be incomplete...';
+			error = hasSubmittedCode
+				? 'Invalid phone number'
+				: 'Phone number appears to be incomplete...';
 		}
-		return { phoneNumberNoCountryCode: '' };
+		return { phoneNumberNoCountryCode: '', countryCode: '', overrideCountryCode: false };
 	}
 
 	$effect(() => {
@@ -55,34 +78,45 @@
 		return countries.find((c) => c.code === selectedCountry)?.dialCode || '+1';
 	};
 
+
+
 	/** @param {*} e*/
 	function handleInput(e) {
 		hasSubmittedCode = false;
 		phone = e.target.value;
-		const { phoneNumberNoCountryCode, countryCode } = validatePhone();
-		console.log(`phoneNumberNoCountryCode: ${phoneNumberNoCountryCode}, countryCode: ${countryCode}`);
-		if (phoneNumberNoCountryCode) {
-			user.updateUser({
-				phoneNumber: {
-					number: phoneNumberNoCountryCode,
-					countryCode: getCountryPrefix()
-				}
-			});
+		const { phoneNumberNoCountryCode, countryCode, overrideCountryCode } = validatePhone();
+
+		// override seems to have too many side effects
+		if (overrideCountryCode) {
+			// @ts-ignore
+			// selectedCountry = dialCodeToCode(countryCode);
 		}
+		// if (phoneNumberNoCountryCode) {
+		user.updateUser({
+			phoneNumber: {
+				number: phoneNumberNoCountryCode || phone,
+				countryCode:  getCountryPrefix()
+			}
+		});
+		// }
 	}
 
 	/** @param {*} e*/
 	function handleCountryChange(e) {
 		selectedCountry = e.target.value;
-		validatePhone();
-		user.updateUser({ phoneNumber: { number: phone, countryCode: getCountryPrefix() } });
+		// const { phoneNumberNoCountryCode } = validatePhone();
+		user.updateUser({
+			phoneNumber: { ...user.state.phoneNumber, countryCode: getCountryPrefix() }
+		});
 	}
 </script>
 
 <div class="phone-input-container">
 	<label for="phone">Phone Number</label>
 	<div class="phone-input">
-		<select bind:value={selectedCountry} onchange={handleCountryChange}>
+		<!-- {selectedCountry} -->
+		<!-- <select bind:value={selectedCountry} onchange={handleCountryChange}> -->
+		<select value={selectedCountry} onchange={handleCountryChange}>
 			{#each countries as country}
 				<option value={country.code}>
 					{country.flag}
@@ -98,9 +132,10 @@
 			}}
 			type="tel"
 			placeholder="Enter phone number"
-			value={phoneValue}
+			value={phone}
 			oninput={handleInput}
 		/>
+			<!-- value={phoneValue} -->
 	</div>
 	{#if error}
 		<div class="error">{error}</div>

@@ -5,6 +5,7 @@ const defaultState = {
     productType: 'ticket',
 	name: '',
 	title: '',
+	cartTitle: '',
 	description: '',
 	place: {
 		name: '',
@@ -22,7 +23,17 @@ const defaultState = {
 	},
     date: '',
 	dates: [''],
-	img: ''
+	img: '',
+	theme: {
+		primaryColor: '',
+		secondaryColor: '',
+		thirdColor: ''
+	},
+	seo: {
+		title: '',
+		description: '',
+		image: ''
+	}
 };
 
 const createProduct = () => {

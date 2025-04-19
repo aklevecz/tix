@@ -48,7 +48,10 @@ export async function POST({ platform, request }) {
 			: null;
 
 		// TODO: Make smarter when there can be multiple projects
-		const project_name = Object.keys(payload.cart.items)[0];
+		let project_name = Object.keys(payload.cart.items)[0];
+		if (project_name === 'r4pt0rz') {
+			project_name = 'raptor-faight-2';
+		}
 		const project_object = payload.cart.items[project_name];
 		const quantity = project_object.quantity;
 		// TODO: Make message not hardcoded and part of project spec

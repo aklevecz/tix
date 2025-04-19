@@ -29,7 +29,8 @@
 	 */
 
 	 /** @type {(paymentIntentId:string) => string} */
-	 const orderUrl = (paymentIntentId) => `https://r2-tix.yaytso.art/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
+	 const orderUrl = (paymentIntentId) => `/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
+	//  const orderUrl = (paymentIntentId) => `https://r2-tix.yaytso.art/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
 
 	/** @type {Sharebee | null} */
 	let sharebee = $state(null);
@@ -72,7 +73,7 @@
 	}
 </script>
 
-<h1 class="ml-4">Profile</h1>
+<h1 class="ml-4 flex items-center gap-4"><img src="/icons/raptor-head.svg" alt="raptor head" class="h-10 w-10 bg-[var(--third-color)] p-2 rounded-full" /> Profile</h1>
 {#if fullScreenQRImgUrl}
 	<div class="fixed top-0 left-0 z-50 flex h-screen w-screen flex-col items-center justify-center bg-black/90 backdrop-blur-sm transition-all duration-300">
 		<div class="relative max-w-lg rounded-xl bg-white p-4 shadow-2xl">
@@ -95,13 +96,14 @@
 {#if !user.token}
 	<div class="mx-auto mt-4">
 		<h1 class="mb-4 text-center">Sign in to see your profile</h1>
+		<div class="px-10">You will be able to see your tickets and other useful things</div>
 		<AuthContainer />
 	</div>
 {/if}
 {#if user.token}
 	<div class="p-4">
 		<h2>Phone: {phoneNumber}</h2>
-		<img src="/api/img?id={phoneNumber}/raptor.jpeg" alt="" class="h-[200px] w-[200px]" />
+		<img src="/api/img/raptor" alt="" class="h-[200px] w-[200px]" />
 		<div class="section">
 			<h1 class="mt-4 mb-2">Freebees</h1>
 			{#if !freebee}
@@ -188,7 +190,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	h1 {
-		@apply text-xl font-semibold tracking-widest text-[var(--third-color)];
+		@apply text-xl font-semibold text-[var(--third-color)];
 	}
 	h2 {
 		@apply text-xl font-semibold text-[var(--third-color)];

@@ -98,7 +98,7 @@
 	}
 	img.hero-img {
 		animation: pulse 4s ease-in-out infinite;
-		@apply mx-auto w-[90%] md:w-[400px] md:h-[400px] my-4 rounded-lg;
+		@apply mx-auto w-[100%] md:w-[400px] md:h-[400px] my-4 rounded-lg;
 	}
 	.btn-bauhaus {
 		@apply mx-auto w-[250px];

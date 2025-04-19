@@ -2,12 +2,8 @@ import { EVENT_ID } from '$lib';
 
 // SHOULD JUST PROXY IMAGES FROM R2 OR SOMETHING
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ cookies, platform, url }) {
-  const path = url.searchParams.get("path");
-console.log(path)
-  if (!path) {
-    return new Response('No path provided', { status: 404 });
-  }
+export async function GET({ cookies, platform}) {
+
   try {
     // Validate platform and storage
     if (!platform?.env.R2) {
@@ -24,7 +20,7 @@ console.log(path)
       throw new Error("Invalid authentication payload");
     }
 
-    const key = path
+    const key = `${EVENT_ID}/${phoneNumber}/raptor.jpeg`;
     const object = await platform.env.R2.get(key);
     if (!object) {
       return new Response("Image not found", { status: 404 });

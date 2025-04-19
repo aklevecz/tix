@@ -53,7 +53,10 @@ export async function POST({ platform, request }) {
 		});
 
 		// TODO: make more dynamic
-		const project_name = Object.keys(cart.items)[0]
+		let project_name = Object.keys(cart.items)[0]
+		if (project_name === 'r4pt0rz') {
+			project_name = 'raptor-faight-2'
+		}
 
 		if (platform) {
 			const { context, env } = platform;

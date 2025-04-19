@@ -73,7 +73,7 @@ const raptorFaight2 = {
 <p>A place where you come as you are and find others who reflect your vibrancy 🌸</p>
 <p>A place to give into curiosity and let go of expectations ✨</p>
 <p>A place to enter with an open heart and mind to meet new people 💕</p>
-<p>Music by <a target="_blank" class="text-[var(--third-color)]" href="https://soundcloud.com/krgmp3">krg</a> and <a class="text-[var(--third-color)]" href="https://soundcloud.com/3kelves" target="_blank">3kelves</a>. More TBA</p>`,
+<p>Music by <a target="_blank" class="text-[var(--third-color)]" href="https://soundcloud.com/krgmp3">krg</a>, <a class="text-[var(--third-color)]" href="https://soundcloud.com/3kelves" target="_blank">3kelves</a>, DAZL. More TBA</p>`,
 	place: locations.faight,
 	price: 1000,
 	priceConfig: {

@@ -12,7 +12,7 @@
 		<!-- <a class:active={page.url.pathname === '/'} href="/">Home</a> -->
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">Checkout</a> -->
 		<a class="btn-bauhaus text-center" href="/freebee">Win a ticket</a>
-		<a class:active={page.url.pathname === '/profile'} href="/profile">profile</a>
+		<a class:active={page.url.pathname === '/profile'} href="/profile"><img src="/icons/raptor-head.svg" alt="profile" class="h-10 w-10 bg-[var(--third-color)] p-2 rounded-full" /></a>
 		<!-- <a class:active={page.url.pathname === '/checkout'} href="/checkout">checkout</a> -->
 		<div class="flex-[1_0_auto]"></div>
 		{#if user.token}
