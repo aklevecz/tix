@@ -1,7 +1,7 @@
 import { EVENT_ID } from '$lib';
 import dbOrders from '$lib/db/orders';
 import { createSharebeeHash } from '$lib/utils';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 
 // MAYBE USE THIS LATER
@@ -10,6 +10,10 @@ export async function GET({ cookies, platform, url }) {
 	const token = cookies.get('token');
 	if (!token) {
 		return new Response(null, { status: 401 });
+	}
+
+	if (!platform) {
+		throw error(400, 'Missing platform');
 	}
 
 	const { phoneNumber } = await platform?.env.AUTH_SERVICE.authorizeToken(token);
@@ -29,9 +33,9 @@ export async function GET({ cookies, platform, url }) {
 	let sharebeeQRUrl = '';
 	let followingSharebeeUrl = '';
 	let followingSharebeeIsClaimed = false
-	if (sharebee) {
+	if (sharebee && sharebee.id) {
 		const r2Path = `order-qrs/${EVENT_ID}/${sharebee.id}.png`;
-		sharebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		// sharebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		sharebeeQRUrl = `/api/img?path=${encodeURIComponent(r2Path)}`
 
 		const followingSharebeeHash = createSharebeeHash(sharebee.id, phoneNumber);
@@ -42,14 +46,14 @@ export async function GET({ cookies, platform, url }) {
 			.first();
 		if (followingSharebeeEntry) {
 			followingSharebeeUrl = `${url.origin}/sharebee/${followingSharebeeHash}`;
-			followingSharebeeIsClaimed = followingSharebeeEntry.claimed_at
+			followingSharebeeIsClaimed = Boolean(followingSharebeeEntry.claimed_at)
 		}
 	}
 
 	let freebeeQRUrl = ''
 	if (freebee) {
 		const r2Path = `order-qrs/${EVENT_ID}/${freebee.id}.png`;
-		freebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		// freebeeQRUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		freebeeQRUrl = `/api/img?path=${encodeURIComponent(r2Path)}`
 	}
 

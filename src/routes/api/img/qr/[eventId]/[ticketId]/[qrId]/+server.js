@@ -5,7 +5,6 @@ import { EVENT_ID } from '$lib';
 export async function GET({ cookies, platform, params}) {
   // eventId is the event id, ticket id is either paymentintent, shareeeId, or freebeeId, and qrId is either the intent index or sharebee or freebee
   const {eventId, ticketId, qrId} = params
-  console.log(eventId, ticketId, qrId)
   try {
     // Validate platform and storage
     if (!platform?.env.R2) {
@@ -31,7 +30,7 @@ export async function GET({ cookies, platform, params}) {
     // Return R2 object with its headers
     return new Response(object.body, {
       headers: {
-        "content-type": object.httpMetadata.contentType || "image/png",
+        "content-type": object.httpMetadata?.contentType || "image/png",
         "cache-control": "public, max-age=31536000",
         etag: object.httpEtag,
       },

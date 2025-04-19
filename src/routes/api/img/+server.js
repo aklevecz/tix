@@ -4,7 +4,6 @@ import { EVENT_ID } from '$lib';
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ cookies, platform, url }) {
   const path = url.searchParams.get("path");
-console.log(path)
   if (!path) {
     return new Response('No path provided', { status: 404 });
   }
@@ -33,7 +32,7 @@ console.log(path)
     // Return R2 object with its headers
     return new Response(object.body, {
       headers: {
-        "content-type": object.httpMetadata.contentType || "image/jpeg",
+        "content-type": object.httpMetadata?.contentType || "image/jpeg",
         "cache-control": "public, max-age=31536000",
         etag: object.httpEtag,
       },

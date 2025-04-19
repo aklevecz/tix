@@ -20,22 +20,21 @@ const sharebeeApi = () => {
                 const formData = new FormData();
                 formData.append('id', id);
                 formData.append('qr', qrBlob);
-                console.log('ehllo')
                 const response = await fetch(`/${endpoints.sharebee}`, {
                     method: "POST",
                     body: formData
                 });
-                // const response = await fetch(`/${endpoints.sharebee}`, {
-                //     method: "POST",
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify({ id })
-                // });
+
+                if (!response.ok) {
+                    throw new Error("Failed to claim sharebee");
+                }
+
                 return await response.json();
             } catch(e) {
                 console.error(`api/sharebee.js: ERROR WHILE FETCHING ${endpoints.sharebee}`);
+                alert("Failed to claim sharebee :( - try refreshing the page or bugging ari");
                 console.error(e);
+                throw new Error(`Failed to claim sharebee :( for sharebee ${id}`);
             }
         },
         reset: async () => {

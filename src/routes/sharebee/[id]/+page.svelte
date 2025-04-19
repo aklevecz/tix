@@ -26,17 +26,18 @@
 		if (id) {
 			const { blob: qrBlob } = await generateQR(`sharebee:${id}`);
 
-			const response = await sharebee.claim(id, qrBlob);
-			const { success, sharebeeId } = response;
-			if (success) {
-				// generate.generateRaptor();
-				newSharebeeUrl = createSharebeeUrlBrowser(sharebeeId);
-			} else {
-				alert(response.error)
-				// alert('couldnt claim -- probably already claimed or something else-- try refreshing');
-			}
+			sharebee.claim(id, qrBlob).then((response) => {
+				const { success, sharebeeId } = response;
+				if (success) {
+					// generate.generateRaptor();
+					newSharebeeUrl = createSharebeeUrlBrowser(sharebeeId);
+				} else {
+					alert(response.message);
+					// alert('couldnt claim -- probably already claimed or something else-- try refreshing');
+				}
+				isClaiming = false;
+			});
 		}
-		isClaiming = false;
 	}
 
 	function resetSharebees() {
@@ -58,14 +59,14 @@
 	<meta name="twitter:image" content="/raptor/faight-2/sharebee-preview-2.jpg" />
 </svelte:head>
 {#snippet raptorImg()}
-<div class="raptor-img-container">
-	<img
-		alt="raptor"
-		class="raptor absolute mix-blend-color"
-		src="/raptor/faight-2/dinotopia-raptor.svg"
-	/>
-	<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
-</div>
+	<div class="raptor-img-container">
+		<img
+			alt="raptor"
+			class="raptor absolute mix-blend-color"
+			src="/raptor/faight-2/dinotopia-raptor.svg"
+		/>
+		<img alt="raptor" class="raptor" src="/raptor/faight-2/sharebee-img.jpg" />
+	</div>
 {/snippet}
 <div class="container">
 	<!-- <h1 class="title">Sharebees</h1> -->

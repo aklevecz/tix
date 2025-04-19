@@ -41,40 +41,46 @@ const dbOrders = (db) => {
 		 * @param {string} pi_id
 		 * @return {Promise<TixOrder|null>}
 		 *  */
-		async getOrder (pi_id) {
+		async getOrder(pi_id) {
 			return db.prepare(`SELECT * FROM ${tableName} WHERE pi_id = ?`).bind(pi_id).first();
 		},
 		/**
-		 * 
-		 * @param {string} phoneNumber 
+		 *
+		 * @param {string} phoneNumber
 		 * @returns {Promise<Record<string, unknown>[]>}
 		 */
 		async getOrdersByPhoneNumber(phoneNumber) {
-			const {results} =  await db.prepare(`SELECT * FROM ${tableName} WHERE phone = ? AND status = 'success'`).bind(phoneNumber).all();
-			return results
+			const { results } = await db
+				.prepare(`SELECT * FROM ${tableName} WHERE phone = ? AND status = 'success'`)
+				.bind(phoneNumber)
+				.all();
+			return results;
 		},
 		/** @param {string} pi_id @param {{key:string, value:string | number}[]} newValues */
-		async updateOrder (pi_id, newValues) {
+		async updateOrder(pi_id, newValues) {
 			const existingOrder = await this.getOrder(pi_id);
 			if (!existingOrder) {
 				console.error('Order does not exist');
 				return null;
 			}
 			try {
-				await db.prepare(
-					`UPDATE ${tableName} SET ${newValues.map((o) => `${o.key} ='${o.value}'`)}`
-				).run();
+				await db
+					.prepare(`UPDATE ${tableName} SET ${newValues.map((o) => `${o.key} ='${o.value}'`)}`)
+					.run();
 			} catch (e) {
 				console.log(e);
 				console.error(`Failed to update ${pi_id} with values ${JSON.stringify(newValues)}`);
 			}
 		},
 		/**
-		 * @returns {Promise<Record<string, unknown>[]>}
-			*/
+		 * Get all orders from the database
+		 * @returns {Promise<TixOrder[]>}
+		 */
 		async getAllOrders() {
 			const { results } = await db.prepare(`SELECT * FROM ${tableName} ORDER BY rowid DESC`).all();
-			return results || [];
+			/** @type {TixOrder[]} */
+			const orders = /** @type {TixOrder[]} */ (results || []);
+			return orders;
 		}
 	};
 };

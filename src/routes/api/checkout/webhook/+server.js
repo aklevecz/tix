@@ -21,9 +21,9 @@ export async function POST({ platform, request }) {
 	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 
 	// OVERRIDE FOR LOCAL TESTING
-	if (isDev) {
-		endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
-	}
+	// if (isDev) {
+	// 	endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
+	// }
 
 	const stripe = new Stripe(STRIPE_SECRET);
 	const rawBody = await request.text();
@@ -87,10 +87,12 @@ export async function POST({ platform, request }) {
 							logger(context).info(`Order completed for ${paymentIntentId}`);
 						}
 					} catch (error) {
+						console.log(`error hook`, error);
 						await env.tixKV.put(
 							`error:create-qrs:${metadata.phoneNumber}:${paymentIntentId}`,
 							JSON.stringify(error)
 						);
+						throw new Error(JSON.stringify(error))
 					}
 				}
 			}

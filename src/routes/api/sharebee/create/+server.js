@@ -1,9 +1,12 @@
 import dbSharebees from '$lib/db/sharebees';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ platform, request }) {
 	try {
+        if (!platform) {
+            throw error(400, 'Missing platform');
+        }
 		const { sharebeeId, projectName } = await request.json();
 
 		if (!sharebeeId || !projectName) {

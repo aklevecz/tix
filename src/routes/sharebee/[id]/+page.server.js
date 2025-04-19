@@ -5,6 +5,9 @@ import { error } from '@sveltejs/kit';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({url, cookies, params, platform, request }) {
 	const { id } = params;
+	if (!platform) {
+		throw error(500, 'Platform not found');
+	}
 	const sharebee = await dbSharebees(platform?.env.DB).getSharebee(id);
 	if (!sharebee) {
 		error(404, `Sharebee with ID ${id} not found`); // This will trigger a 404 error page

@@ -37,7 +37,7 @@ export async function GET({ platform, cookies, url }) {
 		// Return R2 object with its headers
 		return new Response(object.body, {
 			headers: {
-				'content-type': object.httpMetadata.contentType || 'image/jpeg',
+				'content-type': object.httpMetadata?.contentType || 'image/jpeg',
 				'cache-control': 'public, max-age=31536000',
 				etag: object.httpEtag
 			}

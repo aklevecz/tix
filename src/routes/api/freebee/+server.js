@@ -1,8 +1,9 @@
 import { dev } from '$app/environment';
 import { EVENT_ID } from '$lib';
 import dbFreebees from '$lib/db/freebees';
-import { concatDateTime, dateAndTimeToDateZ, phoneNumberToUid } from '$lib/utils';
-import { json } from '@sveltejs/kit';
+import logger from '$lib/logging';
+import { concatDateTime, phoneNumberToUid } from '$lib/utils';
+import { error, json } from '@sveltejs/kit';
 
 let freebeeConfig = {
 	id: 'freebee-1',
@@ -67,6 +68,9 @@ const getTodaysFreebeeId = () => {
 export async function GET({ cookies, platform }) {
 	const token = cookies.get('token');
 	let decodedToken = null;
+	if (!platform) {
+		throw error(500, 'Platform not found');
+	}
 	try {
 		const validated = await platform?.env.AUTH_SERVICE.authorizeToken(token);
 		decodedToken = validated;
@@ -75,13 +79,15 @@ export async function GET({ cookies, platform }) {
 			return json({ message: 'You have already won!' });
 		}
 		// check if has won a freebee
-		const freebee = await dbFreebees(platform?.env.DB).getFreebeeByPhoneNumberAndProjectName(decodedToken.phoneNumber, freebeeConfig.project_name);
+		const freebee = await dbFreebees(platform?.env.DB).getFreebeeByPhoneNumberAndProjectName(
+			decodedToken.phoneNumber,
+			freebeeConfig.project_name
+		);
 		if (freebee) {
 			return json({
-				message: 'You have already won!',
-			})
+				message: 'You have already won!'
+			});
 		}
-
 	} catch (e) {
 		// return json({
 		// 	success: false,
@@ -118,7 +124,7 @@ export async function GET({ cookies, platform }) {
 		});
 	}
 	let { id, winner, project_name, date, time, createdAt } = todaysFreebee;
-	console.log(date, time)
+	console.log(date, time);
 	// if (!time) {
 	// 	// generate a random time of day after 12:00:00
 	// 	time = getRandomTimeString();
@@ -139,6 +145,10 @@ export async function GET({ cookies, platform }) {
 export async function POST({ cookies, platform, request }) {
 	const formData = await request.formData();
 	const qr = formData.get('qr');
+
+	if (!platform) {
+		throw error(400, 'Missing platform');
+	}
 
 	const token = cookies.get('token');
 	let decodedToken = null;
@@ -180,16 +190,18 @@ export async function POST({ cookies, platform, request }) {
 
 	// Use the new atomic update function to prevent race conditions
 	const claimResult = await dbFreebees(platform?.env.DB).claimFreebeeAtomic(
-		today, 
+		today,
 		phoneNumberToUid(decodedToken.phoneNumber)
 	);
-	
+
 	if (claimResult.success) {
 		// Only proceed with these actions if we successfully claimed the freebee
 		const r2Path = `order-qrs/${EVENT_ID}/${today}.png`;
 
 		await platform?.env.R2.put(r2Path, qr, {
-			contentType: 'image/png'
+			httpMetadata: {
+				contentType: 'image/png'
+			}
 		});
 		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		await platform?.env.MESSENGER_QUEUE.send({
@@ -199,7 +211,9 @@ export async function POST({ cookies, platform, request }) {
 		});
 
 		cookies.set('winner', phoneNumberToUid(decodedToken.phoneNumber), cookieOptions);
+		// @ts-ignore
+		logger(platform?.context).info(`Freebee claimed by ${decodedToken.phoneNumber}`);
 	}
-	
+
 	return json(claimResult);
 }

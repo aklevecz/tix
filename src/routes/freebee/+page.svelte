@@ -6,6 +6,7 @@
 	import user from '$lib/stores/user.svelte';
 	import { concatDateTime } from '$lib/utils';
 	import { onMount } from 'svelte';
+	import Error from '../sharebee/+error.svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -72,20 +73,20 @@
 			return;
 		}
 		const { blob } = await generateQR(`freebee:${freebee.state.id}`);
-		const response = await freebee.win({ qrBlob: blob });
-		if (response.success) {
-			won = true;
-			alert(response.message);
-		} else {
-			alert(response.message);
-		}
-		isLoading = false;
+		freebee.win({ qrBlob: blob }).then((response) => {
+			if (response.success) {
+				won = true;
+				alert(response.message);
+			}
+			isLoading = false;
+		});
 	}
 
 	let seo = {
-		image: '/raptor/faight-2/og-image.jpg',
+		image: '/raptor/faight-2/og-image.jpg'
 	};
 </script>
+
 <svelte:head>
 	<meta property="og:image" content={seo.image} />
 	<meta name="twitter:image" content={seo.image} />
@@ -161,7 +162,7 @@
 				</div>
 			</div>
 			{#if !canWin && !alreadyClaimed}
-				<p class="cta-bubble text-lg ">
+				<p class="cta-bubble text-lg">
 					Wait for the timer to finish and press the win button to claim the freebee today 🙃
 				</p>
 			{/if}

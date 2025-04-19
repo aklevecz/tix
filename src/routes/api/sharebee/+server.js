@@ -1,10 +1,17 @@
 import { EVENT_ID } from '$lib';
 import dbSharebees from '$lib/db/sharebees';
+import logger from '$lib/logging';
 import { createSharebeeHash, hashFunction } from '$lib/utils';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ platform }) {
+	if (!platform) {
+		return new Response(JSON.stringify({ error: 'Missing platform' }), {
+			status: 400,
+			headers: { 'Content-Type': 'application/json' }
+		});
+	}
 	const db = dbSharebees(platform?.env.DB);
 	// const config = await db.getSharebeeConfig();
 	const config = {};
@@ -15,7 +22,6 @@ export async function GET({ platform }) {
 	});
 }
 
-
 export async function POST({ cookies, request, platform, url }) {
 	try {
 		// const { id } = await request.json();
@@ -24,6 +30,13 @@ export async function POST({ cookies, request, platform, url }) {
 		const id = formData.get('id');
 		/** @type {*} qr */
 		const qr = formData.get('qr');
+
+		if (!platform) {
+			return new Response(JSON.stringify({ error: 'Missing platform' }), {
+				status: 400,
+				headers: { 'Content-Type': 'application/json' }
+			});
+		}
 
 		if (!id) {
 			return new Response(JSON.stringify({ error: 'Missing sharebee ID' }), {
@@ -66,7 +79,9 @@ export async function POST({ cookies, request, platform, url }) {
 		// });
 
 		await platform?.env.R2.put(r2Path, qr, {
-			contentType: 'image/png'
+			httpMetadata: {
+				contentType: 'image/png'
+			}
 		});
 
 		// save new sharebee
@@ -79,6 +94,8 @@ export async function POST({ cookies, request, platform, url }) {
 			phoneNumber: phoneNumber,
 			mediaUrls: [assetUrl]
 		});
+		// @ts-ignore
+		logger(platform?.context).info(`Sharebee claimed by ${phoneNumber}`);
 
 		if (!success) {
 			return new Response(JSON.stringify({ error: 'Failed to claim sharebee' }), {

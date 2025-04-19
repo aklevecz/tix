@@ -1,5 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import {
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID,
 		PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST
@@ -26,29 +27,34 @@
 			return;
 		}
 		try {
-		const { clientSecret, error, paymentIntentId } = await checkoutApi.createPaymentIntent({ cart, user });
-		// @ts-ignore
-		stripe = Stripe(clientId);
-		if (!stripe) {
-			alert('Stripe failed to load. Bug Ari if it persists');
-			return;
+			const { clientSecret, error, paymentIntentId } = await checkoutApi.createPaymentIntent({
+				cart,
+				user
+			});
+			// @ts-ignore
+			stripe = Stripe(clientId);
+			if (!stripe) {
+				alert('Stripe failed to load. Bug Ari if it persists');
+				return;
+			}
+			elements = stripe.elements({ clientSecret, appearance });
+			const paymentElement = elements.create('payment', options);
+			paymentElement.mount('#payment-element');
+			paymentElement.on('ready', () => {
+				paymentElementLoaded = true;
+				console.log('Payment Element is fully loaded.');
+				setTimeout(() => {
+					if (browser && window.innerWidth < 768) {
+						document.getElementById('payment-element')?.scrollIntoView({ behavior: 'smooth' });
+					}
+				}, 100);
+			});
+		} catch (/** @type {*} */ e) {
+			console.error(e);
+			alert(`Failed to create payment intent: ${e.message}`);
+			goto('/checkout/info');
+			throw new Error(`Failed to create payment intent: ${e.message}`);
 		}
-		elements = stripe.elements({ clientSecret, appearance });
-		const paymentElement = elements.create('payment', options);
-		paymentElement.mount('#payment-element');
-		paymentElement.on('ready', () => {
-			paymentElementLoaded = true;
-			console.log('Payment Element is fully loaded.');
-			setTimeout(() => {
-				if (browser && window.innerWidth < 768) {
-					document.getElementById('payment-element')?.scrollIntoView({ behavior: 'smooth' });
-				}
-			}, 100);
-		});
-	} catch (/** @type {*} */ e) {
-		console.error(e);
-		alert(`Failed to create payment intent: ${e.message}`);
-	}
 		// paymentElement.on('change', (event) => {
 		// 	paymentIsValid = event.complete;
 		// });
@@ -65,36 +71,44 @@
 		if (!elements || !stripe) {
 			return;
 		}
-		// Could check inventory one more time here
-		const host = window.location.host;
-		const protocol = window.location.protocol;
-		// shouldn't throw the order completion and is loggd on the backend if it fails
-		// TODO: HANDLE ERRORS
-		await checkoutApi.orderConfirmed(cart.state, orderId);
-		document.cookie = `generate=true; path=/; max-age=300`;
-
-		const { error } = await stripe.confirmPayment({
-			elements: elements,
-			confirmParams: {
-				return_url: `${protocol}//${host}/receipt`
-				// receipt?date=${$appState.date}&event=${eventName}`,
-			}
-		});
-		if (error) {
+		try {
+			// Could check inventory one more time here
+			const host = window.location.host;
+			const protocol = window.location.protocol;
+			// shouldn't throw the order completion and is loggd on the backend if it fails
 			// TODO: HANDLE ERRORS
-			await checkoutApi.orderFailed(cart.state, orderId);
-			alert(
-				`Hm an error has occurred while finalizing your payment, try again, or contact ariel@yaytso.art, here is the probably confusingly technical error message: ${JSON.stringify(error)}`
-			);
-			// Send an error to the backend to be logged
-		} else {
-			// shop.clearCart();
-			// checkingOutState = 'idle';
-		}
+			await checkoutApi.orderConfirmed(cart.state, orderId);
+			document.cookie = `generate=true; path=/; max-age=300`;
 
+			const { error } = await stripe.confirmPayment({
+				elements: elements,
+				confirmParams: {
+					return_url: `${protocol}//${host}/receipt`
+					// receipt?date=${$appState.date}&event=${eventName}`,
+				}
+			});
+			if (error) {
+				throw new Error(error.message);
+				// TODO: HANDLE ERRORS
+				// await checkoutApi.orderFailed(cart.state, orderId);
+				// alert(
+				// 	`Hm an error has occurred while finalizing your payment, try again, or contact ariel@yaytso.art, here is the probably confusingly technical error message: ${JSON.stringify(error)}`
+				// );
+				// Send an error to the backend to be logged
+			} else {
+				// shop.clearCart();
+				// checkingOutState = 'idle';
+			}
+		} catch (/** @type {*} */ e) {
+			alert(
+				`Hm an error has occurred while finalizing your payment, try again, or contact ariel@yaytso.art, here is the probably confusingly technical error message: ${JSON.stringify(e)}`
+			);
+			throw new Error(e);
+		}
 		fetching = false;
 	}
 </script>
+
 <div class="mb-10">
 	<div class="px-5">
 		<div class="max-w-[600px] p-0 text-xs">

@@ -93,15 +93,11 @@ const dbSharebees = (db) => {
 			}
 			return true;
 		},
-		/**
-		 * Get all sharebees
-		 * @returns {Promise<Record<string, unknown>[]>}
-		 */
 		async getAllSharebees() {
-			return db
-				.prepare(`SELECT * FROM ${tableName} ORDER BY created_at DESC`)
-				.all()
-				.then((result) => result.results || []);
+			const { results } = await db.prepare(`SELECT * FROM ${tableName} ORDER BY created_at DESC`).all();
+			/** @type {SharebeeEntry[]} */
+			const sharebees = /** @type {SharebeeEntry[]} */ (results || []);
+			return sharebees;
 		},
 		/** @param {string} id */
 		async deleteSharebee(id) {

@@ -74,12 +74,11 @@ const dbFreebees = (db) => {
 				message: 'You won the freebee!'
 			};
 		},
-		/**
-			* @returns {Promise<Record<string, unknown>[]>}
-			*/
 		async getAllFreebees() {
 			const { results } = await db.prepare(`SELECT * FROM ${tableName} ORDER BY rowid DESC`).all();
-			return results || [];
+			/** @type {FreebeeEntry[]} */
+			const freebees = /** @type {FreebeeEntry[]} */ (results || []);
+			return freebees
 		}
 	};
 };
