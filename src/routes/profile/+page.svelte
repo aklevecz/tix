@@ -30,7 +30,7 @@
 
 	/** @type {(paymentIntentId:string, fileName:string) => string} */
 	const orderUrl = (paymentIntentId, fileName) =>
-		encodeURIComponent(`/orders-qrs/${EVENT_ID}/${paymentIntentId}/${fileName}.png`);
+		`/api/img?path=${encodeURIComponent(`orders-qrs/${EVENT_ID}/${paymentIntentId}/${fileName}.png`)}`;
 	//  const orderUrl = (paymentIntentId) => `https://r2-tix.yaytso.art/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
 
 	/** @type {Sharebee | null} */
