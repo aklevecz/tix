@@ -25,7 +25,10 @@
 		if (typeof value === 'string') {
 			try {
 				// Attempt to parse if it looks like JSON, then stringify nicely
-				if ((value.startsWith('{') && value.endsWith('}')) || (value.startsWith('[') && value.endsWith(']'))) {
+				if (
+					(value.startsWith('{') && value.endsWith('}')) ||
+					(value.startsWith('[') && value.endsWith(']'))
+				) {
 					return JSON.stringify(JSON.parse(value), null, 2);
 				}
 			} catch (e) {
@@ -35,74 +38,98 @@
 		}
 		// If not a string, stringify directly
 		return JSON.stringify(value, null, 2);
+	}
+
+	/**
+	 * Truncates a string to a maximum length.
+	 * @param {string} str The string to truncate.
+	 * @param {number} maxLength The maximum length.
+	 */
+	function truncateString(str, maxLength) {
+		if (typeof str !== 'string' || str.length <= maxLength) {
+			return str;
 		}
-	
-		/**
-		 * Truncates a string to a maximum length.
-		 * @param {string} str The string to truncate.
-		 * @param {number} maxLength The maximum length.
-		 */
-		function truncateString(str, maxLength) {
-			if (typeof str !== 'string' || str.length <= maxLength) {
-				return str;
+		return str.substring(0, maxLength) + '...';
+	}
+
+	/** @param {*} event */
+	async function createSharebee(event) {
+		event.preventDefault();
+		const formData = new FormData(/** @type {HTMLFormElement} */ (event.target));
+		const sharebeeId = formData.get('sharebeeId');
+		const projectName = formData.get('projectName');
+
+		try {
+			const response = await fetch('/api/sharebee/create/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ sharebeeId, projectName })
+			});
+
+			if (response.ok) {
+				// Reload the page to show the new sharebee
+				window.location.reload();
+			} else {
+				const error = await response.json();
+				alert(error.message || 'Failed to create sharebee');
 			}
-			return str.substring(0, maxLength) + '...';
+		} catch (error) {
+			console.error('Error creating sharebee:', error);
+			alert('Failed to create sharebee');
 		}
+	}
 
-		
-				/** @param {*} event */
-				async function createSharebee(event) {
-			event.preventDefault();
-			const formData = new FormData(/** @type {HTMLFormElement} */ (event.target));
-			const sharebeeId = formData.get('sharebeeId');
-			const projectName = formData.get('projectName');
+	/** @param {string} id */
+	async function deleteSharebee(id) {
+		try {
+			const response = await fetch('/api/sharebee/delete/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ id })
+			});
 
-			try {
-				const response = await fetch('/api/sharebee/create/', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ sharebeeId, projectName })
-				});
-
-				if (response.ok) {
-					// Reload the page to show the new sharebee
-					window.location.reload();
-				} else {
-					const error = await response.json();
-					alert(error.message || 'Failed to create sharebee');
-				}
-			} catch (error) {
-				console.error('Error creating sharebee:', error);
-				alert('Failed to create sharebee');
+			if (response.ok) {
+				// Reload the page to show the new sharebee
+				window.location.reload();
+			} else {
+				const error = await response.json();
+				alert(error.message || 'Failed to delete sharebee');
 			}
+		} catch (error) {
+			console.error('Error deleting sharebee:', error);
+			alert('Failed to delete sharebee');
 		}
+	}
 
-		/** @param {string} id */
-		async function deleteSharebee(id) {
-			try {
-				const response = await fetch('/api/sharebee/delete/', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ id })
-				});
+	/** @param {string} pid @param {string} project_name @param {number} quantity */
+	async function generateQRCodes(pid, project_name, quantity) {
+		try {
+			const response = await fetch('/api/admin/generate-qr/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ pid, project_name, quantity })
+			});
 
-				if (response.ok) {
-					// Reload the page to show the new sharebee
-					window.location.reload();
-				} else {
-					const error = await response.json();
-					alert(error.message || 'Failed to delete sharebee');
-				}
-			} catch (error) {
-				console.error('Error deleting sharebee:', error);
-				alert('Failed to delete sharebee');
+			if (response.ok) {
+				// Reload the page to show the new sharebee
+				window.location.reload();
+			} else {
+				const error = await response.json();
+				alert(error.message || 'Failed to generate QR codes');
 			}
+		} catch (error) {
+			console.error('Error generating QR codes:', error);
+			alert('Failed to generate QR codes');
 		}
+	}
 </script>
+
 <svelte:head>
 	<title>Admin Dashboard</title>
 </svelte:head>
@@ -136,6 +163,8 @@
 				</thead>
 				<tbody>
 					{#each orders as order (order.pi_id)}
+						<!-- TODO: Make more dynamic -->
+						{@const quantityOfFirstItem = Object.values(JSON.parse(order.items))[0].quantity}
 						<tr>
 							<td>{order.pi_id}</td>
 							<td>{order.name || 'N/A'}</td>
@@ -148,6 +177,8 @@
 							<td>{order.project_name || 'N/A'}</td>
 							<td>{order.origin || 'N/A'}</td>
 							<td><pre>{truncateString(safeStringify(order.items), 100)}</pre></td>
+							<td>{quantityOfFirstItem}</td>
+							<td><button onclick={() => generateQRCodes(order.pi_id, order.project_name, quantityOfFirstItem)}>Generate QR</button></td>
 						</tr>
 					{/each}
 				</tbody>
@@ -209,8 +240,12 @@
 							<td>{sharebee.winner || 'N/A'}</td>
 							<td>{sharebee.project_name || 'N/A'}</td>
 							<td>{formatDateTime(/** @type {string} */ (sharebee.created_at))}</td>
-							<td>{sharebee.claimed_at ? formatDateTime(/** @type {string} */ (sharebee.claimed_at)) : 'Not Claimed'}</td>
-							<td><button on:click={() => deleteSharebee(String(sharebee.id))}>Delete</button></td>
+							<td
+								>{sharebee.claimed_at
+									? formatDateTime(/** @type {string} */ (sharebee.claimed_at))
+									: 'Not Claimed'}</td
+							>
+							<td><button onclick={() => deleteSharebee(String(sharebee.id))}>Delete</button></td>
 						</tr>
 					{/each}
 				</tbody>
@@ -223,12 +258,12 @@
 	<!-- Create Sharebee Form -->
 	<section>
 		<h2>Create Sharebee</h2>
-		<form on:submit={createSharebee}>
+		<form onsubmit={createSharebee}>
 			<label for="sharebeeId">Sharebee ID:</label>
-			<input type="text" id="sharebeeId" name="sharebeeId" required>
+			<input type="text" id="sharebeeId" name="sharebeeId" required />
 
 			<label for="projectName">Project Name:</label>
-			<input type="text" id="projectName" name="projectName" required>
+			<input type="text" id="projectName" name="projectName" required />
 
 			<button class="btn-bauhaus mt-2" type="submit">Create Sharebee</button>
 		</form>
@@ -242,7 +277,8 @@
 		max-width: 1400px;
 		margin: 0 auto;
 	}
-	h1, h2 {
+	h1,
+	h2 {
 		color: #333;
 		border-bottom: 1px solid #eee;
 		padding-bottom: 5px;
@@ -256,9 +292,10 @@
 		border-collapse: collapse;
 		margin-top: 15px;
 		font-size: 0.9em;
-		box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 	}
-	th, td {
+	th,
+	td {
 		border: 1px solid #ddd;
 		padding: 8px 12px;
 		text-align: left;

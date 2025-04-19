@@ -9,6 +9,7 @@ import Stripe from 'stripe';
 
 import { isDev } from '$lib';
 import { Byte, Encoder } from '@nuintun/qrcode';
+import { generateQR } from '$lib/qr';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ platform, request }) {
@@ -58,30 +59,23 @@ export async function POST({ platform, request }) {
 							(/** @type {{id:String, quantity: number}} */ item) => item.id === project_name
 						);
 						if (metadataObject) {
-							const {quantity} = metadataObject;
+							const { quantity } = metadataObject;
 							const baseUrl = `https://r2-tix.yaytso.art/orders-qrs/${project_name}/${paymentIntentId}`;
 							for (let i = 0; i < parseInt(quantity); i++) {
-								const encoder = new Encoder({
-									level: 'H'
-								});
-
-								const qrcode = encoder.encode(new Byte(`${paymentIntentId}:${i + 1}`));
-
-								const qrCodeUrl = qrcode.toDataURL(5, {
-									// First arg: moduleSize is now 20
-									margin: 4 // Optional margin
-								});
-								const blob = await fetch(qrCodeUrl).then((res) => res.blob());
-								await platform?.env.R2.put(`orders-qrs/${project_name}/${paymentIntentId}/${i + 1}.png`, blob);
+								const { blob } = await generateQR(`${paymentIntentId}:${i + 1}`);
+								await platform?.env.R2.put(
+									`orders-qrs/${project_name}/${paymentIntentId}/${i + 1}.png`,
+									blob
+								);
 								mediaUrls.push(`${baseUrl}/${i + 1}.png`);
 							}
 							context.waitUntil(
 								env.MESSENGER_QUEUE.send({
-								  defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,
-								  phoneNumber: metadata.phoneNumber,
-								  mediaUrls
+									defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,
+									phoneNumber: metadata.phoneNumber,
+									mediaUrls
 								})
-							  );
+							);
 						}
 					} catch (error) {
 						await env.tixKV.put(
@@ -89,7 +83,6 @@ export async function POST({ platform, request }) {
 							JSON.stringify(error)
 						);
 					}
-
 				}
 			}
 		}
