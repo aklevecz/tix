@@ -167,3 +167,36 @@ export function createSharebeeUrlBrowser(id) {
 	}
 	return '';
 }
+
+
+/**
+ * Calculates the increment based on current date relative to April 20, 2025
+ * @param {number} startValue - The initial value before any increments
+ * @returns {number|string} - The value after all increments or a message if outside date range
+ */
+export function calculateIncrementByCurrentDate(startValue = 0) {
+	// Define start and end dates
+	const startDate = new Date(2025, 3, 20); // April 20, 2025
+	const endDate = new Date(2025, 4, 2);    // May 2, 2025
+	
+	// Get current date and normalize times for comparison
+	const currentDate = new Date();
+	
+	startDate.setHours(0, 0, 0, 0);
+	endDate.setHours(23, 59, 59, 999);
+	currentDate.setHours(0, 0, 0, 0);
+	
+	// Check if current date is within range
+	if (currentDate < startDate || currentDate > endDate) {
+	  return "Current date is outside the specified range (April 20 - May 2, 2025)";
+	}
+	
+	// Calculate days elapsed since start date
+	const daysElapsed = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+	
+	// Calculate increments (integer division by 4)
+	const increments = Math.floor(daysElapsed / 4);
+	
+	// Return the final value
+	return startValue + increments;
+  }

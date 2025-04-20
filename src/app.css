@@ -84,7 +84,7 @@ button:active {
 }
 
 .card-base {
-	@apply grid grid-cols-[2fr,1fr] gap-8;
+	@apply grid grid-cols-[2fr,1fr] gap-2;
 }
 
 label {

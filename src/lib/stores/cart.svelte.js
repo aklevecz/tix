@@ -1,5 +1,6 @@
 import cartApi from '$lib/api/cart';
 import discountApi from '$lib/api/discount';
+import pricing from './pricing.svelte';
 
 /** @type {Cart} */
 export const defaultCart = {
@@ -17,7 +18,8 @@ const createCartStore = () => {
 
 	function calculateTotals() {
 		cart.subtotal = Object.values(cart.items).reduce((sum, { item, quantity }) => {
-			return sum + item.price * quantity;
+			console.log(`sum: ${sum}, item.price: ${item.price}, quantity: ${quantity} pricing.state.increase: ${pricing.state.increase}`);
+			return sum + (item.price + pricing.state.increase) * quantity;
 		}, 0);
 		const discountAmount = cart.subtotal * (cart.discount / 100);
 		cart.total = cart.subtotal - discountAmount;

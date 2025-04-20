@@ -19,4 +19,5 @@
 	<meta name="twitter:image" content={seo.image} />
 </svelte:head>
 <Hero {featured} />
+
 <CartContainer />

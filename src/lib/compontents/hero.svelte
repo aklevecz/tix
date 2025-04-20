@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import { Spring } from 'svelte/motion';
 	import { slide } from 'svelte/transition';
+	import PriceCountdown from './price-countdown.svelte';
+	import pricing from '$lib/stores/pricing.svelte';
 
 	let { featured } = $props();
 
@@ -41,7 +43,7 @@
 
 <div class="md:flex mx-auto mb-10 flex min-h-[50vh] max-w-[900px] flex-col gap-4 px-3">
 	<button bind:this={floatingButton} style="transform: translateY({spring.current}px)" onclick={() => cart.add(featured)} class="btn-bauhaus fixed bottom-4 right-4">
-		Add {quantityInCart ? 'More' : formatPrice(featured.price)}
+		Add {quantityInCart ? 'More' : formatPrice(featured.price + pricing.state.increase)}
 		{featured.productType}
 	</button>
 	<!-- <h1>{featured?.title}</h1> -->
@@ -66,13 +68,15 @@
 		<!-- <div class="quantity-message">
 			{quantityMessage} p
 		</div> -->
+		<PriceCountdown currentPrice={featured.price}/>
+
 		<div class="flex h-full flex-col justify-center gap-4 md:mt-0">
 			<!-- <div class="lower mb-4 px-4 text-center text-3xl text-[var(--third-color)]">
 				There is a free ticket every day at a random time in the afternoon
 			</div> -->
 
 			<button onclick={() => cart.add(featured)} class="btn-bauhaus">
-				Add {quantityInCart ? 'More' : formatPrice(featured.price)}
+				Add {quantityInCart ? 'More' : formatPrice(featured.price + pricing.state.increase)}
 				{featured.productType}
 			</button>
 			<!-- {#if quantityInCart}

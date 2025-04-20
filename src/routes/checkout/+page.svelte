@@ -1,5 +1,6 @@
 <script>
 	import SliderPage from '$lib/compontents/checkout/slider-page.svelte';
+	import PriceCountdown from '$lib/compontents/price-countdown.svelte';
 
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
@@ -7,7 +8,6 @@
 		// goto('/checkout/info');
 	}
 </script>
-
 {#if data.featured?.priceConfig.slidingScale === true}
 	<SliderPage priceConfig={data.featured.priceConfig} />
 {:else}

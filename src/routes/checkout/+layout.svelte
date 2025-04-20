@@ -5,6 +5,7 @@
 	import { isDev } from '$lib';
 	import CartLineItem from '$lib/compontents/cart/cart-line-item.svelte';
 	import Discount from '$lib/compontents/checkout/discount.svelte';
+	import PriceCountdown from '$lib/compontents/price-countdown.svelte';
 	import cart from '$lib/stores/cart.svelte';
 	import { formatPrice } from '$lib/utils';
 
@@ -43,7 +44,7 @@
 		</h1>
 	</div>
 
-	<div class="card-base mb-4 max-w-[600px] p-0 pt-0">
+	<div class="card-base mb-0 max-w-[600px] p-0 pt-0">
 		<div class="relative">
 			<!-- <div class="absolute -left-0 top-0 w-1 h-full bg-[var(--color-1)]"></div> -->
 			<div class="mt-2 space-y-4 border-0 border-b-0 px-0">
@@ -54,8 +55,9 @@
 				{/each}
 			</div>
 		</div>
+		<PriceCountdown currentPrice={data.featured?.price}/>
 
-		<div class="relative mt-[-18px] border border-t p-4">
+		<div class="relative border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
 			<div class="mb-0 space-y-1">
 				<h2 class="flex items-baseline justify-between text-base">
