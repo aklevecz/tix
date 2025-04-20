@@ -23,8 +23,11 @@
 	};
 	console.log(user.state.phoneNumber)
 	// let selectedCountry = $derived(dialCodeToCode(user.state.phoneNumber.countryCode));
+	/** @type {*} */
+	let initialCountry = dialCodeToCode(user.state.phoneNumber.countryCode);
+	console.log(initialCountry)
 	/** @type {import('libphonenumber-js').CountryCode }*/
-	let selectedCountry = $state('US');
+	let selectedCountry = $state(initialCountry);
 	let phone = $state(user.state.phoneNumber.number || '');
 	let error = $state('');
 
@@ -38,12 +41,15 @@
 			return { phoneNumberNoCountryCode: '', countryCode: '', overrideCountryCode: false };
 		}
 		try {
+			console.log(selectedCountry)
 			const parsed = parsePhoneNumberFromString(phone, selectedCountry);
 			if (parsed && parsed.isValid()) {
 				phoneNumberIsValid = true;
 				// not sure about this over complicated changing of country code
 				let countryCode = '';
 				let overrideCountryCode = false;
+				console.log(`getCountryPrefix(): ${getCountryPrefix()}`);
+				console.log(`parsed.countryCallingCode: ${parsed.countryCallingCode}`);
 				if (getCountryPrefix() !== `+${parsed.countryCallingCode}`) {
 					if (phone.startsWith(parsed.countryCallingCode)) {
 						countryCode = `+${parsed.countryCallingCode}`;
@@ -85,8 +91,6 @@
 	const getCountryPrefix = () => {
 		return countries.find((c) => c.code === selectedCountry)?.dialCode || '+1';
 	};
-
-
 
 	/** @param {*} e*/
 	function handleInput(e) {

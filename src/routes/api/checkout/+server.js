@@ -34,8 +34,10 @@ export async function POST({ platform, request }) {
 
 	if (action === checkoutActions.CREATE_INTENT) {
 		const abbreviatedItems = Object.keys(cart.items).map((key) => {
+			// TODO: Make more dynamic
+			const projectId = key === 'r4pt0rz' ? 'raptor-faight-2' : key;
 			return {
-				id: key,
+				id: projectId,
 				quantity: cart.items[key].quantity
 			};
 		});

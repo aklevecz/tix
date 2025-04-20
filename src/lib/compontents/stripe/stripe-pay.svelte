@@ -11,6 +11,8 @@
 	import user from '$lib/stores/user.svelte';
 	import { appearance, options } from '$lib/stripe';
 	import { formatPrice } from '$lib/utils';
+	import parsePhoneNumberFromString from 'libphonenumber-js';
+	import { onMount } from 'svelte';
 
 	const clientId = isDev ? PUBLIC_YAYTSO_STRIPE_CLIENT_ID_TEST : PUBLIC_YAYTSO_STRIPE_CLIENT_ID;
 	/** @type {any} */
@@ -107,6 +109,13 @@
 		}
 		fetching = false;
 	}
+
+	// onMount(() => {
+	// 	const numToParse = `${user.state.phoneNumber.countryCode}1${user.state.phoneNumber.number}`
+	// 	console.log(numToParse)
+	// 	const p = parsePhoneNumberFromString(numToParse);
+	// 	console.log(p?.isValid());
+	// });
 </script>
 
 <div class="mb-10">

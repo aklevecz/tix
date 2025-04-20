@@ -21,9 +21,9 @@ export async function POST({ platform, request }) {
 	const STRIPE_SECRET = isDev ? YAYTSO_STRIPE_SECRET_TEST : YAYTSO_STRIPE_SECRET;
 
 	// OVERRIDE FOR LOCAL TESTING
-	// if (isDev) {
-	// 	endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
-	// }
+	if (isDev) {
+		endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
+	}
 
 	const stripe = new Stripe(STRIPE_SECRET);
 	const rawBody = await request.text();
@@ -53,6 +53,7 @@ export async function POST({ platform, request }) {
 					// TODO: DONT BE RAPTOR-FAIGHT-2 SPECIFIC
 					// const CURRENT_EVENT = 'raptor-faight-2	';
 					const project_name = order.project_name;
+					console.log(`Generating QRs for ${paymentIntentId}, ${project_name}`);
 					try {
 						const parsedItems = JSON.parse(metadata.items);
 						const metadataObject = parsedItems.find(
@@ -71,11 +72,13 @@ export async function POST({ platform, request }) {
 									mediaUrls.push(`${baseUrl}/${i + 1}.png`);
 								}
 							} catch (error) {
+								console.log(`error generating QRs`, error);
 								// @ts-ignore
 								logger(context).error(
 									`Error generating QRs for ${paymentIntentId} ${JSON.stringify(error)}`
 								);
 							}
+							console.log(`Sending message for ${paymentIntentId} to ${metadata.phoneNumber}`);
 							context.waitUntil(
 								env.MESSENGER_QUEUE.send({
 									defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,

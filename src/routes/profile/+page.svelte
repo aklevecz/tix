@@ -28,13 +28,12 @@
 	 * @property {string} winner
 	 */
 
-	/** @type {(paymentIntentId:string, fileName:string) => string} */
-	const orderUrl = (paymentIntentId, fileName) =>
-		`/api/img?path=${encodeURIComponent(`orders-qrs/${EVENT_ID}/${paymentIntentId}/${fileName}.png`)}`;
-	//  const orderUrl = (paymentIntentId) => `https://r2-tix.yaytso.art/orders-qrs/${EVENT_ID}/${paymentIntentId}`;
 
 	/** @type {Sharebee | null} */
 	let sharebee = $state(null);
+
+	/** @type {string} */
+	let ordersUrls = $state('');
 
 	/** @type {string} sharebeeQRUrl */
 	let sharebeeQRUrl = $state('');
@@ -49,6 +48,7 @@
 			console.log(data.orders);
 			phoneNumber = data.phoneNumber;
 			orders = data.orders;
+			ordersUrls = data.ordersUrls;
 			freebee = data.freebee;
 			oldOrders = data.oldOrders;
 			sharebee = data.sharebee;
@@ -106,7 +106,7 @@
 {#if !user.token}
 	<div class="mx-auto mt-4">
 		<h1 class="mb-4 text-center">Sign in to see your profile</h1>
-		<div class="px-10">You will be able to see your tickets and other useful things</div>
+		<div class="px-10 text-center">You will be able to see your tickets and other useful things</div>
 		<AuthContainer />
 	</div>
 {/if}
@@ -143,19 +143,16 @@
 				<div class="lowercase">You haven't ordered any tickets yet</div>
 			{/if}
 			<div class="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-3">
-				{#each orders as order, i}
+				{#each ordersUrls as url}
 					<div class="flex flex-col items-center">
-						<div class="mb-1 text-center font-medium">{order.project_name.replace(/-/g, ' ')}</div>
+						<div class="mb-1 text-center font-medium">Bazaar</div>
 						<div
 							onclick={() =>
-								showQRCodeFullScreen(
-									orderUrl(order.pi_id, String(i + 1)),
-									order.project_name.replace(/-/g, ' ')
-								)}
+								showQRCodeFullScreen(url)}
 							class="inline-block cursor-pointer overflow-hidden rounded-lg border-2 border-amber-300 bg-white p-1 shadow-md transition-all hover:shadow-lg active:scale-95"
 						>
 							<img
-								src={orderUrl(order.pi_id, String(i + 1))}
+								src={url}
 								alt="order qr code"
 								class="h-28 w-28 bg-amber-300"
 							/>

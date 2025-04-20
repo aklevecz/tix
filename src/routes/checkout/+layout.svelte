@@ -59,7 +59,7 @@
 
 		<div class="relative border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
-			<div class="mb-0 space-y-1">
+			<div class="mb-0 space-y-10">
 				<h2 class="flex items-baseline justify-between text-base">
 					Subtotal<span>{formatPrice(cart.state.subtotal)}</span>
 				</h2>

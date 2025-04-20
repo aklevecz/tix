@@ -47,14 +47,15 @@ const dbOrders = (db) => {
 		/**
 		 *
 		 * @param {string} phoneNumber
-		 * @returns {Promise<Record<string, unknown>[]>}
+		 * @returns {Promise<TixOrder[]>}
 		 */
 		async getOrdersByPhoneNumber(phoneNumber) {
 			const { results } = await db
 				.prepare(`SELECT * FROM ${tableName} WHERE phone = ? AND status = 'success'`)
 				.bind(phoneNumber)
 				.all();
-			return results;
+			const orders = /** @type {TixOrder[]} */ (results || []);
+			return orders;
 		},
 		/** @param {string} pi_id @param {{key:string, value:string | number}[]} newValues */
 		async updateOrder(pi_id, newValues) {

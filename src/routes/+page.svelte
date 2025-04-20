@@ -12,6 +12,7 @@
 		host: 'https://tickets.yaytso.art/',
 		icon: '/images/favicon.ico'
 	};
+	console.log(featured)
 </script>
 
 <svelte:head>
