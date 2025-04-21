@@ -32,7 +32,7 @@ const sharebeeApi = () => {
                 // return await response.json();
             } catch(e) {
                 console.error(`api/sharebee.js: ERROR WHILE FETCHING ${endpoints.sharebee}`);
-                alert("Failed to claim sharebee :( - try refreshing the page or bugging ari");
+                alert(e.message);
                 console.error(e);
                 throw new Error(`Failed to claim sharebee :( for sharebee ${id}`);
             }
