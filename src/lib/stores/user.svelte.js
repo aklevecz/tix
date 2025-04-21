@@ -13,11 +13,32 @@ const defaultUser = {
 const createUserStore = () => {
 	let user = $state({ ...defaultUser });
 	let token = $state('');
+	/** @type {ReturnType<typeof setTimeout> | undefined} */
+	let debounceTimeout;
 
-	function saveUserSession() {
+	/**
+	 * Debounce function
+	 * @template {(...args: any[]) => any} T
+	 * @param {T} func The function to debounce.
+	 * @param {number} wait The number of milliseconds to delay.
+	 * @returns {(...args: Parameters<T>) => void} A function that delays the invocation of `func`.
+	 */
+	function debounce(func, wait) {
+	 /**
+	  * @this {ThisParameterType<T>}
+	  * @param {Parameters<T>} args
+	  */
+	 return function(...args) {
+	 	clearTimeout(debounceTimeout);
+	 	// Use 'this' directly as JSDoc now defines its type
+	 	debounceTimeout = setTimeout(() => func.apply(this, args), wait);
+	 };
+	}
+
+	const debouncedSaveUserSession = debounce(() => {
 		document.cookie = `user=${encodeURIComponent(JSON.stringify(user))}; path=/; max-age=${60 * 60 * 24 * 30}`;
 		userApi.updateUser(user);
-	}
+	}, 500); // Debounce for 500ms
 
 	return {
 		get state() {
@@ -35,7 +56,7 @@ const createUserStore = () => {
 		 */
 		updateUser: (props) => {
 			user = { ...user, ...props };
-            saveUserSession()
+			debouncedSaveUserSession();
 		},
 		/** @param {string} phoneNumber */
 		sendCode: async (phoneNumber) => {
