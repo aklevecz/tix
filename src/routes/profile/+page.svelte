@@ -28,7 +28,6 @@
 	 * @property {string} winner
 	 */
 
-
 	/** @type {Sharebee | null} */
 	let sharebee = $state(null);
 
@@ -45,16 +44,19 @@
 
 	onMount(() => {
 		meApi.getMe().then((data) => {
-			console.log(data.orders);
-			phoneNumber = data.phoneNumber;
-			orders = data.orders;
-			ordersUrls = data.ordersUrls;
-			freebee = data.freebee;
-			oldOrders = data.oldOrders;
-			sharebee = data.sharebee;
-			sharebeeQRUrl = data.sharebeeQRUrl;
-			freebeeQRUrl = data.freebeeQRUrl;
-			followingSharebeeIsClaimed = data.followingSharebeeIsClaimed;
+			if (data) {
+				phoneNumber = data.phoneNumber;
+				orders = data.orders;
+				ordersUrls = data.ordersUrls;
+				freebee = data.freebee;
+				oldOrders = data.oldOrders;
+				sharebee = data.sharebee;
+				sharebeeQRUrl = data.sharebeeQRUrl;
+				freebeeQRUrl = data.freebeeQRUrl;
+				followingSharebeeIsClaimed = data.followingSharebeeIsClaimed;
+			} else {
+				console.log('probably not logged in');
+			}
 		});
 	});
 
@@ -106,7 +108,9 @@
 {#if !user.token}
 	<div class="mx-auto mt-4">
 		<h1 class="mb-4 text-center">Sign in to see your profile</h1>
-		<div class="px-10 text-center">You will be able to see your tickets and other useful things</div>
+		<div class="px-10 text-center">
+			You will be able to see your tickets and other useful things
+		</div>
 		<AuthContainer />
 	</div>
 {/if}
@@ -147,15 +151,10 @@
 					<div class="flex flex-col items-center">
 						<div class="mb-1 text-center font-medium">Bazaar</div>
 						<div
-							onclick={() =>
-								showQRCodeFullScreen(url)}
+							onclick={() => showQRCodeFullScreen(url)}
 							class="inline-block cursor-pointer overflow-hidden rounded-lg border-2 border-amber-300 bg-white p-1 shadow-md transition-all hover:shadow-lg active:scale-95"
 						>
-							<img
-								src={url}
-								alt="order qr code"
-								class="h-28 w-28 bg-amber-300"
-							/>
+							<img src={url} alt="order qr code" class="h-28 w-28 bg-amber-300" />
 							<div class="mt-1 text-center text-xs text-gray-500">Tap to expand</div>
 						</div>
 					</div>
