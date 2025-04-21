@@ -258,7 +258,7 @@
         <h3>Current Price State</h3>
         <p>
             Current Increase: <strong>${centsToDollars(pricing.state.increase + pricing.state.fractionOfCent / 100)}</strong> 
-            (${centsToDollars(pricing.state.increase)}.{pricing.state.fractionOfCent.toString().padStart(2, '0')})
+            (${centsToDollars(pricing.state.increase)}{pricing.state.fractionOfCent.toString().padStart(2, '0')})
         </p>
         <p>Final Increase Amount: ${centsToDollars(pricing.config.totalIncrease)}</p>
         <p>Time Remaining Until Next Cent: {pricing.state.timeRemaining} seconds</p>
@@ -323,6 +323,7 @@
         margin-right: 10px;
         padding: 8px 16px;
         cursor: pointer;
+        color: white;
     }
     
     button:disabled {

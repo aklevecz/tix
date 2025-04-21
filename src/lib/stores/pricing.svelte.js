@@ -3,7 +3,7 @@ import { onMount } from 'svelte';
 // --- Configuration ---
 const startDate = new Date(2025, 3, 20); // April 20, 2025
 const endDate = new Date(2025, 4, 2); // May 2, 2025
-const totalIncrease = 500; // Total price increase in cents (50.00)
+const totalIncrease = 1000; // Total price increase in cents (50.00)
 const updateIntervalMs = 100; // Update state every 100ms for accuracy
 
 // Configure the acceleration type and parameters

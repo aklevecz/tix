@@ -52,7 +52,7 @@
 		
 		<!-- Added: Display next cent amount -->
 		<div class="mt-1 text-xs md:text-base">
-			<span class="font-semibold">Next ticket price:</span> ${formatPrice(pricing.state.nextPrice + currentPrice)}
+			<span class="font-semibold">Next ticket price:</span> ${formatPrice(pricing.state.nextPrice + currentPrice)} <a class="text-blue-500 underline" href="/pricing">(Learn more)</a>
 		</div>
 		
 		<!-- Display remaining increase -->
