@@ -32,7 +32,7 @@
 				<CartLineItem {item} {quantity} price={item.price} />
 			{/each}
 		</div>
-		<div class="flex items-end justify-between gap-6 border-t">
+		<div class="flex items-end justify-between gap-6 border-t pb-4 px-1">
 			<div class="total">
 				Total {formatPrice(cart.state.total)}
 			</div>
