@@ -1,6 +1,8 @@
 <script>
 	import CartContainer from '$lib/compontents/cart/cart-container.svelte';
 	import Hero from '$lib/compontents/hero.svelte';
+	import pricing from '$lib/stores/pricing.svelte.js';
+	import { onMount } from 'svelte';
 
 	const { data } = $props();
 	const { featured } = data;
@@ -12,7 +14,11 @@
 		host: 'https://tickets.yaytso.art/',
 		icon: '/images/favicon.ico'
 	};
-	console.log(featured)
+	
+	onMount(() => {
+		pricing.startUpdates();
+		return () => pricing.stopUpdates();
+	});
 </script>
 
 <svelte:head>

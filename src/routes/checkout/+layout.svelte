@@ -55,7 +55,7 @@
 				{/each}
 			</div>
 		</div>
-		<PriceCountdown currentPrice={data.featured?.price}/>
+		<PriceCountdown/>
 
 		<div class="relative border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->
