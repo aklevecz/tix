@@ -24,12 +24,12 @@ const sharebeeApi = () => {
                     method: "POST",
                     body: formData
                 });
-
+                const data = await response.json();
                 if (!response.ok) {
-                    throw new Error("Failed to claim sharebee");
+                    throw new Error(data.error);
                 }
-
-                return await response.json();
+                return data
+                // return await response.json();
             } catch(e) {
                 console.error(`api/sharebee.js: ERROR WHILE FETCHING ${endpoints.sharebee}`);
                 alert("Failed to claim sharebee :( - try refreshing the page or bugging ari");

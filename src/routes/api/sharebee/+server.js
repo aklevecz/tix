@@ -90,7 +90,7 @@ export async function POST({ cookies, request, platform, url }) {
 
 		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
 		await platform?.env.MESSENGER_QUEUE.send({
-			contextMessage: `generate a silly message telling someone that they won a free ticket to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. They also get a link to share with someone else . Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}. It is important that the details of the show and tickets are accurate`,
+			contextMessage: `generate a succinct message telling someone that they won a free ticket to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. They also get a link to share with someone else . Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}. It is important that the details of the show and tickets are accurate`,
 			defaultMessage: `You got a free ticket for May 2nd! Here is your QR code. Here is your link to share with someone else: ${url.origin}/sharebee/${sharebeeId}`,
 			phoneNumber: phoneNumber,
 			mediaUrls: [assetUrl]
