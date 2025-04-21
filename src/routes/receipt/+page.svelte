@@ -55,9 +55,10 @@
 
 		<div class="items mb-4">
 			<!-- Header row -->
+			 <!-- REMOVING PRICE WHILE I DONT HAVE THE ADDED PRICE IN THE CART -->
 			<div class="receipt-grid-line mb-0 pb-1">
 				<div>Item</div>
-				<div>Price</div>
+				<!-- <div>Price</div> -->
 				<div>Quantity</div>
 			</div>
 
@@ -65,7 +66,7 @@
 			{#each Object.entries(JSON.parse(order.items)) as [key, object]}
 				<div class="receipt-grid-line py-1">
 					<div class="item-title">{object.item.cartTitle}</div>
-					<div>{formatPrice(object.item.price)}</div>
+					<!-- <div>{formatPrice(object.item.price)}</div> -->
 					<div class="item-quantity">{object.quantity}</div>
 				</div>
 			{/each}

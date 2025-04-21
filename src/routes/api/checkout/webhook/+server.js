@@ -81,7 +81,7 @@ export async function POST({ platform, request }) {
 							console.log(`Sending message for ${paymentIntentId} to ${metadata.phoneNumber}`);
 							context.waitUntil(
 								env.MESSENGER_QUEUE.send({
-									context: `generate a silly poem telling someone that they are have ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. It is important that the details of the show and tickets are accurate`,
+									contextMessage: `generate a silly poem telling ${order.name.split(' ')[0]} that they are have ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. It is important that the details of the show and tickets are accurate`,
 									defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,
 									phoneNumber: metadata.phoneNumber,
 									mediaUrls
