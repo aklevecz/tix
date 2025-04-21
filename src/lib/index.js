@@ -85,7 +85,7 @@ const raptorFaight2 = {
 	},
 	date: '2025-05-02',
 	dates: ['2025-05-02'],
-	img: '/raptor/bazaar/bazaar_laazers-sm.jpeg',
+	img: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_laazers-sm.jpeg',
 	theme: {
 		primaryColor: '#afdf33',
 		secondaryColor: 'black',
@@ -94,7 +94,7 @@ const raptorFaight2 = {
 	seo: {
 		title: 'BAZAAR - May 2nd - DJs / Interactive art / Vinyl Swap',
 		description: 'BAZAAR - DJs / Interactive art / Vinyl Swap',
-		image: '/raptor/bazaar/bazaar_laazers-sm.jpeg'
+		image: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_laazers-sm.jpeg'
 	}
 };
 

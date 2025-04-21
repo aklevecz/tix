@@ -32,12 +32,12 @@
 	<!-- Only show if running or not yet finished -->
 	<div class="flex flex-col items-center rounded-md">
 		<!-- Timer -->
-		<div class="my-0 flex justify-center text-center text-xs md:text-base">
+		<div class="bg-[var(--third-color)] text-[var(--primary-color)] my-0 flex justify-center text-center text-xs md:text-base">
 			<div class="countdown flex items-center">
 				{#if pricing.state.increase < pricing.config.totalIncrease}
-					<div class="">Price increasing in</div>
+					<!-- <div class="">Price increasing in</div> -->
 					<div class="font-bold">{pricing.state.timeRemaining}</div>
-					<div class="">seconds</div>
+					<div class="">seconds</div> until price increases
 				{:else}
 					<div class="font-bold uppercase">Price increase complete!</div>
 				{/if}

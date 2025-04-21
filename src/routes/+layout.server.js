@@ -13,7 +13,6 @@ export async function load({ cookies, url, locals, params }) {
 	const token = cookies.get('token') || '';
 
 	let currentEvent = EVENT_ID;
-	console.log(params.eventName)
 	if (params.eventName) {
 		if (isValidEventName(params.eventName)) {
 			currentEvent = params.eventName;
