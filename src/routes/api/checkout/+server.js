@@ -2,7 +2,7 @@ import { YAYTSO_STRIPE_SECRET, YAYTSO_STRIPE_SECRET_TEST } from '$env/static/pri
 import { checkoutActions, isDev } from '$lib';
 import dbOrders from '$lib/db/orders';
 import logger from '$lib/logging';
-import { error, json } from '@sveltejs/kit';
+import { json } from '@sveltejs/kit';
 import Stripe from 'stripe';
 
 /** @type {import('./$types').RequestHandler} */

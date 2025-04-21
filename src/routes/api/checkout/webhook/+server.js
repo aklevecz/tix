@@ -22,7 +22,7 @@ export async function POST({ platform, request }) {
 
 	// OVERRIDE FOR LOCAL TESTING
 	if (isDev) {
-		endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991'
+		endpointSecret = 'whsec_adabf5f7d531a1f4f9a7465ddd2d4f5ab10168dc33685d82b46821f1493f6991';
 	}
 
 	const stripe = new Stripe(STRIPE_SECRET);
@@ -81,6 +81,7 @@ export async function POST({ platform, request }) {
 							console.log(`Sending message for ${paymentIntentId} to ${metadata.phoneNumber}`);
 							context.waitUntil(
 								env.MESSENGER_QUEUE.send({
+									context: `generate a silly poem telling someone that they are have ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. It is important that the details of the show and tickets are accurate`,
 									defaultMessage: `You're all set with ${quantity} ticket(s) to Bazaar on May 2nd @ The Faight Collective!`,
 									phoneNumber: metadata.phoneNumber,
 									mediaUrls
@@ -95,7 +96,7 @@ export async function POST({ platform, request }) {
 							`error:create-qrs:${metadata.phoneNumber}:${paymentIntentId}`,
 							JSON.stringify(error)
 						);
-						throw new Error(JSON.stringify(error))
+						throw new Error(JSON.stringify(error));
 					}
 				}
 			}
