@@ -1,7 +1,6 @@
 <script>
 	import CartContainer from '$lib/compontents/cart/cart-container.svelte';
 	import Hero from '$lib/compontents/hero.svelte';
-	import PriceVisualization from '$lib/compontents/price-visualization.svelte';
 	import pricing from '$lib/stores/pricing.svelte.js';
 	import { onMount } from 'svelte';
 
