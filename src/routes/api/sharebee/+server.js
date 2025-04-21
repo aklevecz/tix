@@ -79,9 +79,7 @@ export async function POST({ cookies, request, platform, url }) {
 		// });
 
 		await platform?.env.R2.put(r2Path, qr, {
-			httpMetadata: {
-				contentType: 'image/png'
-			}
+			contentType: 'image/png'
 		});
 
 		// save new sharebee
