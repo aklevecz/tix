@@ -27,6 +27,10 @@
 	}
 	
 	async function onVerifyCode() {
+		if (fetching) {
+			console.log(`Already requesting`)
+			return 
+		}
 		if (code.length !== 6 || !/^\d+$/.test(code)) return;
 		
 		fetching = true;

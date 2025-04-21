@@ -95,5 +95,5 @@ input[type='text'] {
 }
 
 .desc p {
-	@apply text-sm my-4 px-2 w-[95%];
+	@apply text-sm md:text-base my-4 px-2 w-[95%];
 }

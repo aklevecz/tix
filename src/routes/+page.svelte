@@ -1,6 +1,7 @@
 <script>
 	import CartContainer from '$lib/compontents/cart/cart-container.svelte';
 	import Hero from '$lib/compontents/hero.svelte';
+	import PriceVisualization from '$lib/compontents/price-visualization.svelte';
 	import pricing from '$lib/stores/pricing.svelte.js';
 	import { onMount } from 'svelte';
 
@@ -25,6 +26,7 @@
 	<meta property="og:image" content={seo.image} />
 	<meta name="twitter:image" content={seo.image} />
 </svelte:head>
+<!-- <PriceVisualization/> -->
 <Hero {featured} />
 
 <CartContainer />

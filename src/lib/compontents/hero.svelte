@@ -75,7 +75,7 @@
 		<!-- <div class="quantity-message">
 			{quantityMessage} p
 		</div> -->
-		<PriceCountdown />
+		<PriceCountdown currentPrice={featured.price}/>
 
 		<div class="flex h-full flex-col justify-center gap-4 md:mt-0">
 			<!-- <div class="lower mb-4 px-4 text-center text-3xl text-[var(--third-color)]">
@@ -102,7 +102,7 @@
 		@apply text-lg font-semibold;
 	}
 	.desc {
-		@apply text-sm capitalize;
+		@apply text-sm capitalize md:text-lg;
 	}
 	.quantity-message {
 		@apply m-1 text-center text-base font-bold;

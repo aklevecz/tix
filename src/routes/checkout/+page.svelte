@@ -1,9 +1,6 @@
 <script>
 	import SliderPage from '$lib/compontents/checkout/slider-page.svelte';
-	import PriceCountdown from '$lib/compontents/price-countdown.svelte';
-	import pricing from '$lib/stores/pricing.svelte';
-	import { onMount } from 'svelte';
-
+	
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 	if (data.featured?.priceConfig.slidingScale === false) {
@@ -11,10 +8,6 @@
 	}
 
 	// Start updates when component mounts, stop when it unmounts
-	onMount(() => {
-		pricing.startUpdates();
-		return () => pricing.stopUpdates();
-	});
 </script>
 
 {#if data.featured?.priceConfig.slidingScale === true}

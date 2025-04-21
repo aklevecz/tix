@@ -7,7 +7,9 @@
 	import Discount from '$lib/compontents/checkout/discount.svelte';
 	import PriceCountdown from '$lib/compontents/price-countdown.svelte';
 	import cart from '$lib/stores/cart.svelte';
+	import pricing from '$lib/stores/pricing.svelte';
 	import { formatPrice } from '$lib/utils';
+	import { onMount } from 'svelte';
 
 	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
 	let { data, children } = $props();
@@ -23,6 +25,11 @@
 		if (browser) {
 			route = page.url.pathname;
 		}
+	});
+
+	onMount(() => {
+		pricing.startUpdates();
+		return () => pricing.stopUpdates();
 	});
 
 	const squareScript = `https://${isDev ? 'sandbox.' : ''}web.squarecdn.com/v1/square.js`;
@@ -55,7 +62,7 @@
 				{/each}
 			</div>
 		</div>
-		<PriceCountdown/>
+		<PriceCountdown currentPrice={data.featured?.price} />
 
 		<div class="relative border border-t p-4">
 			<!-- <div class="absolute top-0 right-0 h-6 w-6 bg-[var(--color-2)]"></div> -->

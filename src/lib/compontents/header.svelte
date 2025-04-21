@@ -27,7 +27,7 @@
 <style lang="postcss">
 	@reference "tailwindcss/theme";
 	a, button {
-		@apply text-[8px];
+		@apply text-[8px] md:text-sm;
 	}
 	.active {
 		@apply text-[var(--color-2)] transition-colors duration-200;
