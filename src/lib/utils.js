@@ -192,7 +192,7 @@ export function calculateIncrementByCurrentDate(startValue = 0) {
 	}
 	
 	// Calculate days elapsed since start date
-	const daysElapsed = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+	const daysElapsed = Math.floor((currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 	
 	// Calculate increments (integer division by 4)
 	const increments = Math.floor(daysElapsed / 4);

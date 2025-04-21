@@ -204,7 +204,7 @@ function createPricingStore() {
 				accelerationType
 			};
 		},
-		/** @param {'LINEAR' | 'QUADRATIC' | 'CUBIC' | 'EXPONENTIAL' | 'SIGMOID' | 'POWER'} type */
+		/** @param {string} type */
 		setAccelerationType(type) {
 			if (['LINEAR', 'QUADRATIC', 'CUBIC', 'EXPONENTIAL', 'SIGMOID', 'POWER'].includes(type)) {
 				accelerationType = type;
