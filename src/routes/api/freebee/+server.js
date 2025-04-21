@@ -199,9 +199,10 @@ export async function POST({ cookies, platform, request }) {
 		const r2Path = `order-qrs/${EVENT_ID}/${today}.png`;
 
 		await platform?.env.R2.put(r2Path, qr, {
+			// I THINK THE CONTENT TYPE IS ACTUALLY IMAGE GIF AND THIS IS DOING NOTHING
 			contentType: 'image/png'
 		});
-		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}`;
+		const assetUrl = `https://r2-tix.yaytso.art/${r2Path}?v=${Date.now()}`;
 		await platform?.env.MESSENGER_QUEUE.send({
 			contextMessage: `generate a succinct poem telling someone that they won a free ticket to Bazaar on May 2nd @ The Faight Collective 7pm to midnight. It is important that the details of the show and tickets are accurate`,
 			defaultMessage: `You got a free ticket for May 2nd! Here is your QR code`,
