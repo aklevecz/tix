@@ -30,7 +30,7 @@ const sharebeeApi = () => {
                 }
                 return data
                 // return await response.json();
-            } catch(e) {
+            } catch(/** @type {*} */ e) {
                 console.error(`api/sharebee.js: ERROR WHILE FETCHING ${endpoints.sharebee}`);
                 alert(e.message);
                 console.error(e);

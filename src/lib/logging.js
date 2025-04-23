@@ -33,7 +33,8 @@ const logger = (ctx) => {
 		/** @param {string} message */
 		error(message) {
 			loggingClient.error(message);
-		}
+		},
+		
 	};
 };
 

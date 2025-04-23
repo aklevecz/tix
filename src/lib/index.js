@@ -66,14 +66,14 @@ const raptorFaight2 = {
 	projectId: 'raptor-faight-2',
 	productType: 'ticket',
 	name: 'ticket',
-	cartTitle : 'Bazaar ~ May 2nd',
+	cartTitle : 'Bazaar ~ Faight Collective ~ May 2nd',
 	title: `<img class="h-10 w-30" src="/raptor/bazaar/bazaar-text.svg" alt="raptor logo" /> <div>SAN FRANCISCO</div>  <div class="mt-[-12px] md:mt-0">May 2nd ~ 7pm - Midnight</div> `,
 	description: /*html*/ `<div class="text-lg">DJs / Interactive art / Vinyl Swap</div>  <p>Out beyond ideas of wrongdoing and rightdoing, there is a bazaar, I’ll meet you there 🫂</p> 
 <p>A place to connect with those who love sharing the gift of music & dancing 🎶</p>
 <p>A place where you come as you are and find others who reflect your vibrancy 🌸</p>
 <p>A place to give into curiosity and let go of expectations ✨</p>
 <p>A place to enter with an open heart and mind to meet new people 💕</p>
-<p>Music by <a target="_blank" class="text-[var(--third-color)]" href="https://soundcloud.com/krgmp3">krg</a>, <a class="text-[var(--third-color)]" href="https://soundcloud.com/3kelves" target="_blank">3kelves</a>, DAZL. More TBA</p>`,
+<p>Music by <a target="_blank" class="text-[var(--third-color)]" href="https://soundcloud.com/krgmp3">krg</a> ~ <a class="text-[var(--third-color)]" href="https://soundcloud.com/3kelves" target="_blank">3kelves</a> ~ DAZL</p>`,
 	place: locations.faight,
 	price: 1000,
 	priceConfig: {
@@ -85,16 +85,16 @@ const raptorFaight2 = {
 	},
 	date: '2025-05-02',
 	dates: ['2025-05-02'],
-	img: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_laazers-sm.jpeg',
+	img: '/raptor/bazaar/bazaar_fresco.png',
 	theme: {
 		primaryColor: '#afdf33',
 		secondaryColor: 'black',
 		thirdColor: '#f65858'
 	},
 	seo: {
-		title: 'BAZAAR - May 2nd - DJs / Interactive art / Vinyl Swap',
-		description: 'BAZAAR - DJs / Interactive art / Vinyl Swap',
-		image: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_laazers-sm.jpeg'
+		title: 'BAZAAR - Faight Collective ~ May 2nd - DJs / Interactive art / Vinyl Swap',
+		description: 'BAZAAR - Faight Collective ~ May 2nd - DJs / Interactive art / Vinyl Swap',
+		image: '/raptor/bazaar/bazaar_fresco.png'
 	}
 };
 
