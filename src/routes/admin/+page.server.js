@@ -5,10 +5,22 @@ import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ platform, url }) {
-    const teemo = url.searchParams.get('teemo')
-    if (teemo !== 'meepo') {
-        throw error(404, 'whart?')
-    }
+	let ok = false;
+	const teemo = url.searchParams.get('teemo');
+	if (teemo !== 'meepo') {
+		ok = true;
+	}
+
+	const pw = 'AKJSDKJASDKJHASJKDHJKAHSDJKHASDKJh'
+
+	const ghoj = url.searchParams.get('ghoj');
+	if (ghoj === pw) {
+		ok = true;
+	}
+
+	if (!ok) {
+		throw error(404, 'whart?');
+	}
 	if (!platform?.env?.DB) {
 		console.error('Database binding DB not found.');
 		return {
