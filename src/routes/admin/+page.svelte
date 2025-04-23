@@ -40,18 +40,6 @@
 		return JSON.stringify(value, null, 2);
 	}
 
-	/**
-	 * Truncates a string to a maximum length.
-	 * @param {string} str The string to truncate.
-	 * @param {number} maxLength The maximum length.
-	 */
-	function truncateString(str, maxLength) {
-		if (typeof str !== 'string' || str.length <= maxLength) {
-			return str;
-		}
-		return str.substring(0, maxLength) + '...';
-	}
-
 	/** @param {*} event */
 	async function createSharebee(event) {
 		event.preventDefault();
@@ -162,7 +150,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each orders as order (order.pi_id)}
+					{#each orders.filter(order => order.status === 'success' && order.email !== "arielklevecz@gmail.com") as order (order.pi_id)}
 						<!-- TODO: Make more dynamic -->
 						{@const quantityOfFirstItem = Object.values(JSON.parse(order.items))[0].quantity}
 						<tr>
@@ -176,7 +164,7 @@
 							<td>{order.discount || 'N/A'}</td>
 							<td>{order.project_name || 'N/A'}</td>
 							<td>{order.origin || 'N/A'}</td>
-							<td><pre>{truncateString(safeStringify(order.items), 100)}</pre></td>
+							<td><pre>{safeStringify(order.items)}</pre></td>
 							<td>{quantityOfFirstItem}</td>
 							<td><button onclick={() => generateQRCodes(order.pi_id, order.project_name, quantityOfFirstItem)}>Generate QR</button></td>
 						</tr>
@@ -319,6 +307,8 @@
 		background-color: #eee;
 		padding: 5px;
 		border-radius: 3px;
+		max-height: 6em; /* Limit height to prevent row expansion */
+		overflow: auto; /* Add scrollbars if content exceeds max-height */
 	}
 	.error {
 		color: red;
