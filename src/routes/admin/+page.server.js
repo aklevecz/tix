@@ -7,7 +7,7 @@ import { error } from '@sveltejs/kit';
 export async function load({ platform, url }) {
 	let ok = false;
 	const teemo = url.searchParams.get('teemo');
-	if (teemo !== 'meepo') {
+	if (teemo === 'meepo') {
 		ok = true;
 	}
 

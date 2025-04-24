@@ -85,7 +85,7 @@ const raptorFaight2 = {
 	},
 	date: '2025-05-02',
 	dates: ['2025-05-02'],
-	img: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_promo_square_fresco.jpg',
+	img: '/raptor/bazaar/marisa_poster_purple_bg_web.jpg',
 	theme: {
 		primaryColor: '#afdf33',
 		secondaryColor: 'black',
@@ -94,7 +94,7 @@ const raptorFaight2 = {
 	seo: {
 		title: 'BAZAAR - Faight Collective ~ May 2nd - DJs / Interactive art / Vinyl Swap',
 		description: 'BAZAAR - Faight Collective ~ May 2nd - DJs / Interactive art / Vinyl Swap',
-		image: 'https://tix.concertraptors.com/raptor/bazaar/bazaar_promo_square_fresco.jpg'
+		image: 'https://tix.concertraptors.com/raptor/bazaar/marisa_poster_lime.jpg'
 	}
 };
 
