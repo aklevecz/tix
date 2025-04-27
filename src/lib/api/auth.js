@@ -1,3 +1,5 @@
+import { responses } from "$lib";
+
 const endpoints = {
 	auth: 'api/auth'
 };
@@ -18,6 +20,7 @@ const authApi = () => {
 			} catch (e) {
 				console.error(`api/auth.js: ERROR WHILE FETCHING ${endpoints.auth} FROM login`);
 				console.error(e);
+				return {message: responses.UNKNOWN_AUTH_ERROR}
 			}
 		},
 		/** @param {string} code */
@@ -34,6 +37,7 @@ const authApi = () => {
 			} catch (e) {
 				console.error(`api/auth.js: ERROR WHILE FETCHING ${endpoints.auth} FROM login`);
 				console.error(e);
+				return {message: responses.UNKNOWN_AUTH_ERROR}
 			}
 		},
 		logout: async () => {

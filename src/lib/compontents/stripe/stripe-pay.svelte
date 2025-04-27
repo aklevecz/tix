@@ -102,8 +102,8 @@
 				// checkingOutState = 'idle';
 			}
 		} catch (/** @type {*} */ e) {
-			alert(
-				`Hm an error has occurred while finalizing your payment, try again, or contact ariel@yaytso.art, here is the probably confusingly technical error message: ${JSON.stringify(e)}`
+			alert(e
+				// `Hm an error has occurred while finalizing your payment, try again, or contact ariel@yaytso.art, here is the probably confusingly technical error message: ${JSON.stringify(e)}`
 			);
 			throw new Error(e);
 		}
