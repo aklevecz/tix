@@ -44,12 +44,12 @@
 		</div>
 	{/if}
 	{#if !discountIsOpen}
-		<button onclick={toggleDiscount} class="btn-bauhaus discount ml-auto">Apply Discount</button>
+		<button  onclick={toggleDiscount} class="btn-bauhaus discount ml-auto">Apply Discount</button>
 	{/if}
 
 	{#if discountIsOpen}
 		<div class="flex w-full justify-between gap-6">
-			<input oninput={onDiscountInput} placeholder="Discount Code" /><button
+			<input onkeydown={(e) => e.key === 'Enter' && submitDiscount()} oninput={onDiscountInput} placeholder="Discount Code" /><button
 				class="btn-bauhaus"
 				onclick={submitDiscount}>Submit</button
 			>

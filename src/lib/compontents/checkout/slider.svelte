@@ -1,6 +1,7 @@
 <script>
 	import cart from '$lib/stores/cart.svelte';
 	import pricing from '$lib/stores/pricing.svelte';
+	import { onMount } from 'svelte';
 	import { Spring } from 'svelte/motion';
 
 	let {
@@ -15,7 +16,6 @@
 		labelFor = 'ticket-price'
 	} = $props();
 
-
 	let hasSlid = $state(false);
 
 	// Create a spring animation for smooth value changes
@@ -24,21 +24,31 @@
 		damping: 0.4
 	});
 
-	spring.target = value
+	spring.target = value;
 
 	// Update the spring value when the prop changes
 	// $: displayValue.set(value);
 	$effect(() => {
 		// Might need to change this if the base value isn't the minimum
 		// if (hasSlid) {
+		// 	spring.target = value + pricing.state.increase;
+		// 	cart.updateTicketPrice(value);
+		// }
+	});
+
+	onMount(() => {
+		// jank
+		setTimeout(() => {
 			spring.target = value + pricing.state.increase;
 			cart.updateTicketPrice(value);
-		// }
+		}, 1000);
 	});
 
 	/** @param {*} event */
 	function handleInput(event) {
 		value = Number(event.target.value);
+		cart.updateTicketPrice(value);
+		spring.target = value + pricing.state.increase;
 		hasSlid = true;
 	}
 
@@ -48,6 +58,7 @@
 		};
 	}
 </script>
+
 <h2 class="font-semibold">Sliding Scale Ticket Price</h2>
 <div class="slider-container" class:disabled>
 	{#if label}

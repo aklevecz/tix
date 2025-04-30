@@ -118,7 +118,7 @@
 	// });
 </script>
 
-<div class="mb-10">
+<div class="flex flex-col gap-4">
 	<div class="px-5">
 		<div class="max-w-[600px] p-0 text-xs">
 			<div class="flex gap-4">
@@ -131,7 +131,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="payment-container mx-auto">
+	<div class="payment-container mx-auto my-2">
 		<div id="payment-element" class="payment-element">
 			<div class="loading-animation">
 				<div class="spinner"></div>
@@ -141,7 +141,7 @@
 		<button
 			onclick={onPay}
 			disabled={!paymentElementLoaded}
-			class="btn-bauhaus m-auto mt-4 block w-9/12"
+			class="btn-bauhaus m-auto mt-8 block w-9/12"
 			>{fetching ? 'Loading...' : `Pay ${formatPrice(cart.state.total)}`}</button
 		>
 	</div>

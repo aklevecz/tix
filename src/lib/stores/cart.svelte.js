@@ -23,7 +23,8 @@ const createCartStore = () => {
 		}, 0);
 		const discountAmount = cart.subtotal * (cart.discount / 100);
 		cart.total = cart.subtotal - discountAmount;
-		cart.total = Number(cart.total.toFixed(2));
+		// probably overkill
+		cart.total = Math.floor(Number(cart.total.toFixed(2)))
 	}
 
 	function saveCartSession() {
